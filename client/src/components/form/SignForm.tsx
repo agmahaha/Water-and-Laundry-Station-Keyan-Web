@@ -20,6 +20,7 @@ function submit (values: z.infer<typeof loginSchema>){
 }
 export default function SignForm(){
     const{
+        handleSubmit,
         register,
         formState: { errors }
     } = useForm<z.infer<typeof loginSchema>>({
@@ -31,7 +32,7 @@ export default function SignForm(){
     })
 
     return(
-        <form>
+        <form onSubmit={handleSubmit(submit)}>
             <div>
                 <label> Username:</label>
                 <input type ="text" {...register("username")}/>
