@@ -9,6 +9,7 @@ import { z } from "zod"
 const allowedUsername = ["customer", "employee", "owner"];
 
 const loginSchema = z.object({
+    email: z.string().min(1, "Email is required").email("Invalid Email").refine((value) => value.includes("@")),
     username: z.string().refine((value) => allowedUsername.includes(value),
     {
       message: "Invalid username.",
@@ -34,6 +35,11 @@ const SignForm = () => {
 
     return(
         <form onSubmit={handleSubmit(submit)}>
+            <div>
+                <label> Email:</label>
+                <input type ="text" {...register("email")}/>
+                {errors.email && <span>{errors.email.message}</span>}
+            </div>
             <div>
                 <label> Username:</label>
                 <input type ="text" {...register("username")}/>
