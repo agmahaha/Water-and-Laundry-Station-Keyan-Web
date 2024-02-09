@@ -49,7 +49,7 @@ const SignForm = () => {
                 <label> Password:</label>
                 <input type ="password" {...register("password")}/>
             </div>
-            <button type = "submit"> Login</button>
+            <button type = "submit"> Register</button>
             <p>
                 <Link href="/auth/signup"> Sign-Up</Link>
             </p>
