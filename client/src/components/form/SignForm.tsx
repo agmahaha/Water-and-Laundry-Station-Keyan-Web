@@ -18,7 +18,7 @@ const loginSchema = z.object({
 function submit (values: z.infer<typeof loginSchema>){
     console.log(values)
 }
-export function SignForm(){
+export default function SignForm(){
     const{
         register,
         formState: { errors }
