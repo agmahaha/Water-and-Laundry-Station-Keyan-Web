@@ -1,6 +1,8 @@
+import SignForm from "@/components/form/SignForm"
+
 const page = () => {
     return (
-      <div>Login</div>
+      <div><SignForm/></div>
     )
   }
   
