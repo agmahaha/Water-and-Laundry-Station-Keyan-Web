@@ -115,8 +115,8 @@ const Login = () => {
                   }}
               >
                   {isLogin
-                  ? "Don't have an Account? Register here!"
-                  : "Already have an Account? Log in here!"}
+                  ? "Don't have an Account? Register HERE!"
+                  : "Already have an Account? Log in HERE!"}
          </Typography>
         </Box>
         </form>
