@@ -8,29 +8,35 @@ const HomePage = () => {
     return (
         <Box bgcolor="white" sx={{ width: '85%', margin: '0 auto', borderRadius: '10px' }}>
             {/* Logo and Text */}
-            <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '20px', marginTop: '80px' }}>
-                {/* Logo */}
-                <img
-                    src={Logo}
-                    alt="Logo"
-                    style={{ height: '100px', width: '100px', marginLeft: '60%' }}
-                />
+            <Grid container spacing={2} sx={{ textAlign: 'center', marginTop: '80px' }}>
+                {/* First Column (60% wider) */}
+                <Grid item xs={12} md={8}></Grid>
 
-                {/* Text */}
-                <Typography variant="h4" sx={{ fontWeight: 'bold', color: '#0b4c84', flex: '40%'}}>
-                    Keyan Water & Laundry
-                </Typography>
-            </Box>
+                {/* Second Column (Logo and Text) */}
+                <Grid item xs={12} md={4} sx={{ display: 'flex', alignItems: 'center', marginTop: '40px', marginBottom: '20px'}}>
+                    {/* Logo */}
+                    <img
+                        src={Logo}
+                        alt="Logo"
+                        style={{ height: '75px', width: '75px', marginRight: '10px' }}
+                    />
+
+                    {/* Text */}
+                    <Typography variant="h5" sx={{ fontWeight: 'bold', color: '#0b4c84' }}>
+                        Keyan Water & Laundry
+                    </Typography>
+                </Grid>
+            </Grid>
             <Grid container spacing={2} sx={{ textAlign: 'center', padding: '2% 2% 5% 2%'}}>
                 {/* First Column */}
-                <Grid item xs={12} md={4}>
-                    <Typography variant="h4" sx={{ fontWeight: 'bold', color: '#0b4c84' }}>
+                <Grid item xs={12} md={6}>
+                    <Typography variant="h1" sx={{ fontWeight: 'bold', color: '#0b4c84' }}>
                         COMPANY SERVICES
                     </Typography>
                 </Grid>
 
                 {/* Second Column */}
-                <Grid item xs={12} md={4}>
+                <Grid item xs={12} md={3}>
                     <Box
                         sx={{
                             borderRadius: 6,
@@ -47,7 +53,7 @@ const HomePage = () => {
                 </Grid>
 
                 {/* Third Column */}
-                <Grid item xs={12} md={4}>
+                <Grid item xs={12} md={3}>
                     <Box
                         sx={{
                             borderRadius: 6,
