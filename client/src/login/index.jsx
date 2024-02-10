@@ -49,11 +49,14 @@ const Login = () => {
         <form onSubmit={() => alert("Submitted")}>
         <Box
         style={{marginTop: '10%', padding:'2% 10% 5% 10%'}}
+        display="grid"
+        gap="20px"
         sx={{
           margin:'auto',
           borderRadius: 6,
           bgcolor:'#7092be',
           width: '50%',
+          height: '50%',  
           left: 0,
           right: 0,
           textAlign:'center'
@@ -75,6 +78,13 @@ const Login = () => {
             error={Boolean(errors.email)}
             helperText={errors.email}
             autoComplete='false'
+            sx={{
+              '& .Mui-error': {
+                color: (theme) => (Boolean(errors.email) ? theme.palette.error.main : 'black'),
+              },
+              color: 'black',      
+              bgcolor: 'white',    
+            }}
           />
           )}
           
@@ -85,6 +95,10 @@ const Login = () => {
           error={Boolean(errors.username)}
           helperText={errors.username}
           autoComplete='false'
+          sx={{
+            color: 'black',      
+            bgcolor: 'white',    
+          }}
           />
           <TextField
           fullWidth
@@ -94,11 +108,19 @@ const Login = () => {
           error={Boolean(errors.password)}
           helperText={errors.password}
           autoComplete='false'
+          sx={{
+            color: 'black',      
+            bgcolor: 'white',    
+          }}
           />
           <Button 
             variant='contained' 
             type='submit' 
-            name='submit'>
+            name='submit'
+            sx={{
+              color: 'black',      
+              bgcolor: 'white',    
+            }}>
              {isLogin ? 'LOGIN' : 'REGISTER'}
           </Button>
           <Typography
