@@ -1,6 +1,6 @@
-import FormLog from "./login/login"
+import FormLog from "./login"
 import './App.css';
-import Navbar from "./Navbar/Navbar";
+import Navbar from "./Navbar";
 
 function App() {
   return (
