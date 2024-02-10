@@ -1,8 +1,29 @@
-import React, {useState} from 'react'
+import React, {useEffect, useState} from 'react'
 import {AppBar, Toolbar, Typography, Tabs, Tab }from '@mui/material';
+import { useNavigate} from 'react-router';
 
 const Navbar = () => {
     const [value, setValue] = useState();
+    const navigate = useNavigate()
+    
+      const handleChange = (event, newValue) => {
+        setValue(newValue);
+    
+        switch (newValue) {
+          case 0:
+            navigate('/about');
+            break;
+          case 1:
+            navigate('/services');
+            break;
+          case 2:
+            navigate('/login');
+            break;
+          default:
+            navigate('/');
+        }
+      };
+    
 
   return (
     <React.Fragment>
@@ -16,14 +37,24 @@ const Navbar = () => {
             right: 0,
             }}>
             <Toolbar>
-                <Typography>
+                <Typography
+                    onClick={() => {
+                        navigate('/')
+                      } }
+                      sx={{
+                        color: 'White',
+                        "&:hover": {
+                          cursor: "pointer",
+                        },
+                      }}
+                >
                     LOGO
                 </Typography>
                 <Tabs
                     sx ={{marginLeft:"auto"}} 
                     textColor='inherit'
                     value={value}
-                    onChange={(e,value)=> setValue(value)}
+                    onChange={handleChange}
                     indicatorColor='secondary'>
                         <Tab label ="About" sx={{ color: "white" }}/>
                         <Tab label ="Services" sx={{ color: "white" }}/>
