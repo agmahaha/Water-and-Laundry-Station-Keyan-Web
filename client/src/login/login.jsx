@@ -1,5 +1,5 @@
 import React, {useState} from 'react'
-import { Card, TextField, Typography, Button, Box, Alert} from '@mui/material'
+import { Card, TextField, Typography, Button, Box, Alert, useTheme} from '@mui/material'
 import {Formik} from "formik"
 import * as yup from 'yup'
 
@@ -27,13 +27,25 @@ const initialValuesLog ={
   password:"",
 }
 
-const login = () => {
-  const isLogin = true;
+const Login = () => {
+  const [isLogin, setIsLogin] = useState(true);
+
+  const { palette } = useTheme();
   return (
     <Formik
         initialVal = {isLogin ? initialValuesLog : initialValuesReg}
         formSchema={isLogin ? loginSchema : signupSchema}
     >
+      {({
+          values,
+          errors,
+          touched,
+          handleBlur,
+          handleChange,
+          handleSubmit,
+          setFieldValue,
+          resetForm,
+      })=> (
         <form onSubmit={() => alert("Submitted")}>
         <Box
         style={{marginTop: '10%', padding:'2% 10% 5% 10%'}}
@@ -60,8 +72,8 @@ const login = () => {
             fullWidth
             label="Email Address"
             name='email'
-            error={false}
-            helperText={"Please enter valid email."}
+            error={Boolean(errors.email)}
+            helperText={errors.email}
             autoComplete='false'
           />
           )}
@@ -70,8 +82,8 @@ const login = () => {
           fullWidth
           label="Username"
           name='username'
-          error={false}
-          helperText={"Please enter valid username."}
+          error={Boolean(errors.username)}
+          helperText={errors.username}
           autoComplete='false'
           />
           <TextField
@@ -79,8 +91,8 @@ const login = () => {
           type='password'
           label="Password"
           name='password'
-          error={false}
-          helperText={"Please enter valid password."}
+          error={Boolean(errors.password)}
+          helperText={errors.password}
           autoComplete='false'
           />
           <Button 
@@ -88,11 +100,29 @@ const login = () => {
             type='submit' 
             name='submit'>
              {isLogin ? 'LOGIN' : 'REGISTER'}
-             </Button>
+          </Button>
+          <Typography
+              onClick={() => {
+                setIsLogin(!isLogin)
+                resetForm();
+                  }}
+                  sx={{
+                    color: 'Black',
+                    "&:hover": {
+                        cursor: "pointer",
+                        color: palette.primary.light,
+                    },
+                  }}
+              >
+                  {isLogin
+                  ? "Don't have an Account? Register here!"
+                  : "Already have an Account? Log in here!"}
+         </Typography>
         </Box>
         </form>
+      )}
     </Formik>
   )
 }
 
-export default login
+export default Login
