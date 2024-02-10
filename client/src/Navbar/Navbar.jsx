@@ -1,0 +1,39 @@
+import React, {useState} from 'react'
+import {AppBar, Toolbar, Typography, Tabs, Tab }from '@mui/material';
+
+const Navbar = () => {
+    const [value, setValue] = useState();
+
+  return (
+    <React.Fragment>
+        <AppBar
+            sx ={{background:'#0b4c84', 
+            margin:"10px auto",
+            borderRadius:"10px",
+            position:'fixed',
+            width: "85%",
+            left: 0,
+            right: 0,
+            }}>
+            <Toolbar>
+                <Typography>
+                    LOGO
+                </Typography>
+                <Tabs
+                    sx ={{marginLeft:"auto"}} 
+                    textColor='inherit'
+                    value={value}
+                    onChange={(e,value)=> setValue(value)}
+                    indicatorColor='secondary'>
+                        <Tab label ="About" sx={{ color: "white" }}/>
+                        <Tab label ="Services" sx={{ color: "white" }}/>
+                        <Tab label ="Login/Signup" sx={{ color: "white" }}/>
+                </Tabs>
+            </Toolbar>
+        </AppBar>
+    </React.Fragment>
+
+  )
+}
+
+export default Navbar
