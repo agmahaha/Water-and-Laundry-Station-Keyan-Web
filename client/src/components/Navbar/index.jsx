@@ -1,10 +1,22 @@
 import React, {useEffect, useState} from 'react'
 import {AppBar, Toolbar, Typography, Tabs, Tab }from '@mui/material';
-import { useNavigate} from 'react-router';
+import { useNavigate, useLocation } from 'react-router';
+import Logo from './whiteLogoKeyan.PNG'
 
 const Navbar = () => {
     const [value, setValue] = useState();
     const navigate = useNavigate()
+    const location = useLocation()
+    
+    useEffect(() => {
+        if (location.pathname === '/about') {
+          setValue(0);
+        } else if (location.pathname === '/services') {
+          setValue(1);
+        } else if (location.pathname === '/login') {
+          setValue(2);
+        }
+      }, [location.pathname]);
     
       const handleChange = (event, newValue) => {
         setValue(newValue);
@@ -48,7 +60,10 @@ const Navbar = () => {
                         },
                       }}
                 >
-                    LOGO
+                    <img
+                    src={Logo}
+                    alt="Logo"
+                    style={{ height: '60px', width: '60px' }} />
                 </Typography>
                 <Tabs
                     sx ={{marginLeft:"auto"}} 
