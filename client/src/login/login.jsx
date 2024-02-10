@@ -34,7 +34,6 @@ const login = () => {
         initialVal = {isLogin ? initialValuesLog : initialValuesReg}
         formSchema={isLogin ? loginSchema : signupSchema}
     >
-      
         <form onSubmit={() => alert("Submitted")}>
         <Box
         style={{marginTop: '10%', padding:'2% 10% 5% 10%'}}
@@ -61,7 +60,7 @@ const login = () => {
             fullWidth
             label="Email Address"
             name='email'
-            error={errors.email}
+            error={false}
             helperText={"Please enter valid email."}
             autoComplete='false'
           />
