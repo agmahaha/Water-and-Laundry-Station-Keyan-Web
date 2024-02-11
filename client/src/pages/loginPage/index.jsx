@@ -78,16 +78,13 @@ const Login = () => {
                 fullWidth
                 label="Email Address"
                 name='email'
-                error={Boolean(errors.email)}
-                helperText={errors.email}
+                variant='filled'
+                error={Boolean(touched.username) && Boolean(errors.username)}
+                helperText={touched.username && errors.username}
+                InputLabelProps={{ style: {color: '#F4A4AC'}}}
+                InputProps={{ style: {color: 'white'}}}
                 autoComplete='false'
-                sx={{
-                  '& .Mui-error': {
-                    color: (theme) => (Boolean(errors.email) ? theme.palette.error.main : 'black'),
-                  },
-                  color: 'black',
-                  bgcolor: 'white',
-                }} />
+                />
             )}
 
             <TextField
@@ -135,7 +132,7 @@ const Login = () => {
                 textDecoration: 'underline',
                 "&:hover": {
                   cursor: "pointer",
-                  color: "#0B4C84",
+                  color: "#F4A4AC",
                 },
               }}
             >
