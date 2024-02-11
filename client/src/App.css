@@ -10,3 +10,17 @@ body {
   flex-direction: column;
 }
 
+.page-not-found-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-image: none;
+  height: 100vh;
+  background: none;
+  text-align: center;
+}
+
+.page-not-found-pad{
+  padding: 150px
+}
+

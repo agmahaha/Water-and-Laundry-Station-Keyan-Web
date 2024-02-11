@@ -4,6 +4,7 @@ import Service from './pages/servicesPage'
 import About from'./pages/aboutPage'
 import {BrowserRouter, Routes, Route} from 'react-router-dom'
 import './App.css';
+import PageNotFound from "./pages/pageNotFound"
 
 function App() {
   return (
@@ -12,8 +13,7 @@ function App() {
         <Routes>
           <Route path ="/" element={<Home/>}/>
           <Route path ="/login" element={<FormLog/>}/>
-          <Route path ="/about" element={<About/>}/>
-          <Route path ="/services" element={<Service/>}/>
+          <Route path ="*" element={<PageNotFound/>}/>
         </Routes>
       </BrowserRouter>
     </div>
