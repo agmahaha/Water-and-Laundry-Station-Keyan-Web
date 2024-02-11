@@ -57,7 +57,7 @@ const OwnerView = () => {
                             <img
                                 src={Order}
                                 alt="OrderList"
-                                style={{ height: '80%', width: '65%', margin:'5%'}}
+                                style={{ height: '70%', width: '55%', margin:'10%'}}
                             />
                             <Typography
                                 variant="h6"
@@ -97,7 +97,7 @@ const OwnerView = () => {
                             <img
                                 src={Pricelist}
                                 alt="Pricelist"
-                                style={{ height: '80%', width: '85%', margin:'5%'}}
+                                style={{ height: '70%', width: '70%', margin:'10%'}}
                             />
                             <Typography
                                 variant="h6"
