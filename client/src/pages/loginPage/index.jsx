@@ -12,7 +12,7 @@ const signupSchema = yup.object().shape({
 })
 
 const loginSchema = yup.object().shape({
-  username:  yup.string().required("required"),
+  username: yup.string().required("required"),
   password: yup.string().required("required"),
 })
 
@@ -39,7 +39,14 @@ const Login = () => {
       formSchema={isLogin ? loginSchema : signupSchema}
     >
       {({
-        values, errors, touched, handleBlur, handleChange, handleSubmit, setFieldValue, resetForm,
+        values, 
+        errors, 
+        touched, 
+        handleBlur, 
+        handleChange, 
+        handleSubmit, 
+        setFieldValue, 
+        resetForm,
       }) => (
         <form onSubmit={() => alert("Submitted")}>
           <Box
@@ -49,7 +56,7 @@ const Login = () => {
             sx={{
               margin: 'auto',
               borderRadius: 6,
-              bgcolor: '#7092be',
+              bgcolor: '#0b4c84',
               width: '50%',
               height: '50%',
               left: 0,
@@ -60,6 +67,7 @@ const Login = () => {
             <Typography
               variant="h4"
               sx={{
+                color: '#F4A4AC',
                 fontWeight: 'bold',
               }}>
               {isLogin ? 'LOGIN' : 'REGISTER'}
@@ -85,26 +93,24 @@ const Login = () => {
             <TextField
               fullWidth
               label="Username"
-              name='username'
-              error={Boolean(errors.username)}
-              helperText={errors.username}
-              autoComplete='false'
-              sx={{
-                color: 'black',
-                bgcolor: 'white',
-              }} />
+              name="username"
+              variant='filled'
+              error={Boolean(touched.username) && Boolean(errors.username)}
+              helperText={touched.username && errors.username}
+              InputLabelProps={{ style: {color: '#F4A4AC'}}}
+              InputProps={{ style: {color: 'white'}}}
+              />
             <TextField
               fullWidth
               type='password'
               label="Password"
               name='password'
-              error={Boolean(errors.password)}
-              helperText={errors.password}
-              autoComplete='false'
-              sx={{
-                color: 'black',
-                bgcolor: 'white',
-              }} />
+              variant='filled'
+              error={Boolean(touched.password) && Boolean(errors.password)}
+              helperText={touched.password && errors.password}
+              InputLabelProps={{ style: {color: '#F4A4AC'}}}
+              InputProps={{ style: {color: 'white'}}}
+              />
             <Button
               variant='contained'
               type='submit'
@@ -112,7 +118,11 @@ const Login = () => {
               sx={{
                 color: 'black',
                 bgcolor: 'white',
-              }}>
+                "&:hover": {
+                  color: 'white',
+                },
+              }}
+              >
               {isLogin ? 'LOGIN' : 'REGISTER'}
             </Button>
             <Typography
@@ -121,10 +131,11 @@ const Login = () => {
                 resetForm()
               } }
               sx={{
-                color: 'Black',
+                color: 'White',
+                textDecoration: 'underline',
                 "&:hover": {
                   cursor: "pointer",
-                  color: palette.primary.light,
+                  color: "#0B4C84",
                 },
               }}
             >

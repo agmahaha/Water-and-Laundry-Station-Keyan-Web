@@ -69,7 +69,7 @@ const HomePage = () => {
                                 alignItems: 'center', // Center items horizontally
                                 justifyContent: 'space-between', // Align items at the start and end of the container
                                 borderRadius: 6,
-                                bgcolor: '#7092be',
+                                bgcolor: '#0b4c84',
                                 height: '75%',
                                 width: '75%',
                                 padding: '10%',
@@ -79,7 +79,7 @@ const HomePage = () => {
                                     marginRight: 'auto',
                                 },
                                 '&:hover': {
-                                    bgcolor: '#0b4c84',
+                                    bgcolor: '#7092be',
                                     transform: 'scale(1.1)',
                                     cursor: 'pointer',
                                 },

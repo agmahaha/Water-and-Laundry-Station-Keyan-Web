@@ -70,7 +70,8 @@ const Navbar = () => {
                     textColor='inherit'
                     value={value}
                     onChange={handleChange}
-                    indicatorColor='secondary'>
+                    TabIndicatorProps={{style: {background:'#F4A4AC'}}}
+                    >
                         <Tab label ="About" sx={{ color: "white" }}/>
                         <Tab label ="Services" sx={{ color: "white" }}/>
                         <Tab label ="Login/Signup" sx={{ color: "white" }}/>
