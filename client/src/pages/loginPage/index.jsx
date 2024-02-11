@@ -117,6 +117,7 @@ const Login = () => {
                 bgcolor: 'white',
                 "&:hover": {
                   color: 'white',
+                  bgcolor: '#F4A4AC'
                 },
               }}
               >
