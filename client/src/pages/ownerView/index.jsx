@@ -37,7 +37,7 @@ const OwnerView = () => {
                     <Grid item xs={12} sm={6} sx={{ textAlign: 'right' }}>
                         {/* Content for the first column */}
                         <Box
-                            
+                            onClick={() => navigate("/orders")}
                             sx={{
                                 display: 'flex',
                                 flexDirection: 'column',
@@ -79,6 +79,7 @@ const OwnerView = () => {
                     <Grid item xs={12} sm={6} sx={{ textAlign: 'left' }}>
                         {/* Content for the second column */}
                         <Box
+                            onClick={() => navigate("/expenses")}
                             sx={{
                                 display: 'flex',
                                 flexDirection: 'column',
