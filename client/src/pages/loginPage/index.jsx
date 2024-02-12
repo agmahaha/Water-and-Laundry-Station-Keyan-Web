@@ -45,6 +45,9 @@ const Login = () => {
     else if (values.username.toLowerCase() == "customer") {
       navigate("/home")
     }
+    else {
+      alert("invalid Credentials!");
+    }
   }
 
   return (
