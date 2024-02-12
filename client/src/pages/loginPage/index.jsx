@@ -3,6 +3,7 @@ import { Card, TextField, Typography, Button, Box, Alert, useTheme} from '@mui/m
 import {Formik} from "formik"
 import * as yup from 'yup'
 import Navbar from '../../components/Navbar'
+import { useNavigate } from 'react-router-dom'
 
 
 const signupSchema = yup.object().shape({
@@ -32,10 +33,25 @@ const Login = () => {
   const [isLogin, setIsLogin] = useState(true);
 
   const { palette } = useTheme();
+
+  const navigate = useNavigate();
+
+  const loginUser = async (values, onSubmitProps) => {
+    console.log("logging in user: ");
+
+    if (values.username.toLowerCase() == "owner" || values.username.toLowerCase() == "employee") {
+      navigate("/employee/home");
+    } 
+    else if (values.username.toLowerCase() == "customer") {
+      navigate("/home")
+    }
+  }
+
   return (
     <><Navbar />
     <Formik
-      initialVal={isLogin ? initialValuesLog : initialValuesReg}
+      onSubmit={loginUser}
+      initialValues={isLogin ? initialValuesLog : initialValuesReg}
       formSchema={isLogin ? loginSchema : signupSchema}
     >
       {({
@@ -48,7 +64,7 @@ const Login = () => {
         setFieldValue, 
         resetForm,
       }) => (
-        <form onSubmit={() => alert("Submitted")}>
+        <form onSubmit={handleSubmit}>
           <Box
             style={{ marginTop: '80px', padding: '2% 10% 5% 10%' }}
             display="grid"
@@ -90,6 +106,9 @@ const Login = () => {
             <TextField
               fullWidth
               label="Username"
+              onBlur={handleBlur}
+              onChange={handleChange}
+              value={values.username}
               name="username"
               variant='filled'
               error={Boolean(touched.username) && Boolean(errors.username)}
@@ -101,6 +120,9 @@ const Login = () => {
               fullWidth
               type='password'
               label="Password"
+              onBlur={handleBlur}
+              onChange={handleChange}
+              value={values.password}
               name='password'
               variant='filled'
               error={Boolean(touched.password) && Boolean(errors.password)}
@@ -117,7 +139,7 @@ const Login = () => {
                 bgcolor: 'white',
                 "&:hover": {
                   color: 'white',
-                  bgcolor: '#F4A4AC'
+                  bgcolor: '#BDBDBD'
                 },
               }}
               >

@@ -15,7 +15,8 @@ function App() {
         <Routes>
           <Route path ="/" element={<Home/>}/>
           <Route path ="/login" element={<FormLog/>}/>
-          <Route path ="/homepage" element={<OwnerView/>}/>
+          <Route path ="/home" element={<Home/>}/>
+          <Route path ="/employee/home" element={<OwnerView/>}/>
           <Route path ="*" element={<PageNotFound/>}/>
         </Routes>
       </BrowserRouter>
