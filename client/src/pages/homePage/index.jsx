@@ -6,8 +6,12 @@ import Navbar from '../../components/Navbar';
 
 const HomePage = () => {
     const navigate = useNavigate();
-    const navigateToServices = () => {
-        navigate('/services');
+    const navigateToWater = () => {
+        navigate('/water');
+    };
+
+    const navigateToLaundry = () => {
+        navigate('/laundry');
     };
     const theme = useTheme();
     return (
@@ -84,7 +88,7 @@ const HomePage = () => {
                                     cursor: 'pointer',
                                 },
                             }}
-                            onClick={navigateToServices}
+                            onClick={navigateToWater}
                         >
                             <Typography
                                 variant="h5"
@@ -143,7 +147,7 @@ const HomePage = () => {
                                     transform: 'scale(1.1)',
                                     cursor: 'pointer',
                                 },
-                            }} onClick={navigateToServices}
+                            }} onClick={navigateToLaundry}
                         >
                             <Typography
                                 variant="h5"
