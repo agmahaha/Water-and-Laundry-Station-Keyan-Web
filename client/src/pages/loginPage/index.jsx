@@ -37,7 +37,7 @@ const Login = () => {
   const navigate = useNavigate();
 
   const loginUser = async (values, onSubmitProps) => {
-    console.log("logging in user: ");
+    console.log("logging in user: " + values.username);
 
     if (values.username.toLowerCase() == "owner" || values.username.toLowerCase() == "employee") {
       navigate("/employee/home");
@@ -64,7 +64,6 @@ const Login = () => {
         handleBlur, 
         handleChange, 
         handleSubmit, 
-        setFieldValue, 
         resetForm,
       }) => (
         <form onSubmit={handleSubmit}>
@@ -95,10 +94,13 @@ const Login = () => {
             {!isLogin && (
               <TextField
                 fullWidth
-                label="Email Address"
+                label="email"
+                onBlur={handleBlur}
+                onChange={handleChange}
+                value={values.email}
                 name='email'
                 variant='filled'
-                error={Boolean(touched.username) && Boolean(errors.username)}
+                error={Boolean(touched.email) && Boolean(errors.email)}
                 helperText={touched.username && errors.username}
                 InputLabelProps={{ style: {color: '#F4A4AC'}}}
                 InputProps={{ style: {color: 'white'}}}
@@ -169,7 +171,8 @@ const Login = () => {
           </Box>
         </form>
       )}
-    </Formik></>
+    </Formik>
+    </>
   )
 }
 

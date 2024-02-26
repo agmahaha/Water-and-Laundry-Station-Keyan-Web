@@ -3,6 +3,7 @@ import Logo from "./circleLogo.jpg";
 import { Grid, Typography, Box, useTheme, Button } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import Navbar from '../../components/Navbar';
+import OuterBox from '../../components/outerBox';
 
 const HomePage = () => {
     const navigate = useNavigate();
@@ -15,7 +16,7 @@ const HomePage = () => {
             <Navbar />
             <Box bgcolor="white" sx={{ width: '85%', margin: '0 auto', borderRadius: '10px' }}>
                 {/* Logo and Text */}
-                <Grid container spacing={2} sx={{ display: 'flex', textAlign: 'center', marginTop: '80px' }}>
+                <Grid container spacing={2} sx={{ display: 'flex', textAlign: 'center', marginTop: '0px' }}>
                     {/* First Column (60% wider) */}
                     <Grid item xs={12} md={8}></Grid>
 

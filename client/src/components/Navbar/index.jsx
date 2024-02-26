@@ -1,10 +1,12 @@
 import React, {useEffect, useState} from 'react'
 import {AppBar, Toolbar, Typography, Tabs, Tab }from '@mui/material';
 import { useNavigate, useLocation } from 'react-router';
-import Logo from './whiteLogoKeyan.PNG'
+import Logo from './keyanwhite.PNG'
+import Logo2 from './pinkLogoKeyan.PNG'
 
 const Navbar = () => {
     const [value, setValue] = useState();
+    const [hovering, setHovering] = useState(false);
     const navigate = useNavigate()
     const location = useLocation()
     
@@ -43,7 +45,7 @@ const Navbar = () => {
             sx ={{background:'#0b4c84', 
             margin:"10px auto",
             borderRadius:"10px",
-            position:'fixed',
+            position:'sticky',
             width: "85%",
             left: 0,
             right: 0,
@@ -59,11 +61,14 @@ const Navbar = () => {
                           cursor: "pointer",
                         },
                       }}
+                    onMouseOver={() => setHovering(true)}
+                    onMouseOut={() => setHovering(false)}
                 >
                     <img
-                    src={Logo}
+                    src={hovering ? Logo2 : Logo}
                     alt="Logo"
-                    style={{ height: '60px', width: '60px' }} />
+                    style={{ height: '60px', width: '60px' }}
+                    />
                 </Typography>
                 <Tabs
                     sx ={{marginLeft:"auto"}} 
@@ -72,9 +77,9 @@ const Navbar = () => {
                     onChange={handleChange}
                     TabIndicatorProps={{style: {background:'#F4A4AC'}}}
                     >
-                        <Tab label ="About" sx={{ color: "white" }}/>
-                        <Tab label ="Services" sx={{ color: "white" }}/>
-                        <Tab label ="Login/Signup" sx={{ color: "white" }}/>
+                        <Tab label ="About" sx={{ color: "white", "&:hover": {color: "#F4A4AC"}}}/>
+                        <Tab label ="Services" sx={{ color: "white", "&:hover": {color: "#F4A4AC"}}}/>
+                        <Tab label ="Login/Signup" sx={{ color: "white", "&:hover": {color: "#F4A4AC"}}}/>
                 </Tabs>
             </Toolbar>
         </AppBar>
