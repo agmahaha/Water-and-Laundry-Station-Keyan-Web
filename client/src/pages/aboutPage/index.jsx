@@ -1,8 +1,10 @@
 import React from 'react';
 import Navbar from '../../components/Navbar';
-import { Box, Breadcrumbs, Link, Typography } from '@mui/material';
+import { Accordion, AccordionDetails, AccordionSummary, Box, Breadcrumbs, Divider, Link, Stack, Typography } from '@mui/material';
+import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
 import { useNavigate } from 'react-router-dom';
 import FlexBetween from '../../components/FlexBetween';
+import GMap from '../../components/Map';
 
 const AboutPage = () => {
   const navigate = useNavigate();
@@ -37,30 +39,84 @@ const AboutPage = () => {
           />
         </Box>
 
-        <FlexBetween 
+        <Divider spacing={1} variant='middle'>
+          <Typography fontSize={50} textAlign="center" color='#F4A4AC' fontWeight="bold">ABOUT</Typography>
+        </Divider>
+
+        <Stack 
+          direction='row' 
+          spacing={20}
           gap="1.75rem" 
-          padding="1rem 4%" 
-          paddingTop={0}
+          padding="1rem 5%" 
+          paddingTop={3}
+          paddingBottom={10} 
+          object-fit="cover"
+          justifyContent="center"
+          alignItems="center"
         >
-          <Typography 
-            fontSize={50} 
-            fontWeight='Bold'
-          >
-            About
-          </Typography>
-        </FlexBetween>
-
-        <FlexBetween gap="1.75rem" padding="1rem 5%" paddingBottom={0}>
-          <Box>
-            <Typography fontSize={20} paddingBottom="1rem">+ Details</Typography>
+          <Box object-fit="cover" minWidth={100} display="-ms-flexbox"  alignItems="center">
+            <Typography style={{ overflowWrap: "break-word"}} fontSize={20} paddingBottom="1rem">
+                          + Details Details Details Details Details Details Details Details Details Details 
+            </Typography>
+          
             <Typography fontSize={20} paddingBottom="1rem">+ More Details</Typography>
+          
             <Typography fontSize={20} paddingBottom="1rem">+ More Details</Typography>
-          </Box>
-
-          <Box>
             
           </Box>
-        </FlexBetween>
+
+          <Box>
+            {/* <img width="25%" height="100%" src={`/assets/circlelogo.jpg`} /> */}
+            <GMap/>
+          </Box>
+        </Stack>
+
+        <Divider spacing={1} variant='middle'>
+          <Typography fontSize={50} textAlign="center" color='#F4A4AC' fontWeight="bold">FAQ</Typography>
+        </Divider>
+
+        <Box bgcolor='#0b4c84' alignContent="center" padding="1rem 4%">
+        <Accordion>
+            <AccordionSummary
+              expandIcon={<ArrowDropDownIcon />}
+            >
+              faq #1
+            </AccordionSummary>
+            <AccordionDetails>
+              <Typography>
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse
+                malesuada lacus ex, sit amet blandit leo lobortis eget.
+              </Typography>
+            </AccordionDetails>
+          </Accordion>
+          <Accordion>
+            <AccordionSummary
+              expandIcon={<ArrowDropDownIcon />}
+            >
+              faq #2
+            </AccordionSummary>
+            <AccordionDetails>
+              <Typography>
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse
+                malesuada lacus ex, sit amet blandit leo lobortis eget.
+              </Typography>
+            </AccordionDetails>
+          </Accordion>
+          <Accordion>
+            <AccordionSummary
+              expandIcon={<ArrowDropDownIcon />}
+            >
+              faq #3
+            </AccordionSummary>
+            <AccordionDetails>
+              <Typography>
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse
+                malesuada lacus ex, sit amet blandit leo lobortis eget.
+              </Typography>
+            </AccordionDetails>
+          </Accordion>
+        </Box>
+        
       </Box>
     </>
   )
