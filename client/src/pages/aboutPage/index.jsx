@@ -5,6 +5,7 @@ import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
 import { useNavigate } from 'react-router-dom';
 import FlexBetween from '../../components/FlexBetween';
 import GMap from '../../components/Map';
+import Footer from '../../components/Footer';
 
 const AboutPage = () => {
   const navigate = useNavigate();
@@ -75,7 +76,7 @@ const AboutPage = () => {
           <Typography fontSize={50} textAlign="center" color='#F4A4AC' fontWeight="bold">FAQ</Typography>
         </Divider>
 
-        <Box bgcolor='#0b4c84' alignContent="center" padding="1rem 4%">
+        <Box bgcolor='#0b4c84' alignContent="center" padding="1rem 4%" sx={{ margin: '0 auto', borderBottomLeftRadius: '10px', borderBottomRightRadius: '10px' }}>
         <Accordion>
             <AccordionSummary
               expandIcon={<ArrowDropDownIcon />}
@@ -116,8 +117,8 @@ const AboutPage = () => {
             </AccordionDetails>
           </Accordion>
         </Box>
-        
       </Box>
+      <Footer/>
     </>
   )
 }

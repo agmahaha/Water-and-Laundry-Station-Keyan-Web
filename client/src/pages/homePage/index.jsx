@@ -1,9 +1,10 @@
 import React from 'react';
 import Logo from "./circleLogo.jpg";
-import { Grid, Typography, Box, useTheme, Button } from '@mui/material';
+import { Grid, Typography, Box, useTheme, Button, Badge, IconButton } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import Navbar from '../../components/Navbar';
-import OuterBox from '../../components/outerBox';
+import CampaignIcon from '@mui/icons-material/Campaign';
+import Footer from '../../components/Footer';
 
 const HomePage = () => {
     const navigate = useNavigate();
@@ -37,13 +38,13 @@ const HomePage = () => {
                             }
                             }}
                         >
-                            Keyan Water & Laundry
+                            Water & Laundry Station Keyan
                         </Typography>
                     </Grid>
                 </Grid>
                 <Grid container spacing={2} sx={{ textAlign: 'center', padding: '2% 2% 5% 2%', display: 'flex' }}>
                     {/* First Column */}
-                    <Grid item xs={12} sm={12} md={5.5} lg={5.5}>
+                    <Grid item xs={12} sm={12} md={5.5} lg={5.5} sx={{ flexFlow: 'column' }}>
                         <Typography
                             variant="h1"
                             sx={{
@@ -59,6 +60,45 @@ const HomePage = () => {
                         >
                             COMPANY SERVICES
                         </Typography>
+
+                        {/* <Box
+                            sx={{
+                                display: 'flex',
+                                justifySelf: 'center',
+                                alignSelf: 'center',
+                                alignItems: 'center', // Center items horizontally
+                                justifyContent: 'center', // Center items vertically
+                                borderRadius: 15,
+                                bgcolor: '#0b4c84',
+                                height: '45%',
+                                width: '45%',
+                                marginTop: '1%'
+                            }}
+                        >
+                            <Typography
+                                fontSize={30}
+                                sx={{
+                                    color: '#ffffff',
+                                }}
+                            >
+                                Announcements
+                            </Typography>
+                        </Box> */}
+
+                        <IconButton>
+                            
+                            <Box bgcolor='#F4A4AC' p={2} borderRadius={15} display='flex' flexDirection='row' sx={{'&:hover': {
+                                    transform: 'scale(1.1)',
+                                }}}>
+                                <Badge color='primary' variant='dot' invisible={false}> {/*<Badge color='secondary' variant='dot' invisible={false}>*/}
+                                    <Typography pr={2} fontSize={30} color='black'>
+                                    ANNOUNCEMENTS
+                                    </Typography>
+                                    <CampaignIcon sx={{ color: 'black'}} fontSize='large'/>
+                                </Badge>
+                            </Box>
+                            
+                        </IconButton>
                     </Grid>
 
                     {/* Second Column */}
@@ -130,7 +170,7 @@ const HomePage = () => {
                                 alignItems: 'center', // Center items horizontally
                                 justifyContent: 'space-between', // Align items at the start and end of the container
                                 borderRadius: 6,
-                                bgcolor: '#7092be',
+                                bgcolor: '#0b4c84',
                                 height: '75%',
                                 width: '75%',
                                 padding: '10%',
@@ -140,7 +180,7 @@ const HomePage = () => {
                                     marginRight: 'auto',
                                 },
                                 '&:hover': {
-                                    bgcolor: '#0b4c84',
+                                    bgcolor: '#7092be',
                                     transform: 'scale(1.1)',
                                     cursor: 'pointer',
                                 },
@@ -210,6 +250,7 @@ const HomePage = () => {
                     </Grid>
                 </Grid>
             </Box>
+            <Footer/>
         </>
     );
 };
