@@ -1,9 +1,11 @@
 import React, {useState} from 'react'
-import { Card, TextField, Typography, Button, Box, Alert, useTheme} from '@mui/material'
+import { Card, TextField, Typography, Button, Box, Alert, useTheme, Stack} from '@mui/material'
 import {Formik} from "formik"
 import * as yup from 'yup'
 import Navbar from '../../components/Navbar'
 import { useNavigate } from 'react-router-dom'
+import FacebookIcon from '@mui/icons-material/Facebook';
+import GoogleIcon from '@mui/icons-material/Google';
 
 
 const signupSchema = yup.object().shape({
@@ -36,10 +38,16 @@ const Login = () => {
 
   const navigate = useNavigate();
 
+  const handleFormSubmit = async(values, onSubmitProps) => {
+    if (isLogin == true) await loginUser(values, onSubmitProps);
+    if (isLogin == false) await registerUser(values, onSubmitProps);
+  };
+
   const loginUser = async (values, onSubmitProps) => {
     console.log("logging in user: " + values.username);
 
     if (values.username.toLowerCase() == "owner" || values.username.toLowerCase() == "employee") {
+      alert("Here's what we got: \n" + "Username: " + values.username + "\n Password: " + values.password);
       navigate("/employee/home");
     } 
     else if (values.username.toLowerCase() == "customer") {
@@ -50,10 +58,23 @@ const Login = () => {
     }
   }
 
+  const registerUser = async (values, onSubmitProps) => {
+    console.log("registering in user: " + values.username);
+
+    if (values.username.toLowerCase() != "" && values.password != "" && values.email != "") {
+      alert("Here's what we got: \n" + "Email: " + values.email + "\nUsername: " + values.username + "\n Password: " + values.password);
+      navigate("/home");
+    } 
+
+    else {
+      alert("invalid Credentials!");
+    }
+  }
+
   return (
     <><Navbar />
     <Formik
-      onSubmit={loginUser}
+      onSubmit={handleFormSubmit}
       initialValues={isLogin ? initialValuesLog : initialValuesReg}
       formSchema={isLogin ? loginSchema : signupSchema}
     >
@@ -150,6 +171,41 @@ const Login = () => {
               >
               {isLogin ? 'LOGIN' : 'REGISTER'}
             </Button>
+            <Stack direction='row' spacing={1} useFlexGap>
+              <Button
+              variant='contained'
+              type='submit'
+              name='submit'
+              fullWidth
+              sx={{
+                color: 'black',
+                bgcolor: 'white',
+                "&:hover": {
+                  color: 'white',
+                  bgcolor: '#BDBDBD'
+                },
+              }}
+              >
+                {isLogin ? 'LOGIN WITH FACEBOOK' : 'REGISTER WITH FACEBOOK'} <FacebookIcon />
+            </Button>
+            <Button
+              variant='contained'
+              type='submit'
+              name='submit'
+              fullWidth
+              sx={{
+                color: 'black',
+                bgcolor: 'white',
+                "&:hover": {
+                  color: 'white',
+                  bgcolor: '#BDBDBD'
+                },
+              }}
+              >
+                {isLogin ? 'LOGIN WITH GOOGLE' : 'REGISTER WITH GOOGLE'} <GoogleIcon />
+            </Button>
+            </Stack>
+            
             <Typography
               onClick={() => {
                 setIsLogin(!isLogin)
