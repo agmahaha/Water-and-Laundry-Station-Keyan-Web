@@ -78,7 +78,7 @@ const Navbar = () => {
                     TabIndicatorProps={{style: {background:'#F4A4AC'}}}
                     >
                         <Tab label ="About" sx={{ color: "white", "&:hover": {color: "#F4A4AC"}}}/>
-                        <Tab label ="Services" sx={{ color: "white", "&:hover": {color: "#F4A4AC"}}}/>
+                        <Tab label ="Announcements" sx={{ color: "white", "&:hover": {color: "#F4A4AC"}}}/>
                         <Tab label ="Login/Signup" sx={{ color: "white", "&:hover": {color: "#F4A4AC"}}}/>
                 </Tabs>
             </Toolbar>

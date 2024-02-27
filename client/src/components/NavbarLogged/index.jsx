@@ -73,7 +73,7 @@ const NavLoggedIn = () => {
                     TabIndicatorProps={{style: {background:'#F4A4AC'}}}
                     >
                         <Tab label ="About" sx={{ color: "white" }}/>
-                        <Tab label ="Services" sx={{ color: "white" }}/>
+                        <Tab label ="Announcements" sx={{ color: "white" }}/>
                         <Avatar>U</Avatar>
                 </Tabs>
             </Toolbar>

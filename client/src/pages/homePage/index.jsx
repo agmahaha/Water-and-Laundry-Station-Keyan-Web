@@ -5,15 +5,22 @@ import { useNavigate } from 'react-router-dom';
 import Navbar from '../../components/Navbar';
 import CampaignIcon from '@mui/icons-material/Campaign';
 import Footer from '../../components/Footer';
-import CloseIcon from '@mui/icons-material/Close';
 
 const HomePage = () => {
     const navigate = useNavigate();
 
     const [open, setOpen] = useState(true);
 
-    const navigateToServices = () => {
-        navigate('/services');
+    const navigateToPageNotFound = () => {
+        navigate('*');
+    };
+    
+    const navigateToWater = () => {
+        navigate('/water');
+    };
+
+    const navigateToLaundry = () => {
+        navigate('/laundry');
     };
 
     const theme = useTheme();
@@ -84,7 +91,7 @@ const HomePage = () => {
                         >
                             COMPANY SERVICES
                         </Typography>
-                        <IconButton onClick={navigateToServices}>
+                        <IconButton onClick={navigateToPageNotFound}>
                             <Box bgcolor='#F4A4AC' p={2} borderRadius={15} display='flex' flexDirection='row' sx={{'&:hover': {
                                     transform: 'scale(1.1)',
                                 }}}>
@@ -123,7 +130,7 @@ const HomePage = () => {
                                     cursor: 'pointer',
                                 },
                             }}
-                            onClick={navigateToServices}
+                            onClick={navigateToWater}
                         >
                             <Typography
                                 variant="h5"
@@ -182,7 +189,7 @@ const HomePage = () => {
                                     transform: 'scale(1.1)',
                                     cursor: 'pointer',
                                 },
-                            }} onClick={navigateToServices}
+                            }} onClick={navigateToLaundry}
                         >
                             <Typography
                                 variant="h5"

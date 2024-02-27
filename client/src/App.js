@@ -1,6 +1,7 @@
 import FormLog from "./pages/loginPage"
 import Home from './pages/homePage'
-import Service from './pages/servicesPage'
+import Water from'./pages/servicesPage/waterPage'
+import Laundry from'./pages/servicesPage/laundryPage'
 import AboutPage from'./pages/aboutPage'
 import OwnerView from './pages/ownerView'
 import PageNotFound from "./pages/pageNotFound"
@@ -16,6 +17,8 @@ function App() {
           <Route path ="/" element={<Home/>}/>
           <Route path ="/login" element={<FormLog/>}/>
           <Route path ="/home" element={<Home/>}/>
+          <Route path ="/water" element={<Water/>}/>
+          <Route path ="/laundry" element={<Laundry/>}/>
           <Route path ="/employee/home" element={<OwnerView/>}/>
           <Route path ="/about" element={<AboutPage/>}/>
           <Route path ="*" element={<PageNotFound/>}/>
