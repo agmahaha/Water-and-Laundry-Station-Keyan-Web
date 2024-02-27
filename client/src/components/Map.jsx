@@ -15,7 +15,7 @@ export default function GMap() {
     const position = { lat: 14.575455244859533, lng: 121.04237086871804 };
 
     return (
-        <APIProvider apiKey={'AIzaSyDB9Rut_fEF2NNFWBNzzrAJs_kumHVga2s'}>
+        <APIProvider apiKey={'AIzaSyC6-xpfIV6wbvWj_-WkFzq0xfsOxTq62TI'}>
             <Box
                 sx={{
                     height: "50vh",

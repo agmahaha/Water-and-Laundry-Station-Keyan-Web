@@ -1,20 +1,44 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Logo from "./circleLogo.jpg";
-import { Grid, Typography, Box, useTheme, Button, Badge, IconButton } from '@mui/material';
+import { Grid, Typography, Box, useTheme, Button, Badge, IconButton, Snackbar, Alert } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import Navbar from '../../components/Navbar';
 import CampaignIcon from '@mui/icons-material/Campaign';
 import Footer from '../../components/Footer';
+import CloseIcon from '@mui/icons-material/Close';
 
 const HomePage = () => {
     const navigate = useNavigate();
+
+    const [open, setOpen] = useState(true);
+
     const navigateToServices = () => {
         navigate('/services');
     };
+
     const theme = useTheme();
+
+    const handleClose = () => {
+        setOpen(false);
+    };
+
     return (
         <>
             <Navbar />
+            <Snackbar
+            anchorOrigin={{vertical: 'top', horizontal: 'center'}}
+                open={open}
+                autoHideDuration={6000}
+                onClose={handleClose}
+            >
+                <Alert
+                    onClose={handleClose}
+                    severity='warning'
+                    variant='filled'
+                >
+                    This is an urgent announcement. The toast will expand depending on the phrase.
+                    </Alert>
+            </Snackbar>
             <Box bgcolor="white" sx={{ width: '85%', margin: '0 auto', borderRadius: '10px' }}>
                 {/* Logo and Text */}
                 <Grid container spacing={2} sx={{ display: 'flex', textAlign: 'center', marginTop: '0px' }}>
@@ -60,37 +84,12 @@ const HomePage = () => {
                         >
                             COMPANY SERVICES
                         </Typography>
-
-                        {/* <Box
-                            sx={{
-                                display: 'flex',
-                                justifySelf: 'center',
-                                alignSelf: 'center',
-                                alignItems: 'center', // Center items horizontally
-                                justifyContent: 'center', // Center items vertically
-                                borderRadius: 15,
-                                bgcolor: '#0b4c84',
-                                height: '45%',
-                                width: '45%',
-                                marginTop: '1%'
-                            }}
-                        >
-                            <Typography
-                                fontSize={30}
-                                sx={{
-                                    color: '#ffffff',
-                                }}
-                            >
-                                Announcements
-                            </Typography>
-                        </Box> */}
-
                         <IconButton>
                             
                             <Box bgcolor='#F4A4AC' p={2} borderRadius={15} display='flex' flexDirection='row' sx={{'&:hover': {
                                     transform: 'scale(1.1)',
                                 }}}>
-                                <Badge color='primary' variant='dot' invisible={false}> {/*<Badge color='secondary' variant='dot' invisible={false}>*/}
+                                <Badge color='primary' badgeContent=" " invisible={false} size="large">
                                     <Typography pr={2} fontSize={30} color='black'>
                                     ANNOUNCEMENTS
                                     </Typography>
