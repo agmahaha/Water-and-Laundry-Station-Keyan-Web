@@ -84,8 +84,7 @@ const HomePage = () => {
                         >
                             COMPANY SERVICES
                         </Typography>
-                        <IconButton>
-                            
+                        <IconButton onClick={navigateToServices}>
                             <Box bgcolor='#F4A4AC' p={2} borderRadius={15} display='flex' flexDirection='row' sx={{'&:hover': {
                                     transform: 'scale(1.1)',
                                 }}}>
