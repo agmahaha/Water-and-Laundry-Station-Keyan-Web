@@ -1,6 +1,7 @@
 import React, {useState} from 'react'
 import Navbar from '../../../components/Navbar'
 import { Grid, Typography, Box, useTheme, Button, MobileStepper } from '@mui/material';
+import { useNavigate } from 'react-router';
 import KeyboardArrowLeft from '@mui/icons-material/KeyboardArrowLeft';
 import KeyboardArrowRight from '@mui/icons-material/KeyboardArrowRight';
 import SwipeableViews from 'react-swipeable-views';
@@ -19,6 +20,7 @@ const WaterPage = () => {
   const theme = useTheme();
   const [activeStep, setActiveStep] = useState(0)
   const max = images.length
+  const navigate = useNavigate()
 
   const next = () => {
     setActiveStep((prev) => prev + 1)
@@ -31,6 +33,10 @@ const WaterPage = () => {
   const handleStepChange = (step)=> {
     setActiveStep(step)
   }
+
+  const navigateToLogin = () => {
+    navigate('/login');
+  };
 
   return (
     <>
@@ -103,8 +109,10 @@ const WaterPage = () => {
                       </Box>
                     </Grid>
 
-                    <Grid item xs={12} md={5} sx={{ display: 'flex', marginTop: '100px', marginBottom: '20px', textAlign: 'center'
-                    }}>
+                    <Grid item xs={12} md={3} sx={{ display: 'flex', marginTop: '100px', textAlign: 'center',
+                     flexDirection: 'column',
+                     alignItems: 'center',
+                     justifyContent: 'space-between'}}>
 
                         {/* Text */}
                         <Typography variant="h3" sx={{ fontWeight: 'bold', color: '#0b4c84',
@@ -115,6 +123,43 @@ const WaterPage = () => {
                         >
                             Water Service
                         </Typography>
+                        <Typography
+                                variant="h6"
+                                sx={{
+                                    textAlign: 'left',
+                                }}
+                            >
+                                • Lorem ipsum dolor, sit amet consectetur adipisicing elit. Ratione
+                                 illo numquam nesciunt eius. Aliquam quod provident tenetur eaque natus, sed 
+                                 inventore excepturi veniam, quisquam aperiam corporis, mollitia facere repellat
+                                  sapiente? <br/>
+                        </Typography>
+                        <Box
+                          sx={{
+                            borderRadius: 6,
+                            bgcolor: '#0b4c84',
+                            height: '10%',
+                            width: '50%',
+                            padding: '5%',
+                            '&:hover': {
+                              bgcolor: '#7092be',
+                              transform: 'scale(1.1)',
+                              cursor: 'pointer',
+                          },
+                          
+                          }}
+                          onClick= {navigateToLogin}
+                          >
+                        <Typography
+                                variant="h5"
+                                sx={{
+                                    fontWeight: 'bold',
+                                    color: '#ffffff',
+                                }}
+                            >
+                                ORDER ⭢
+                        </Typography>
+                        </Box>
                     </Grid>
                 </Grid>
     </Box>
