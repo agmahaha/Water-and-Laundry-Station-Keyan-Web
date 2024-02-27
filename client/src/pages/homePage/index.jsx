@@ -36,7 +36,7 @@ const HomePage = () => {
                     severity='warning'
                     variant='filled'
                 >
-                    This is an urgent announcement. The toast will expand depending on the phrase.
+                    This is an urgent announcement. The toast will expand depending on the phrase. This is an urgent announcement. The toast will expand depending on the phrase. This is an urgent announcement. The toast will expand depending on the phrase. Thank you.
                     </Alert>
             </Snackbar>
             <Box bgcolor="white" sx={{ width: '85%', margin: '0 auto', borderRadius: '10px' }}>
