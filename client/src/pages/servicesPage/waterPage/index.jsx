@@ -1,10 +1,11 @@
 import React, {useState} from 'react'
 import Navbar from '../../../components/Navbar'
-import { Grid, Typography, Box, useTheme, Button, MobileStepper } from '@mui/material';
+import { Grid, Typography, Box, useTheme, Button, MobileStepper, Link, Breadcrumbs } from '@mui/material';
 import { useNavigate } from 'react-router';
 import KeyboardArrowLeft from '@mui/icons-material/KeyboardArrowLeft';
 import KeyboardArrowRight from '@mui/icons-material/KeyboardArrowRight';
 import SwipeableViews from 'react-swipeable-views';
+import FlexBetween from '../../../components/FlexBetween';
 import { autoPlay } from 'react-swipeable-views-utils';
 import w1 from './waterImgs/w1.jpg'
 import w2 from './waterImgs/w2.jpg'
@@ -42,7 +43,15 @@ const WaterPage = () => {
     <>
     <Navbar/>
     <Box bgcolor="white" sx={{ width: '85%', margin: '0 auto', borderRadius: '10px', height: '700px' }}>
-                <Grid container spacing={2} sx={{ display: 'flex', textAlign: 'center', marginTop: '80px' }}>
+    <FlexBetween gap="1.75rem" padding="1rem" paddingBottom={0}>
+          <Breadcrumbs aria-label="breadcrumb">
+            <Link underline="hover" color="inherit" href="/" fontWeight='bold' fontSize={20}>
+              Home
+            </Link>
+            <Typography color="text.primary" fontWeight='bold' fontSize={20}>Water Service</Typography>
+          </Breadcrumbs>
+    </FlexBetween>
+                <Grid container spacing={2} sx={{ display: 'flex', textAlign: 'center' }}>
                     {/* Picture Carousel */}
                     <Grid item xs={12} md={7} sx={{ display: 'flex', marginTop: '100px', textAlign: 'center'}}>
                       <Box

@@ -6,6 +6,7 @@ import KeyboardArrowLeft from '@mui/icons-material/KeyboardArrowLeft';
 import KeyboardArrowRight from '@mui/icons-material/KeyboardArrowRight';
 import SwipeableViews from 'react-swipeable-views';
 import { autoPlay } from 'react-swipeable-views-utils';
+import FlexBetween from '../../../components/FlexBetween';
 import l1 from './laundryImgs/l1.jpg'
 import l2 from './laundryImgs/l2.jpg'
 import l3 from './laundryImgs/l3.jpg'
@@ -42,7 +43,15 @@ const LaundryPage = () => {
     <>
     <Navbar/>
     <Box bgcolor="white" sx={{ width: '85%', margin: '0 auto', borderRadius: '10px', height: '700px'}}>
-                <Grid container spacing={2} sx={{ display: 'flex', textAlign: 'center', marginTop: '80px' }}>
+    <FlexBetween gap="1.75rem" padding="1rem" paddingBottom={0}>
+          <Breadcrumbs aria-label="breadcrumb">
+            <Link underline="hover" color="inherit" href="/" fontWeight='bold' fontSize={20}>
+              Home
+            </Link>
+            <Typography color="text.primary" fontWeight='bold' fontSize={20}>Laundry Service</Typography>
+          </Breadcrumbs>
+    </FlexBetween>
+                <Grid container spacing={2} sx={{ display: 'flex', textAlign: 'center' }}>
                     {/* Picture Carousel */}
                     <Grid item xs={12} md={7} sx={{ display: 'flex', marginTop: '100px', textAlign: 'center'}}>
                     <Box
