@@ -37,7 +37,7 @@ export const verifyToken = async(req, res, next) => {
         }
         
 
-    }catch (err){
+    } catch (err){
         if(err.name === 'TokenExpiredError')
             console.error('Token has expired')
         else

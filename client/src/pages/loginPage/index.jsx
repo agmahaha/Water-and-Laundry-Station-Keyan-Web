@@ -39,18 +39,30 @@ const Login = () => {
   const navigate = useNavigate();
 
   const handleFormSubmit = async(values, onSubmitProps) => {
-    if (isLogin == true) await loginUser(values, onSubmitProps);
-    if (isLogin == false) await registerUser(values, onSubmitProps);
+    if (isLogin === true) await loginUser(values, onSubmitProps);
+    if (isLogin === false) await registerUser(values, onSubmitProps);
   };
 
   const loginUser = async (values, onSubmitProps) => {
     console.log("logging in user: " + values.username);
+    
+    const loggedInResponse = await fetch("",
+      {
+        method: "POST",
+        headers: {"Content-Type": "application/json"},
+        body:  JSON.stringify(values)
+      }
+    )
 
-    if (values.username.toLowerCase() == "owner" || values.username.toLowerCase() == "employee") {
-      alert("Here's what we got: \n" + "Username: " + values.username + "\n Password: " + values.password);
+    const loggedIn = await loggedInResponse.json()
+    onSubmitProps.resetForm()
+
+
+    if (loggedIn.user.toLowerCase() === "owner" || loggedIn.user.toLowerCase() === "employee") {
+      alert("Here's what we got: \n" + "Username: " + loggedIn.user + "\n Password: " + loggedIn.password);
       navigate("/employee/home");
     } 
-    else if (values.username.toLowerCase() == "customer") {
+    else if (loggedIn.user.toLowerCase() === "customer") {
       navigate("/home")
     }
     else {
@@ -59,11 +71,28 @@ const Login = () => {
   }
 
   const registerUser = async (values, onSubmitProps) => {
-    console.log("registering in user: " + values.username);
+    console.log("registering in user: " + values.username)
+    const formData = new FormData()
 
-    if (values.username.toLowerCase() != "" && values.password != "" && values.email != "") {
+    for (let value in values){
+      formData.append(value, values[value])
+    }
+
+    const savedUserResponse = await fetch(
+      "",
+      {
+        method: "Post",
+        body: formData
+      }
+    )
+
+    const savedUser = await savedUserResponse.json()
+    onSubmitProps.resetForm()
+
+    if (values.username.toLowerCase() !== "" && values.password !== "" && values.email !== "") {
       alert("Here's what we got: \n" + "Email: " + values.email + "\nUsername: " + values.username + "\n Password: " + values.password);
-      navigate("/home");
+      navigate("/login");
+      setIsLogin(!isLogin)
     } 
 
     else {
