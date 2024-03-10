@@ -20,9 +20,10 @@ const loginSchema = yup.object().shape({
 })
 
 const initialValuesReg = {
-  email:"",
   username:"",
-  password:"",
+  password:"",  
+  email:"",
+  userType: "customer"
 
 }
 
@@ -56,6 +57,7 @@ const Login = () => {
     )
 
     const loggedIn = await loggedInResponse.json()
+    console.log("logging in user: " + loggedIn.username);
     onSubmitProps.resetForm()
 
 
@@ -72,28 +74,25 @@ const Login = () => {
   }
 
   const registerUser = async (values, onSubmitProps) => {
-    console.log("registering in user: " + values.username)
-    const formData = new FormData()
-
-    for (let value in values){
-      formData.append(value, values[value])
-    }
+    console.log(values)
 
     const savedUserResponse = await fetch(
       "http://localhost:3001/auth/register",
       {
-        method: "Post",
-        body: formData
+        method: "POST",
+        headers: {"Content-Type": "application/json"},
+        body: JSON.stringify(values)
       }
     )
 
     const savedUser = await savedUserResponse.json()
+
+    console.log("registering in user: " + savedUser.email + values.username);
     onSubmitProps.resetForm()
 
     if (values.username.toLowerCase() !== "" && values.password !== "" && values.email !== "") {
-      alert("Here's what we got: \n" + "Email: " + values.email + "\nUsername: " + values.username + "\n Password: " + values.password);
-      navigate("/login");
-      setIsLogin(!isLogin)
+      //alert("Here's what we got: \n" + "Email: " + values.email + "\nUsername: " + values.username + "\n Password: " + values.password);
+      //setIsLogin(!isLogin)
     } 
 
     else {

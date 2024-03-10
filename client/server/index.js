@@ -10,7 +10,6 @@ import path from "path";
 import { fileURLToPath } from "url";
 import authRoute from "./route/auth.js"
 import userRoute from "./route/users.js"
-import { registerUser } from "./controller/auth.js";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -24,8 +23,6 @@ app.use(bodyParser.json({ limit: "30mb", extended: true }));
 app.use(bodyParser.urlencoded({ limit: "30mb", extended: true }));
 app.use(cors());
 app.use("/assets", express.static(path.join(__dirname, 'public/assets'))); // set the dir of where assets are located
-
-app.post("/auth/register", registerUser)
 
 /*ROUTES*/ 
 app.use("/auth", authRoute)
