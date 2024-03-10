@@ -57,15 +57,16 @@ const Login = () => {
     )
 
     const loggedIn = await loggedInResponse.json()
-    console.log("logging in user: " + loggedIn.username);
+    console.log(loggedIn)
+    console.log("logging in user: " + loggedIn.token);
     onSubmitProps.resetForm()
 
 
-    if (loggedIn.user.toLowerCase() === "owner" || loggedIn.user.toLowerCase() === "employee") {
-      alert("Here's what we got: \n" + "Username: " + loggedIn.user + "\n Password: " + loggedIn.password);
+    if (loggedIn.user.userType === "owner" || loggedIn.user.userType === "employee") {
+      alert("Here's what we got: \n" + "Username: " + loggedIn.user.username + "\n Password: " + loggedIn.user.password);
       navigate("/employee/home");
     } 
-    else if (loggedIn.user.toLowerCase() === "customer") {
+    else if (loggedIn.user.userType === "customer") {
       navigate("/home")
     }
     else {
@@ -74,14 +75,19 @@ const Login = () => {
   }
 
   const registerUser = async (values, onSubmitProps) => {
-    console.log(values)
+    console.log(values.userType)
 
     const savedUserResponse = await fetch(
       "http://localhost:3001/auth/register",
       {
         method: "POST",
         headers: {"Content-Type": "application/json"},
-        body: JSON.stringify(values)
+        body: JSON.stringify({
+          username: values.username,
+          password: values.password,
+          email: values.email,
+          userType: "customer"
+        })
       }
     )
 
@@ -91,8 +97,8 @@ const Login = () => {
     onSubmitProps.resetForm()
 
     if (values.username.toLowerCase() !== "" && values.password !== "" && values.email !== "") {
-      //alert("Here's what we got: \n" + "Email: " + values.email + "\nUsername: " + values.username + "\n Password: " + values.password);
-      //setIsLogin(!isLogin)
+      alert("Here's what we got: \n" + "Email: " + values.email + "\nUsername: " + values.username + "\n Password: " + values.password);
+      setIsLogin(!isLogin)
     } 
 
     else {
