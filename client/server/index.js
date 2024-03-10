@@ -25,11 +25,11 @@ app.use(bodyParser.urlencoded({ limit: "30mb", extended: true }));
 app.use(cors());
 app.use("/assets", express.static(path.join(__dirname, 'public/assets'))); // set the dir of where assets are located
 
-app.post("", registerUser)
+app.post("/auth/register", registerUser)
 
 /*ROUTES*/ 
-app.use("", authRoute)
-app.use("", userRoute)
+app.use("/auth", authRoute)
+app.use("/users", userRoute)
 
 /* MONGOOSE SETUP */
 const PORT = process.env.PORT || 10000;

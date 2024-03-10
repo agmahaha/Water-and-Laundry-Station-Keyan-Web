@@ -46,7 +46,8 @@ const Login = () => {
   const loginUser = async (values, onSubmitProps) => {
     console.log("logging in user: " + values.username);
     
-    const loggedInResponse = await fetch("",
+    const loggedInResponse = await fetch(
+      "http://localhost:3001/auth/login",
       {
         method: "POST",
         headers: {"Content-Type": "application/json"},
@@ -79,7 +80,7 @@ const Login = () => {
     }
 
     const savedUserResponse = await fetch(
-      "",
+      "http://localhost:3001/auth/register",
       {
         method: "Post",
         body: formData
