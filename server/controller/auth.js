@@ -28,7 +28,7 @@ export const registerUser = async (req, res) => {
 
 export const loginUser = async (req, res) => {
     try{
-        const {username, passowrd} = req.body
+        const {username, password} = req.body
         const user = await User.findOne({username: username})
 
         if(!user)
@@ -39,10 +39,10 @@ export const loginUser = async (req, res) => {
         if(!isMatch)
             return res.Status(400).json({msg: "Password Invalid"})
 
-        const token = jwt.sign({id: user._id}, process.env.JWT_SECRET)
+        const token = jwt.sign({id: user._id}, process.env.JWT_SECRET, {expiresIn: '1h'}) /* Add expiration? */
         delete user.password
         res.status(200).json({token, user})
-    }catch{
+    } catch{
         res.status(500).json({ error: err.message })
     }
 }

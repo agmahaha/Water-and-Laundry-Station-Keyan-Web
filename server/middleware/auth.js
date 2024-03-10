@@ -1,7 +1,19 @@
 import jwt from "jsonwebtoken"
+import Ajv from "ajv"
 
 export const verifyToken = async(req, res, next) => {
     try{
+        const schema = {
+            type: 'object',
+            properties:{
+                sub:{type: 'string'},
+                iss:{type: 'string'},
+                exp:{type: 'integer'}
+            },
+            required: ['sub','iss','exp'],
+            additionalProperties: False
+        }
+
         let token = req.header("Authorization")
 
         if (!token){
@@ -9,14 +21,26 @@ export const verifyToken = async(req, res, next) => {
         }
 
         if(token.startsWith("Bearer ")) {
-            token = token.slice(11, token.length).trimleft()
+            token = token.slice(7, token.length).trimleft()
         }
 
         const verified = jwt.verify(token, process.env.JWT_SECRET)
-        req.user = verified
-        next()
+        const ajv = new Ajv()
+        const validate = ajv.compile(schema)
+        const valid = validate(verified)
+
+        if(!valid)
+            console.error('Token does not match expected schema')
+        else {
+            req.user = verified
+            next()
+        }
+        
 
     }catch (err){
-        res.status(500).json({error: err.message})
+        if(err.name === 'TokenExpiredError')
+            console.error('Token has expired')
+        else
+            res.status(500).json({error: err.message})
     }
 }
