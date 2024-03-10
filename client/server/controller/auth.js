@@ -21,7 +21,7 @@ export const registerUser = async (req, res) => {
         const savedUser = await newUser.save()
         res.status(201).json(savedUser)
 
-    }catch{
+    }catch(err){
         res.status(500).json({ error: err.message })
     }
 }
@@ -42,7 +42,7 @@ export const loginUser = async (req, res) => {
         const token = jwt.sign({id: user._id}, process.env.JWT_SECRET, {expiresIn: '1h'}) /* Add expiration? */
         delete user.password
         res.status(200).json({token, user})
-    } catch{
+    } catch(err){
         res.status(500).json({ error: err.message })
     }
 }

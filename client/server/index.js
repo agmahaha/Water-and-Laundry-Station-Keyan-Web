@@ -8,6 +8,10 @@ import helmet from "helmet";
 import morgan from "morgan";
 import path from "path";
 import { fileURLToPath } from "url";
+import authRoute from "./route/auth.js"
+import userRoute from "./route/users.js"
+import { registerUser } from "./controller/auth.js";
+import User from "./models/users.js"
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -21,6 +25,11 @@ app.use(bodyParser.json({ limit: "30mb", extended: true }));
 app.use(bodyParser.urlencoded({ limit: "30mb", extended: true }));
 app.use(cors());
 app.use("/assets", express.static(path.join(__dirname, 'public/assets'))); // set the dir of where assets are located
+
+
+/*ROUTES*/ 
+app.use("", authRoute)
+app.use("", userRoute)
 
 /* MONGOOSE SETUP */
 const PORT = process.env.PORT || 10000;

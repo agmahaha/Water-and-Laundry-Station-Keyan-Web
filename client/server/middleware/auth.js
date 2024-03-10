@@ -11,7 +11,7 @@ export const verifyToken = async(req, res, next) => {
                 exp:{type: 'integer'}
             },
             required: ['sub','iss','exp'],
-            additionalProperties: False
+            additionalProperties: false
         }
 
         let token = req.header("Authorization")
