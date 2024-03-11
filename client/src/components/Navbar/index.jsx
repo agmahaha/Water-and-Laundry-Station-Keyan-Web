@@ -93,6 +93,32 @@ const Navbar = () => {
                       >
                           <Tab label ="About" sx={{ color: "white", "&:hover": {color: "#F4A4AC"} }}/>
                           <Tab label ="Announcements" sx={{ color: "white", "&:hover": {color: "#F4A4AC"} }}/>
+                          <FormControl>
+                            <Select
+                              sx={{
+                                  backgroundColor: '#0b4c84',
+                                  width: "140px",
+                                  borderRadius: "0.25rem",
+                                  height: "50px",
+                                  p: "0.25rem 1rem",
+                                  "& .MuiSvgIcon-root:": {
+                                      pr: "0.25rem",
+                                      width: "3rem"
+                                  },
+                                  color: "white", "&:hover": {color: "#F4A4AC"}
+                              }}    
+                              maxMenuHeight={1}
+                              defaultValue="none"
+                              displayEmpty
+                              input={<InputBase/>}
+                            >
+                              <MenuItem key='0' disabled value="none"><Typography sx={{ color: "#9DB7CD", "&:hover": {color: "#F4A4AC"}}}>SERVICES</Typography></MenuItem>
+                              <MenuItem onClick={() => {navigate(`/water`)}}>
+                                  <Typography>Water</Typography>
+                              </MenuItem>
+                              <MenuItem onClick={() => {navigate("/laundry")}}><Typography>Laundry</Typography></MenuItem>
+                            </Select>
+                          </FormControl>
                           <Select
                               value={username}
                               sx={{
