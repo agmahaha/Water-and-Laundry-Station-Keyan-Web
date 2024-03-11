@@ -7,6 +7,7 @@ import OwnerView from './pages/ownerView'
 import PageNotFound from "./pages/pageNotFound"
 import {BrowserRouter, Routes, Route} from 'react-router-dom'
 import './App.css';
+import AnnouncementsPage from "./pages/announcementPage"
 
 
 function App() {
@@ -21,6 +22,7 @@ function App() {
           <Route path ="/laundry" element={<Laundry/>}/>
           <Route path ="/employee/home" element={<OwnerView/>}/>
           <Route path ="/about" element={<AboutPage/>}/>
+          <Route path ="/announcements" element={<AnnouncementsPage />}/>
           <Route path ="*" element={<PageNotFound/>}/>
         </Routes>
       </BrowserRouter>

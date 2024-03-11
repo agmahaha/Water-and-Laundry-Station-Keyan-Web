@@ -13,7 +13,7 @@ const Navbar = () => {
     useEffect(() => {
         if (location.pathname === '/about') {
           setValue(0);
-        } else if (location.pathname === '/services') {
+        } else if (location.pathname === '/announcements') {
           setValue(1);
         } else if (location.pathname === '/login') {
           setValue(2);
@@ -28,7 +28,7 @@ const Navbar = () => {
             navigate('/about');
             break;
           case 1:
-            navigate('/services');
+            navigate('/announcements');
             break;
           case 2:
             navigate('/login');
