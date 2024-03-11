@@ -33,14 +33,16 @@ export const verifyToken = async(req, res, next) => {
             console.error('Token does not match expected schema')
         else {
             req.user = verified
+            next()
         }
-        next()
         
 
     } catch (err){
         if(err.name === 'TokenExpiredError')
             console.error('Token has expired')
-        else
+        else{
             res.status(500).json({error: err.message})
+        }
+            
     }
 }

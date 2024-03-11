@@ -1,23 +1,24 @@
 import bcrypt from "bcrypt"
 import jwt from "jsonwebtoken"
-import User from "../models/users.js"
+import User from "../models/Users.js"
 
 export const registerUser = async (req, res) => {
+    console.log(req.body)
     try{
         const{
             username,
-            email,
             password,
+            email,
             userType
         } = req.body
-
+        
         const hash = await bcrypt.hash(password, 10)
 
         const newUser = new User({
             username,
-            email,
             password: hash,
-            userType 
+            email,
+            userType
         })
 
         const savedUser = await newUser.save()
@@ -31,8 +32,10 @@ export const registerUser = async (req, res) => {
 export const loginUser = async (req, res) => {
     try{
         const {username, password} = req.body
-        const user = await User.findOne({username: username})
+        console.log(username + password)
 
+        const user = await User.findOne({username: username})
+       
         if(!user)
             return res.Status(400).json({msg: "User not Found"})
 
@@ -45,6 +48,7 @@ export const loginUser = async (req, res) => {
         delete user.password
         res.status(200).json({token, user})
     } catch(err){
+        console.log("tanga")
         res.status(500).json({ error: err.message })
     }
 }

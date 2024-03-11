@@ -20,9 +20,10 @@ const loginSchema = yup.object().shape({
 })
 
 const initialValuesReg = {
-  email:"",
   username:"",
-  password:"",
+  password:"",  
+  email:"",
+  userType: "customer"
 
 }
 
@@ -56,14 +57,16 @@ const Login = () => {
     )
 
     const loggedIn = await loggedInResponse.json()
+    console.log(loggedIn)
+    console.log("logging in user: " + loggedIn.token);
     onSubmitProps.resetForm()
 
 
-    if (loggedIn.user.toLowerCase() === "owner" || loggedIn.user.toLowerCase() === "employee") {
-      alert("Here's what we got: \n" + "Username: " + loggedIn.user + "\n Password: " + loggedIn.password);
+    if (loggedIn.user.userType === "owner" || loggedIn.user.userType === "employee") {
+      alert("Here's what we got: \n" + "Username: " + loggedIn.user.username + "\n Password: " + loggedIn.user.password);
       navigate("/employee/home");
     } 
-    else if (loggedIn.user.toLowerCase() === "customer") {
+    else if (loggedIn.user.userType === "customer") {
       navigate("/home")
     }
     else {
@@ -72,27 +75,29 @@ const Login = () => {
   }
 
   const registerUser = async (values, onSubmitProps) => {
-    console.log("registering in user: " + values.username)
-    const formData = new FormData()
-
-    for (let value in values){
-      formData.append(value, values[value])
-    }
+    console.log(values.userType)
 
     const savedUserResponse = await fetch(
       "http://localhost:3001/auth/register",
       {
-        method: "Post",
-        body: formData
+        method: "POST",
+        headers: {"Content-Type": "application/json"},
+        body: JSON.stringify({
+          username: values.username,
+          password: values.password,
+          email: values.email,
+          userType: "customer"
+        })
       }
     )
 
     const savedUser = await savedUserResponse.json()
+
+    console.log("registering in user: " + savedUser.email + values.username);
     onSubmitProps.resetForm()
 
     if (values.username.toLowerCase() !== "" && values.password !== "" && values.email !== "") {
       alert("Here's what we got: \n" + "Email: " + values.email + "\nUsername: " + values.username + "\n Password: " + values.password);
-      navigate("/login");
       setIsLogin(!isLogin)
     } 
 
