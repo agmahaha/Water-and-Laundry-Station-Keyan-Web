@@ -36,7 +36,7 @@ const AboutPage = () => {
             width="100%"
             height="100%"
             style={{ borderRadius: "0.75rem" }}
-            src={`/assets/noBlur.jpg`}
+            src={`/assets/storeFront1.jpg`}
           />
         </Box>
 
@@ -57,12 +57,12 @@ const AboutPage = () => {
         >
           <Box object-fit="cover" minWidth={100} display="-ms-flexbox"  alignItems="center">
             <Typography style={{ overflowWrap: "break-word"}} fontSize={20} paddingBottom="1rem">
-                          + Details Details Details Details Details Details Details Details Details Details 
+                          + 5B Basilan St., Bgy. Malamig, Mandaluyong, Philippines, 1550
             </Typography>
           
-            <Typography fontSize={20} paddingBottom="1rem">+ More Details</Typography>
+            <Typography fontSize={20} paddingBottom="1rem">+ keyanwaterandlaundry@gmail.com</Typography>
           
-            <Typography fontSize={20} paddingBottom="1rem">+ More Details</Typography>
+            <Typography fontSize={20} paddingBottom="1rem">+ 0915 588 3622 / 0968 879 3657</Typography>
             
           </Box>
 
