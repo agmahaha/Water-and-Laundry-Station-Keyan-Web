@@ -23,6 +23,10 @@ const HomePage = () => {
         navigate('/laundry');
     };
 
+    const navigateToAnnouncements = () => {
+        navigate('/announcements');
+    }
+
     const theme = useTheme();
 
     const handleClose = () => {
@@ -91,7 +95,7 @@ const HomePage = () => {
                         >
                             COMPANY SERVICES
                         </Typography>
-                        <IconButton onClick={navigateToPageNotFound}>
+                        <IconButton onClick={navigateToAnnouncements}>
                             <Box bgcolor='#F4A4AC' p={2} borderRadius={15} display='flex' flexDirection='row' sx={{'&:hover': {
                                     transform: 'scale(1.1)',
                                 }}}>
