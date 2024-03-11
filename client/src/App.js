@@ -23,7 +23,7 @@ function App() {
           <Route path ="/employee/home" element={<OwnerView/>}/>
           <Route path ="/about" element={<AboutPage/>}/>
           <Route path ="/announcements" element={<AnnouncementsPage />}/>
-          <Route path ="*" element={<PageNotFound/>}/>
+          <Route path ="/pageNotFound" element={<PageNotFound/>}/>
         </Routes>
       </BrowserRouter>
     </div>

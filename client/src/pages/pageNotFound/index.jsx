@@ -1,9 +1,32 @@
 import React from 'react'
 import { Box, Typography, useTheme} from '@mui/material'
 import { useNavigate } from 'react-router-dom';
+import { useSelector } from "react-redux";
 const PageNotFound = () => {
   const navigate = useNavigate()
+  var isCustomer = false
+  var loc = '/'
   const { palette } = useTheme();
+  const user = useSelector((state) => state.user);
+
+  if (user) {
+    var userType = `${user.userType}`;
+  }
+
+  if (userType === 'customer'){
+    isCustomer = true
+    loc = '/'
+  }else if (userType === ('owner' || 'employee')){
+    isCustomer = false
+    loc = '/employee/home'
+  }else{
+    isCustomer = true
+    loc = '/'  
+  }
+
+
+
+
   return (
     <body className='page-not-found-container'>
 
@@ -20,10 +43,10 @@ const PageNotFound = () => {
                 },
               }}
               onClick={() => {
-                navigate('/')
+                navigate(loc)
               } }
                >
-                Return to Home Page
+                {isCustomer? 'Return to Home Page' : 'Return to Employee Page'}
               </Typography>
             </div>
     </Box>
