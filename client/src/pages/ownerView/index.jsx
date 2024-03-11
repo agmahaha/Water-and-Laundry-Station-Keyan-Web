@@ -2,7 +2,7 @@ import Pricelist from "./price.png";
 import Order from "./order.png";
 import { Box, Grid, Typography, useTheme} from '@mui/material'
 // import Navbar from '../../components/Navbar'
-import NavLoggedIn from '../../components/NavbarLogged'
+import Navbar from '../../components/Navbar'
 import React from "react";
 import { useNavigate } from "react-router-dom";
 
@@ -12,7 +12,7 @@ const OwnerView = () => {
 
     return (
         <>
-            <NavLoggedIn />
+            <Navbar />
             <Box
                 style={{ marginTop: '80px', padding: '2% 10% 5% 10%', alignItems: 'center', }}
                 sx={{

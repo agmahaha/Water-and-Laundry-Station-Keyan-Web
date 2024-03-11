@@ -1,12 +1,16 @@
 import React, {useEffect, useState} from 'react'
-import {AppBar, Toolbar, Typography, Tabs, Tab, MenuItem, Menu,}from '@mui/material';
+import {AppBar, Toolbar, Typography, Tabs, Tab, MenuItem, Menu, InputBase, Select}from '@mui/material';
 import { useNavigate, useLocation } from 'react-router';
+import { useDispatch, useSelector } from "react-redux";
+import { setLogout } from "../../state";
 import Logo from './keyanwhite.PNG'
 import Logo2 from './pinkLogoKeyan.PNG'
 
 const Navbar = () => {
     const [value, setValue] = useState();
     const [anchorE1, setAnchorE1] = useState(false)
+    const dispatch = useDispatch();
+    const user = useSelector((state) => state.user);
     const open =  Boolean(anchorE1)
     const [hovering, setHovering] = useState(false);
     const navigate = useNavigate()
@@ -52,80 +56,148 @@ const Navbar = () => {
       setAnchorE1(true)
     }
 
-  return (
-    <React.Fragment>
-        <AppBar
-            sx ={{background:'#0b4c84', 
-            margin:"10px auto",
-            borderRadius:"10px",
-            position:'sticky',
-            width: "85%",
-            left: 0,
-            right: 0,
-            }}>
-            <Toolbar>
-                <Typography
-                    onClick={() => {
-                        navigate('/')
-                      } }
-                      sx={{
-                        color: 'White',
-                        "&:hover": {
-                          cursor: "pointer",
-                        },
-                      }}
-                    onMouseOver={() => setHovering(true)}
-                    onMouseOut={() => setHovering(false)}
-                >
-                    <img
-                    src={hovering ? Logo2 : Logo}
-                    alt="Logo"
-                    style={{ height: '60px', width: '60px' }}
-                    />
-                </Typography>
-                <Tabs
-                    sx ={{marginLeft:"auto"}} 
-                    textColor='inherit'
-                    value={value}
-                    onChange={handleChange}
-                    TabIndicatorProps={{style: {background:'#F4A4AC'}}}
-                    >
-                        <Tab label ="About" sx={{ color: "white", "&:hover": {color: "#F4A4AC"}}}/>
-                        <Tab label ="Announcements" sx={{ color: "white", "&:hover": {color: "#F4A4AC"}}}/>
-                        <Tab label ="Services" 
-                        id='water_or_laundry'
-                        onClick={handleOpen}
-                        aria-controls={open ? 'water_or_laundry' : undefined}
-                        aria-haspopup= 'true'
-                        aria-expanded= {open ? true : undefined}
-                        sx={{ color: "white", "&:hover": {color: "#F4A4AC"}}}>
+    if (user) {
+      var username = `${user.username}`;
+  }
 
-                          
-                        </Tab>
-                        <Tab label ="Login/Signup" sx={{ color: "white", "&:hover": {color: "#F4A4AC"}}}/>
-
-                        </Tabs>
-            </Toolbar>
-            <Menu id= 'water_or_laundry' 
-                              anchorEl={{anchorE1}} 
-                              open = {open} 
-                              MenuListProps={{
-                                'aria-labelledby' : 'water_or_laundry'
-                              }}
-                              onClose={handleClose}
-                              sx ={{marginRight:'auto'}}>
-                              <MenuItem onClick={() => {
-                                navigate('/water')
-                              } }>Water</MenuItem>
-                              <MenuItem onClick={() => {
-                                navigate('/laundry')
-                              } }>Laundry</MenuItem>
-                            </Menu>
-                          
-        </AppBar>                      
-    </React.Fragment>
-
-  )
+  if (username) {
+    return (
+      <React.Fragment>
+          <AppBar
+              sx ={{background:'#0b4c84', 
+              margin:"10px auto",
+              borderRadius:"10px",
+              position:'sticky',
+              width: "85%",
+              left: 0,
+              right: 0,
+              }}>
+              <Toolbar>
+                  <Typography
+                      onClick={() => {
+                          navigate('/')
+                        } }
+                        sx={{
+                          color: 'White',
+                          "&:hover": {
+                            cursor: "pointer",
+                          },
+                        }}
+                        onMouseOver={() => setHovering(true)}
+                        onMouseOut={() => setHovering(false)}
+                  >
+                      <img
+                      src={hovering ? Logo2 : Logo}
+                      alt="Logo"
+                      style={{ height: '60px', width: '60px' }} />
+                  </Typography>
+                  <Tabs
+                      sx ={{marginLeft:"auto"}} 
+                      textColor='inherit'
+                      value={value}
+                      onChange={handleChange}
+                      TabIndicatorProps={{style: {background:'#F4A4AC'}}}
+                      >
+                          <Tab label ="About" sx={{ color: "white", "&:hover": {color: "#F4A4AC"} }}/>
+                          <Tab label ="Announcements" sx={{ color: "white", "&:hover": {color: "#F4A4AC"} }}/>
+                          <Select
+                              value={username}
+                              sx={{
+                                  color: "white",
+                                  width: "100px",
+                                  borderRadius: "0.25rem",
+                                  p: "0.25rem 1rem",
+                              }}    
+                              input={<InputBase />}
+                        >
+                        <MenuItem value={username}>
+                            <Typography>{username}</Typography>
+                        </MenuItem>
+                        <MenuItem onClick={() => dispatch(setLogout())}>Log Out</MenuItem>
+                    </Select>
+                  </Tabs>
+              </Toolbar>
+          </AppBar>
+      </React.Fragment>
+  
+    )
+  } else {
+    return (
+      <React.Fragment>
+          <AppBar
+              sx ={{background:'#0b4c84', 
+              margin:"10px auto",
+              borderRadius:"10px",
+              position:'sticky',
+              width: "85%",
+              left: 0,
+              right: 0,
+              }}>
+              <Toolbar>
+                  <Typography
+                      onClick={() => {
+                          navigate('/')
+                        } }
+                        sx={{
+                          color: 'White',
+                          "&:hover": {
+                            cursor: "pointer",
+                          },
+                        }}
+                      onMouseOver={() => setHovering(true)}
+                      onMouseOut={() => setHovering(false)}
+                  >
+                      <img
+                      src={hovering ? Logo2 : Logo}
+                      alt="Logo"
+                      style={{ height: '60px', width: '60px' }}
+                      />
+                  </Typography>
+                  <Tabs
+                      sx ={{marginLeft:"auto"}} 
+                      textColor='inherit'
+                      value={value}
+                      onChange={handleChange}
+                      TabIndicatorProps={{style: {background:'#F4A4AC'}}}
+                      >
+                          <Tab label ="About" sx={{ color: "white", "&:hover": {color: "#F4A4AC"}}}/>
+                          <Tab label ="Announcements" sx={{ color: "white", "&:hover": {color: "#F4A4AC"}}}/>
+                          <Tab label ="Services" 
+                          id='water_or_laundry'
+                          onClick={handleOpen}
+                          aria-controls={open ? 'water_or_laundry' : undefined}
+                          aria-haspopup= 'true'
+                          aria-expanded= {open ? true : undefined}
+                          sx={{ color: "white", "&:hover": {color: "#F4A4AC"}}}>
+  
+                            
+                          </Tab>
+                          <Tab label ="Login/Signup" sx={{ color: "white", "&:hover": {color: "#F4A4AC"}}}/>
+  
+                          </Tabs>
+              </Toolbar>
+              <Menu id= 'water_or_laundry' 
+                                anchorEl={{anchorE1}} 
+                                open = {open} 
+                                MenuListProps={{
+                                  'aria-labelledby' : 'water_or_laundry'
+                                }}
+                                onClose={handleClose}
+                                sx ={{marginRight:'auto'}}>
+                                <MenuItem onClick={() => {
+                                  navigate('/water')
+                                } }>Water</MenuItem>
+                                <MenuItem onClick={() => {
+                                  navigate('/laundry')
+                                } }>Laundry</MenuItem>
+                              </Menu>
+                            
+          </AppBar>                      
+      </React.Fragment>
+  
+    )
+  }
+    
 }
 
 export default Navbar
