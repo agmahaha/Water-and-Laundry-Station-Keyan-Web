@@ -42,20 +42,24 @@ const AnnouncementsPage = () => {
                     
                 >
                     <Typography
-                        color='black'
+                        color='#0b4c84'
                         fontSize={30}
+                        fontWeight='bold'
+                        textAlign='center'
                     >
-                        title of announcement
+                        CLOSED NOTICE
                     </Typography>
                     <Typography
                         color='black'
                         fontSize={20}
                         sx={{
-                            mt: "1rem",
-                            mb: "1rem"
+                            mt: "1rem"
                         }}
                     >
-                        body of announcement
+                        due to preventive maintenance power shutdown in Sheridan Towers, we will be unable to offer our services. We rely heavily on the use of elevators to collect and deliver your water and laundry.....
+                    </Typography>
+                    <Typography sx={{mb: "1rem"}}>
+                        2/20/24
                     </Typography>
                 </Box>
                 <Divider/>
