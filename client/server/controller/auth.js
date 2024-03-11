@@ -9,7 +9,8 @@ export const registerUser = async (req, res) => {
             username,
             password,
             email,
-            userType
+            userType,
+            address
         } = req.body
         
         const hash = await bcrypt.hash(password, 10)
@@ -18,7 +19,8 @@ export const registerUser = async (req, res) => {
             username,
             password: hash,
             email,
-            userType
+            userType,
+            address
         })
 
         const savedUser = await newUser.save()
@@ -48,7 +50,6 @@ export const loginUser = async (req, res) => {
         delete user.password
         res.status(200).json({token, user})
     } catch(err){
-        console.log("tanga")
         res.status(500).json({ error: err.message })
     }
 }

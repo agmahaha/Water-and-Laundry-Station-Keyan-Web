@@ -25,7 +25,8 @@ const initialValuesReg = {
   username:"",
   password:"",  
   email:"",
-  userType: "customer"
+  userType: "customer",
+  address:""
 
 }
 
@@ -100,7 +101,8 @@ const Login = () => {
           username: values.username,
           password: values.password,
           email: values.email,
-          userType: "customer"
+          userType: "customer",
+          address: ""
         })
       }
     )
@@ -109,15 +111,18 @@ const Login = () => {
 
     console.log("registering in user: " + savedUser.email + values.username);
     onSubmitProps.resetForm()
-
-    if (values.username.toLowerCase() !== "" && values.password !== "" && values.email !== "") {
+    
+    if (savedUser){
+      if (values.username.toLowerCase() !== "" && values.password !== "" && values.email !== "") {
       alert("Here's what we got: \n" + "Email: " + values.email + "\nUsername: " + values.username + "\n Password: " + values.password);
       setIsLogin(!isLogin)
-    } 
+      } 
 
-    else {
-      alert("invalid Credentials!");
+      else {
+        alert("invalid Credentials!");
+      }
     }
+    
   }
 
   return (
