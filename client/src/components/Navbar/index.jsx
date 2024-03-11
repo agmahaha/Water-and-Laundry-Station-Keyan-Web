@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react'
-import {AppBar, Toolbar, Typography, Tabs, Tab, MenuItem, Menu }from '@mui/material';
+import {AppBar, Toolbar, Typography, Tabs, Tab, MenuItem, Menu,}from '@mui/material';
 import { useNavigate, useLocation } from 'react-router';
 import Logo from './keyanwhite.PNG'
 import Logo2 from './pinkLogoKeyan.PNG'
@@ -11,17 +11,17 @@ const Navbar = () => {
     const [hovering, setHovering] = useState(false);
     const navigate = useNavigate()
     const location = useLocation()
-    
+
     useEffect(() => {
         if (location.pathname === '/about') {
           setValue(0);
         } else if (location.pathname === '/services') {
           setValue(1);
-        } else if (location.pathname === ('/water' || '/laundry') && anchorE1 === true) {
+        } else if (location.pathname === ('/water' || '/laundry')) {
           setValue(2);
         } else if (location.pathname === '/login') {
           setValue(3);
-        }
+        } 
       }, [location.pathname]);
     
     const handleChange = (event, newValue) => {
@@ -51,10 +51,6 @@ const Navbar = () => {
     const handleOpen= () =>{
       setAnchorE1(true)
     }
-  
-    
-    
-    
 
   return (
     <React.Fragment>
@@ -102,25 +98,31 @@ const Navbar = () => {
                         aria-controls={open ? 'water_or_laundry' : undefined}
                         aria-haspopup= 'true'
                         aria-expanded= {open ? true : undefined}
-                        sx={{ color: "white", "&:hover": {color: "#F4A4AC"}}}/>
+                        sx={{ color: "white", "&:hover": {color: "#F4A4AC"}}}>
+
+                          
+                        </Tab>
                         <Tab label ="Login/Signup" sx={{ color: "white", "&:hover": {color: "#F4A4AC"}}}/>
-                </Tabs>
-                <Menu id= 'water_or_laundry' 
-                      anchorEl={{anchorE1}} 
-                      open = {open} 
-                      MenuListProps={{
-                        'aria-labelledby' : 'water_or_laundry'
-                      }}
-                      onClose={handleClose}>
-                      <MenuItem onClick={() => {
-                        navigate('/water')
-                      } }>Water</MenuItem>
-                      <MenuItem onClick={() => {
-                        navigate('/laundry')
-                      } }>Laundry</MenuItem>
-                </Menu>
+
+                        </Tabs>
             </Toolbar>
-        </AppBar>
+            <Menu id= 'water_or_laundry' 
+                              anchorEl={{anchorE1}} 
+                              open = {open} 
+                              MenuListProps={{
+                                'aria-labelledby' : 'water_or_laundry'
+                              }}
+                              onClose={handleClose}
+                              sx ={{marginRight:'auto'}}>
+                              <MenuItem onClick={() => {
+                                navigate('/water')
+                              } }>Water</MenuItem>
+                              <MenuItem onClick={() => {
+                                navigate('/laundry')
+                              } }>Laundry</MenuItem>
+                            </Menu>
+                          
+        </AppBar>                      
     </React.Fragment>
 
   )
