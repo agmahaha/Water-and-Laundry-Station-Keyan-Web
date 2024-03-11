@@ -4,8 +4,10 @@ import {Formik} from "formik"
 import * as yup from 'yup'
 import Navbar from '../../components/Navbar'
 import { useNavigate } from 'react-router-dom'
+import { useDispatch } from "react-redux";
 import FacebookIcon from '@mui/icons-material/Facebook';
 import GoogleIcon from '@mui/icons-material/Google';
+import {setLogin} from '../../state'
 
 
 const signupSchema = yup.object().shape({
@@ -34,9 +36,8 @@ const initialValuesLog ={
 
 const Login = () => {
   const [isLogin, setIsLogin] = useState(true);
-
   const { palette } = useTheme();
-
+  const dispatch = useDispatch();
   const navigate = useNavigate();
 
   const handleFormSubmit = async(values, onSubmitProps) => {
@@ -61,13 +62,26 @@ const Login = () => {
     console.log("logging in user: " + loggedIn.token);
     onSubmitProps.resetForm()
 
-
-    if (loggedIn.user.userType === "owner" || loggedIn.user.userType === "employee") {
-      alert("Here's what we got: \n" + "Username: " + loggedIn.user.username + "\n Password: " + loggedIn.user.password);
-      navigate("/employee/home");
-    } 
-    else if (loggedIn.user.userType === "customer") {
-      navigate("/home")
+    if (loggedInResponse.status === 200){
+      if (loggedIn.user.userType === "owner" || loggedIn.user.userType === "employee") {
+        alert("Here's what we got: \n" + "Username: " + loggedIn.user.username + "\n Password: " + loggedIn.user.password);
+        dispatch(
+          setLogin({
+            user: loggedIn.user,
+            token: loggedIn.token
+          })
+        )
+        navigate("/employee/home");
+      } 
+      else if (loggedIn.user.userType === "customer") {
+        dispatch(
+          setLogin({
+            user: loggedIn.user,
+            token: loggedIn.token
+          })
+        )
+        navigate("/home")
+      }
     }
     else {
       alert("invalid Credentials!");
