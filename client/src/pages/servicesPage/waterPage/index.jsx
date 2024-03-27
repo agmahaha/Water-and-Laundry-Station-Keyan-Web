@@ -36,9 +36,6 @@ const WaterPage = () => {
     setActiveStep(step)
   }
 
-  const navigateToLogin = () => {
-    navigate('/login');
-  };
   const user = useSelector((state) => state.user);
 
   useEffect(() => {
@@ -49,10 +46,12 @@ const WaterPage = () => {
     }
  }, [navigate, user]);
 
-  if (user) {
-    var userType = `${user.userType}`;
-  }
+ var orderRedirect = navigate('/login')
 
+ if (user) {
+   var userType = `${user.userType}`;
+   orderRedirect = navigate('/order')
+ }
   if (userType === 'customer' || user === null){
     return (
       <>
@@ -172,7 +171,7 @@ const WaterPage = () => {
                             },
                             
                             }}
-                            onClick= {navigateToLogin}
+                            onClick= {orderRedirect}
                             >
                           <Typography
                                   variant="h5"

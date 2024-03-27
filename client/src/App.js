@@ -4,6 +4,8 @@ import Water from'./pages/servicesPage/waterPage'
 import Laundry from'./pages/servicesPage/laundryPage'
 import AboutPage from'./pages/aboutPage'
 import OwnerView from './pages/ownerView'
+import Order from './pages/orderPage'
+import Profile from './pages/profilePage'
 import PageNotFound from "./pages/pageNotFound"
 import {BrowserRouter, Routes, Route} from 'react-router-dom'
 import './App.css';
@@ -23,6 +25,8 @@ function App() {
           <Route path ="/employee/home" element={<OwnerView/>}/>
           <Route path ="/about" element={<AboutPage/>}/>
           <Route path ="/announcements" element={<AnnouncementsPage />}/>
+          <Route path ="/order" element={<Order/>}/>
+          <Route path ="/profile" element={<Profile/>}/>
           <Route path ="/pageNotFound" element={<PageNotFound/>}/>
         </Routes>
       </BrowserRouter>

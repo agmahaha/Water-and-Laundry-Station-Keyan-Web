@@ -26,8 +26,9 @@ const initialValuesReg = {
   password:"",  
   email:"",
   userType: "customer",
-  address:""
-
+  address:"",
+  phone_num:"",
+  name:""
 }
 
 const initialValuesLog ={
@@ -102,7 +103,9 @@ const Login = () => {
           password: values.password,
           email: values.email,
           userType: "customer",
-          address: ""
+          address: "",
+          phone_num: "",
+          name:""
         })
       }
     )
@@ -169,7 +172,7 @@ const Login = () => {
             {!isLogin && (
               <TextField
                 fullWidth
-                label="email"
+                label="Email"
                 onBlur={handleBlur}
                 onChange={handleChange}
                 value={values.email}

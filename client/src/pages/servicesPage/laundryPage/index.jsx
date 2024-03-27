@@ -24,7 +24,7 @@ const LaundryPage = () => {
   const max = images.length
   const navigate = useNavigate()
 
-  const next = () => {
+  const next = () => { 
     setActiveStep((prev) => prev + 1)
   }
 
@@ -36,9 +36,6 @@ const LaundryPage = () => {
     setActiveStep(step)
   }
 
-  const navigateToLogin = () => {
-    navigate('/login');
-  };
   const user = useSelector((state) => state.user);
 
   useEffect(() => {
@@ -48,9 +45,12 @@ const LaundryPage = () => {
         }
     }
  }, [navigate, user]);
+  
+  var orderRedirect = navigate('/login')
 
   if (user) {
     var userType = `${user.userType}`;
+    orderRedirect = navigate('/order')
   }
 
   if (userType === 'customer' || user === null){
@@ -169,7 +169,7 @@ const LaundryPage = () => {
                             },
                             
                             }}
-                            onClick= {navigateToLogin}
+                            onClick= {orderRedirect}
                             >
                           <Typography
                                   variant="h5"

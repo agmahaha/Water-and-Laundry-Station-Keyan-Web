@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react'
-import {AppBar, Toolbar, Typography, Tabs, Tab, MenuItem, Menu, Select, InputBase, FormControl, InputLabel, Input}from '@mui/material';
+import {AppBar, Toolbar, Typography, Tabs, Tab, MenuItem, Menu, Select, InputBase, FormControl, InputLabel, Input, Avatar}from '@mui/material';
 import { useNavigate, useLocation } from 'react-router';
 import { useDispatch, useSelector } from "react-redux";
 import { setLogout } from "../../state";
@@ -112,28 +112,40 @@ const Navbar = () => {
                               displayEmpty
                               input={<InputBase/>}
                             >
-                              <MenuItem key='0' disabled value="none"><Typography sx={{ color: "#9DB7CD", "&:hover": {color: "#F4A4AC"}}}>SERVICES</Typography></MenuItem>
+                              <MenuItem disabled value="none"><Typography sx={{ color: "#9DB7CD", "&:hover": {color: "#F4A4AC"}}}>SERVICES</Typography></MenuItem>
                               <MenuItem onClick={() => {navigate(`/water`)}}>
                                   <Typography>Water</Typography>
                               </MenuItem>
                               <MenuItem onClick={() => {navigate("/laundry")}}><Typography>Laundry</Typography></MenuItem>
                             </Select>
                           </FormControl>
-                          <Select
-                              value={username}
-                              sx={{
-                                  color: "white",
-                                  width: "100px",
-                                  borderRadius: "0.25rem",
-                                  p: "0.25rem 1rem",
-                              }}    
-                              input={<InputBase />}
-                        >
-                        <MenuItem value={username}>
-                            <Typography>{username}</Typography>
-                        </MenuItem>
-                        <MenuItem onClick={() => dispatch(setLogout())}>Log Out</MenuItem>
-                    </Select>
+                          <FormControl>
+                            <Select
+                                  sx={{
+                                    backgroundColor: '#0b4c84',
+                                    width: "100px",
+                                    borderRadius: "0.25rem",
+                                    height: "50px",
+                                    p: "0.25rem 1rem",
+                                    "& .MuiSvgIcon-root:": {
+                                        pr: "0.25rem",
+                                        width: "3rem"
+                                    },
+                                    color: "white", "&:hover": {color: "#F4A4AC"}
+                                }}    
+                                maxMenuHeight={1}
+                                defaultValue={username}
+                                displayEmpty
+                                input={<InputBase/>}
+                            >
+                              <MenuItem value = {username} disabled>
+                                  <Typography sx={{ color: "#9DB7CD", "&:hover": {color: "#F4A4AC"}}}>{username}</Typography>
+                              </MenuItem>
+                              <MenuItem onClick={() => {navigate("/profile")}}>Profile</MenuItem>
+                              <MenuItem onClick={() => dispatch(setLogout())}>Log Out</MenuItem>
+                            </Select>
+                          </FormControl>
+                          
                   </Tabs>
               </Toolbar>
           </AppBar>
