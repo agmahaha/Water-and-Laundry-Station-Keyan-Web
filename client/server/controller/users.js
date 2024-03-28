@@ -12,7 +12,6 @@ export const getUser = async (req, res) => {
 }
 
 export const updateUser = async(req, res) =>{
-    console.log(req.body.address)
     try{
         const{
             id, 

@@ -1,7 +1,8 @@
 import React, {useEffect, useState} from 'react'
 import { Card, TextField, Typography, Button, Box, Alert, useTheme, Stack, Breadcrumbs, Link} from '@mui/material'
 import Navbar from '../../components/Navbar'
-import {useSelector } from "react-redux";
+import {useSelector, useDispatch } from "react-redux";
+import {updateUser} from '../../state'
 
 const Profile = () => {
     const user = useSelector((state) => state.user);
@@ -9,6 +10,8 @@ const Profile = () => {
     const [address, setAddress] = useState ("")
     const [phone_num, setPhoneNum] = useState ("")
     var pShrink, nShrink, aShrink
+    const dispatch = useDispatch();
+
 
 
     useEffect(() =>{
@@ -41,9 +44,16 @@ const Profile = () => {
             }
           )
         
-        const updatedUser = await updatedProfile.json()
-      
+        const getUpdatedUser = await fetch(`http://localhost:3001/users/${user._id}`, {
+            method: "GET",
+            headers: { "Content-Type": "application/json" },
+        })
+        
+        const updatedUser = await getUpdatedUser.json()
+        dispatch(updateUser({user : updatedUser}))
     }
+
+    console.log(user)
 
     return(
        <><Navbar/>
