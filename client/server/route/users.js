@@ -4,7 +4,7 @@ import {verifyToken } from "../middleware/auth.js"
 
 const router = express.Router()
 
-router.get(":/id", verifyToken, getUser)
+router.get("/:id", verifyToken, getUser)
 router.post("/updateProfile", updateUser)
 
 export default router

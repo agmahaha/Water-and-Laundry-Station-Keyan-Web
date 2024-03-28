@@ -6,6 +6,7 @@ import {updateUser} from '../../state'
 
 const Profile = () => {
     const user = useSelector((state) => state.user);
+    const token = useSelector((state) => state.token)
     const [name, setName] = useState ("")
     const [address, setAddress] = useState ("")
     const [phone_num, setPhoneNum] = useState ("")
@@ -46,11 +47,18 @@ const Profile = () => {
         
         const getUpdatedUser = await fetch(`http://localhost:3001/users/${user._id}`, {
             method: "GET",
-            headers: { "Content-Type": "application/json" },
+            headers: { "Content-Type": "application/json",
+                       "Authorization": `Bearer ${token}` },
         })
+        console.log(token)
+        if (!getUpdatedUser.ok) {
+          console.error('Failed to fetch user data')
+        }else{
+          const updatedUser = await getUpdatedUser.json()
+          dispatch(updateUser({user : updatedUser}))
+        }
         
-        const updatedUser = await getUpdatedUser.json()
-        dispatch(updateUser({user : updatedUser}))
+        
     }
 
     console.log(user)
