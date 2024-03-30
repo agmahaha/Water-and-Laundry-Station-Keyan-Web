@@ -50,7 +50,7 @@ const LaundryPage = () => {
 
   if (user) {
     var userType = `${user.userType}`;
-    orderRedirect = navigate('/order')
+    orderRedirect = navigate('/orderLaundry')
   }
 
   if (userType === 'customer' || user === null){

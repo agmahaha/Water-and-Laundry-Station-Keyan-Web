@@ -50,7 +50,7 @@ const WaterPage = () => {
 
  if (user) {
    var userType = `${user.userType}`;
-   orderRedirect = navigate('/order')
+   orderRedirect = navigate('/orderWater')
  }
   if (userType === 'customer' || user === null){
     return (

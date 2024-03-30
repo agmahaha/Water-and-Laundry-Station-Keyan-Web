@@ -16,14 +16,6 @@ const Profile = () => {
     const dispatch = useDispatch();
     const [isEdit, setIsEdit] = useState(false)
 
-
-    useEffect(() =>{
-        setName(user.name)
-        setAddress(user.address)
-        setPhoneNum(user.phone_num)
-
-    }, [user])
-
     if(hold !== ""){
         holdShrink = true
     }else if (address !== ""){
@@ -65,7 +57,22 @@ const Profile = () => {
         
     }
 
-  if(isEdit && user){
+    if(user){
+      var username = user.username
+      var CName = user.name
+      var CAddress = user.address
+      var CPhone = user.phone_num
+      var CEmail = user.email
+    }
+
+    useEffect(() =>{
+      setName(CName)
+      setAddress(CAddress)
+      setPhoneNum(CPhone)
+
+  }, [])
+
+  if(isEdit && username){
     return(
        <><Navbar/>
         <Box
@@ -87,7 +94,7 @@ const Profile = () => {
             <TextField
                 fullWidth
                 label="NAME"
-                defaultValue= {user.name}
+                defaultValue= {CName}
                 variant='outlined'
                 InputLabelProps={{ style: {color: 'black'}, shrink: nShrink}}
                 InputProps={{ style: {color: 'black'}}}
@@ -97,7 +104,7 @@ const Profile = () => {
             <TextField
                 fullWidth
                 label="ADDRESS"
-                defaultValue= {user.address}
+                defaultValue= {CAddress}
                 variant='outlined'
                 InputLabelProps={{ style: {color: 'black'}, shrink: aShrink}}
                 InputProps={{ style: {color: 'black'}}}
@@ -107,7 +114,7 @@ const Profile = () => {
             <TextField
                 fullWidth
                 label="EMAIL"
-                value= {user.email}
+                value= {CEmail}
                 variant='outlined'
                 InputLabelProps={{ style: {color: 'black'}}}
                 InputProps={{ style: {color: 'black'}}}
@@ -118,7 +125,7 @@ const Profile = () => {
             <TextField
                 fullWidth
                 label="PHONE NUMBER"
-                defaultValue= {user.phone_num}
+                defaultValue= {CPhone}
                 variant='outlined'
                 InputLabelProps={{ style: {color: 'black'}, shrink: pShrink}}
                 InputProps={{ style: {color: 'black'}}}
@@ -167,7 +174,7 @@ const Profile = () => {
         </Box>
        </>
     )
-  }else{
+  }else if (username && !isEdit){
     return(
       <><Navbar/>
        <Box
@@ -186,16 +193,16 @@ const Profile = () => {
                    }}
                >
            <h3>NAME:</h3>
-           <Typography>{user.name}</Typography>
+           <Typography>{CName}</Typography>
 
            <h3>ADDRESS:</h3>
-           <Typography>{user.address}</Typography>
+           <Typography>{CAddress}</Typography>
 
            <h3>EMAIL:</h3>
-           <Typography>{user.email}</Typography>
+           <Typography>{CEmail}</Typography>
 
            <h3>Contact Number:</h3>
-           <Typography>{user.phone_num}</Typography>
+           <Typography>{CPhone}</Typography>
            
            <Button
              variant='contained'
