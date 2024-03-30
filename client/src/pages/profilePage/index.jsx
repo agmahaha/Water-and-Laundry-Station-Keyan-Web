@@ -3,16 +3,18 @@ import { Card, TextField, Typography, Button, Box, Alert, useTheme, Stack, Bread
 import Navbar from '../../components/Navbar'
 import {useSelector, useDispatch } from "react-redux";
 import {updateUser} from '../../state'
+import { useNavigate } from 'react-router-dom'
 
 const Profile = () => {
     const user = useSelector((state) => state.user);
     const token = useSelector((state) => state.token)
-    const [name, setName] = useState ("")
-    const [address, setAddress] = useState ("")
-    const [phone_num, setPhoneNum] = useState ("")
-    var pShrink, nShrink, aShrink
+    const hold = useState()
+    const [name, setName] = useState ()
+    const [address, setAddress] = useState ()
+    const [phone_num, setPhoneNum] = useState ()
+    var pShrink, nShrink, aShrink, holdShrink
     const dispatch = useDispatch();
-
+    const [isEdit, setIsEdit] = useState(false)
 
 
     useEffect(() =>{
@@ -20,9 +22,11 @@ const Profile = () => {
         setAddress(user.address)
         setPhoneNum(user.phone_num)
 
-    }, [])
+    }, [user])
 
-    if (address !== ""){
+    if(hold !== ""){
+        holdShrink = true
+    }else if (address !== ""){
         aShrink = true
     }else if (name !== ""){
         nShrink = true
@@ -61,13 +65,15 @@ const Profile = () => {
         
     }
 
-    console.log(user)
-
+  if(isEdit && user){
     return(
        <><Navbar/>
         <Box
-                    style={{ padding: '2% 10% 5% 10%', alignItems: 'center', }}
-                    display="grid"
+                    style={{ padding: '2% 10% 5% 10%' }}
+                    display="flex"
+                    flexDirection="column"
+                    justifyContent="center"
+                    alignItems= "center"
                     gap="20px"
                     sx={{
                         margin: 'auto',
@@ -124,15 +130,18 @@ const Profile = () => {
               type='submit'
               name='submit'
               sx={{
-                color: 'black',
-                bgcolor: 'white',
+                color: 'white',
+                bgcolor: '#0b4c84',
                 "&:hover": {
                   color: 'white',
                   bgcolor: '#BDBDBD'
                 },
-                width:'30%'
+                width:'15%'
               }}
-              onClick={updateDetails}
+              onClick={() => {
+                updateDetails()
+                setIsEdit(!isEdit)
+              }}
               >
               Save
             </Button>
@@ -142,14 +151,15 @@ const Profile = () => {
               type='submit'
               name='submit'
               sx={{
-                color: 'black',
-                bgcolor: 'white',
+                color: 'white',
+                bgcolor: '#0b4c84',
                 "&:hover": {
                   color: 'white',
                   bgcolor: '#BDBDBD'
                 },
-                width:'30%'
+                width:'15%'
               }}
+              onClick={() => {window.location.reload()}}
               >
               Revert Changes
             </Button>
@@ -157,6 +167,61 @@ const Profile = () => {
         </Box>
        </>
     )
+  }else{
+    return(
+      <><Navbar/>
+       <Box
+                   style={{ padding: '2% 10% 5% 10%' }}
+                   display="flex"
+                   flexDirection="column"
+                   justifyContent="center"
+                   gap="20px"
+                   sx={{
+                       margin: 'auto',
+                       borderRadius: 6,
+                       bgcolor: '#ffffff',
+                       width: '65%',
+                       height: '50%',
+
+                   }}
+               >
+           <h3>NAME:</h3>
+           <Typography>{user.name}</Typography>
+
+           <h3>ADDRESS:</h3>
+           <Typography>{user.address}</Typography>
+
+           <h3>EMAIL:</h3>
+           <Typography>{user.email}</Typography>
+
+           <h3>Contact Number:</h3>
+           <Typography>{user.phone_num}</Typography>
+           
+           <Button
+             variant='contained'
+             type='submit'
+             name='submit'
+             sx={{
+               color: 'white',
+               bgcolor: '#0b4c84',
+               "&:hover": {
+                 color: 'white',
+                 bgcolor: '#BDBDBD'
+               },
+               width:'15%'
+             }}
+             onClick={() => {
+               setIsEdit(!isEdit)
+             }}
+             >
+             Edit Details
+           </Button>
+               
+       </Box>
+      </>
+     )
+  }
+    
 }
 
 export default Profile

@@ -142,7 +142,7 @@ const Navbar = () => {
                                   <Typography sx={{ color: "#9DB7CD", "&:hover": {color: "#F4A4AC"}}}>{username}</Typography>
                               </MenuItem>
                               <MenuItem onClick={() => {navigate("/profile")}}>Profile</MenuItem>
-                              <MenuItem onClick={() => dispatch(setLogout())}>Log Out</MenuItem>
+                              <MenuItem onClick={async () => {await dispatch(setLogout()); navigate("/");}}>Log Out</MenuItem>
                             </Select>
                           </FormControl>
                           

@@ -12,8 +12,7 @@ export const authSlice = createSlice({
         setLogin: (state, action) => {
             state.user = action.payload.user
             state.token = action.payload.token
-            console.log(state.user)
-            console.log("jhak")
+
         },
         setLogout: (state) => {
             state.user = null
@@ -21,7 +20,6 @@ export const authSlice = createSlice({
         },
         updateUser: (state, action) => {
             state.user = action.payload.user;
-            console.log(state.user.name)
          },
     }
 })
