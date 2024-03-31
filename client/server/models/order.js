@@ -18,7 +18,6 @@ const orderItemSchema = new mongoose.Schema(
         },
         numberOfItems: { // e.g. 1 gallon, 2 gallons
             type: Number,
-            required: true
         },
         pricePerItem: {
             type: Number,
@@ -42,7 +41,7 @@ const OrderSchema = new mongoose.Schema(
         },
         isPaid: {
             type: Boolean,
-            default: false
+            default: false,
         },
         orderDate:{
             type: Date, 

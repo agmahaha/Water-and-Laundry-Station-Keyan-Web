@@ -10,6 +10,7 @@ import path from "path";
 import { fileURLToPath } from "url";
 import authRoute from "./route/auth.js"
 import userRoute from "./route/users.js"
+import orderRoute from "./route/order.js"
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -27,6 +28,8 @@ app.use("/assets", express.static(path.join(__dirname, 'public/assets'))); // se
 /*ROUTES*/ 
 app.use("/auth", authRoute)
 app.use("/users", userRoute)
+app.use("/order", orderRoute)
+
 
 /* MONGOOSE SETUP */
 const PORT = process.env.PORT || 10000;

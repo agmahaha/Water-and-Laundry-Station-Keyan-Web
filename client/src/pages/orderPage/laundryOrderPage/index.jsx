@@ -2,12 +2,14 @@ import React, {useState} from 'react'
 import { Typography, Button, Box, Grid, Checkbox, TextField, FormControlLabel, Breadcrumbs, Link} from '@mui/material'
 import {StorefrontOutlined, LocalShippingOutlined} from '@mui/icons-material'
 import Navbar from '../../../components/Navbar'
-import FlexBetween from '../../../components/FlexBetween';
+import FlexBetween from '../../../components/FlexBetween'
+import {useSelector} from "react-redux"
 import { useNavigate } from 'react-router-dom'
-import { useDispatch } from "react-redux";
+import { useDispatch } from "react-redux"
 
 
 const LaundryOrder = () => {
+  const user = useSelector((state) => state.user)
   const [selectedOption, setSelectedOption] = useState(null);
   const [L1, setL1] = useState (false)
   const [L2, setL2] = useState (false)
@@ -24,6 +26,53 @@ const LaundryOrder = () => {
 
   const estimatedTotal = () => {
     return filteredItems.reduce((total, item) => total + item.price, 0)
+  }
+
+  if(user){
+    var user_ID = user._id 
+  }
+
+  const orderItems = () => {
+    var orderedItems = []
+
+    if(filteredItems != null){
+      filteredItems.forEach(item => {
+        const itemName = item.name
+        const type = 'water'
+        const weight = 5
+        const pricePerItem = item.price
+
+        orderedItems.push({ itemName, type, weight, pricePerItem })
+      })
+    }
+    
+
+    if(orderedItems != null){
+      orderedItems = orderedItems.filter(item => 
+        filteredItems.some(filteredItem => filteredItem.name === item.itemName)
+      )
+    }
+    
+      return orderedItems
+  }
+
+  console.log(orderItems())
+  
+
+  const createUserOrder = async() => {
+    const savedUserOrder = await fetch(
+      "http://localhost:3001/order/orderService",
+      {
+        method: "POST",
+        headers:{"Content-Type" : "application/json"},
+        body: JSON.stringify({
+            userID: user_ID,
+            items: orderItems()
+        })
+      }
+    )
+
+    const savedOrder = await savedUserOrder.json()
   }
 
     return(
@@ -373,6 +422,8 @@ const LaundryOrder = () => {
                             fontWeight: 'bold',
                             color: '#ffffff',
                           }}
+
+                          onClick={()=>createUserOrder()}
                         >
                               ORDER ⭢
                         </Typography>
