@@ -1,7 +1,8 @@
 import React, {useState} from 'react'
-import { Typography, Button, Box, Grid, Checkbox, TextField, FormControlLabel} from '@mui/material'
+import { Typography, Button, Box, Grid, Checkbox, TextField, FormControlLabel, Breadcrumbs, Link} from '@mui/material'
 import {StorefrontOutlined, LocalShippingOutlined} from '@mui/icons-material'
 import Navbar from '../../../components/Navbar'
+import FlexBetween from '../../../components/FlexBetween';
 import { useNavigate } from 'react-router-dom'
 import { useDispatch } from "react-redux";
 
@@ -11,16 +12,24 @@ const LaundryOrder = () => {
   const [L1, setL1] = useState (false)
   const [L2, setL2] = useState (false)
   const [L3, setL3] = useState (false)
-
+  const itemsOrdered = [
+      (L1 ? {name: 'Comforters / Blankets', price: 150} : {}),
+      (L2 ? {name: 'Thick / Linen / Comforter', price: 200} : {}),
+      (L3 ? {name: 'Regular Clothing', price: 100} : {}),
+    ]
+  const filteredItems = itemsOrdered.filter(item => Object.keys(item).length > 0)
 
   const handleOptionChange = (option) => {
     setSelectedOption(option)}
+
+  const estimatedTotal = () => {
+    return filteredItems.reduce((total, item) => total + item.price, 0)
+  }
 
     return(
        <><Navbar/>
        <Box
             style={{ padding: '2% 2% 2% 2%' }}
-            display="flex"
             gap="20px"
             sx={{
                 margin: 'auto',
@@ -30,6 +39,21 @@ const LaundryOrder = () => {
                 height: '50%',
                 }}
         >
+            <Grid container>
+              <Grid xs ={12}>
+              <FlexBetween gap="1.75rem" padding="1rem" paddingBottom={0}>
+                <Breadcrumbs aria-label="breadcrumb">
+                  <Typography color="inherit" fontWeight='bold' fontSize={20}>
+                    Home
+                  </Typography>
+                  <Link underline="hover" color="inherit" href="/laundry" fontWeight='bold' fontSize={20}>
+                    Laundry Service
+                  </Link>
+                  <Typography color="text.primary" fontWeight='bold' fontSize={20}>Order</Typography>
+                </Breadcrumbs>
+              </FlexBetween>
+              </Grid>
+            </Grid>
             <Grid container>
               <Grid xs = {6} sx= {{borderRight:'2px solid black',}}>
                 <Grid container p={2}>
@@ -290,11 +314,74 @@ const LaundryOrder = () => {
                   </Grid>
                 <Grid xs = {12} sx={{marginTop:'2%'}}>
                   <h2>PRICE BREAKDOWN:</h2>
+                  <Grid container
+                        display="flex"
+                        flexDirection="row"
+                        justifyContent="center"
+                        alignItems= "center"
+                        sx={{
+                          textAlign:'center'
+                        }}>
+                    <Grid xs ={6}>
+                      {filteredItems.map((item, index) => (
+                        <Typography key = {index}>
+                          {item.name}
+                        </Typography>
+                      ))}
+                    </Grid>
+                    <Grid xs ={6}>
+                      {filteredItems.map((item, index) => (
+                        <Typography key = {index}>
+                            ₱ {item.price}
+                        </Typography>
+                      ))}
+                    </Grid>
+                  </Grid>
+                  <Grid container
+                      display="flex"
+                      flexDirection="column"
+                      justifyContent="center"
+                      alignItems= "center"
+                      sx={{
+                        marginTop: '2%'
+                      }}>
+                    <Grid xs = {12} sx={{margin: '10% 0 10% 0'}}>
+                      <Typography
+                        variant='h5'>
+                        Estimated Total :  ₱ {estimatedTotal()}
+                      </Typography>
+                    </Grid>
+                    <Grid xs ={12}>
+                      <Box
+                        sx={{
+                          borderRadius: 2,
+                          bgcolor: '#0b4c84',
+                          height: '10%',
+                          width: '100%',
+                          padding: '5%',
+                          '&:hover': {
+                            bgcolor: '#7092be',
+                            transform: 'scale(1.1)',
+                            cursor: 'pointer',
+                          },
+                                
+                        }}
+                      >
+                        <Typography
+                          variant="h4"
+                          sx={{
+                            fontWeight: 'bold',
+                            color: '#ffffff',
+                          }}
+                        >
+                              ORDER ⭢
+                        </Typography>
+                      </Box>
+                    </Grid>
+                  </Grid>
                 </Grid>
               </Grid>
                 </Grid>
-                
-                
             </Grid>
 
         </Box>
