@@ -16,7 +16,7 @@ const LaundryOrder = () => {
   const [L3, setL3] = useState (false)
   const itemsOrdered = [
       (L1 ? {name: 'Comforters / Blankets', price: 150} : {}),
-      (L2 ? {name: 'Thick / Linen / Comforter', price: 200} : {}),
+      (L2 ? {name: 'Thick / Linen / Curtains', price: 200} : {}),
       (L3 ? {name: 'Regular Clothing', price: 100} : {}),
     ]
   const filteredItems = itemsOrdered.filter(item => Object.keys(item).length > 0)
