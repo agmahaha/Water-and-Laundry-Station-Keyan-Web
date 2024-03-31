@@ -78,30 +78,27 @@ const LaundryOrder = () => {
     return(
        <><Navbar/>
        <Box
-            style={{ padding: '2% 2% 2% 2%' }}
             gap="20px"
             sx={{
                 margin: 'auto',
-                borderRadius: 6,
+                borderRadius: '10px',
                 bgcolor: '#ffffff',
-                width: '80%',
+                width: '85%',
                 height: '50%',
                 }}
         >
-            <Grid container>
-              <Grid xs ={12}>
-              <FlexBetween gap="1.75rem" padding="1rem" paddingBottom={0}>
+            <FlexBetween gap="1.75rem" padding="1rem" paddingBottom={0}>
                 <Breadcrumbs aria-label="breadcrumb">
-                  <Typography color="inherit" fontWeight='bold' fontSize={20}>
+                  <Link underline= "hover" color="inherit" href="/" fontWeight='bold' fontSize={20}>
                     Home
-                  </Typography>
+                  </Link>
                   <Link underline="hover" color="inherit" href="/laundry" fontWeight='bold' fontSize={20}>
                     Laundry Service
                   </Link>
                   <Typography color="text.primary" fontWeight='bold' fontSize={20}>Order</Typography>
                 </Breadcrumbs>
-              </FlexBetween>
-              </Grid>
+            </FlexBetween>
+            <Grid container>
             </Grid>
             <Grid container>
               <Grid xs = {6} sx= {{borderRight:'2px solid black',}}>

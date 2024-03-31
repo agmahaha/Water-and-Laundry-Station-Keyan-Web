@@ -182,6 +182,7 @@ const Profile = () => {
                    display="flex"
                    flexDirection="column"
                    justifyContent="center"
+                   alignItems='center'
                    gap="20px"
                    sx={{
                        margin: 'auto',
@@ -189,7 +190,6 @@ const Profile = () => {
                        bgcolor: '#ffffff',
                        width: '65%',
                        height: '50%',
-
                    }}
                >
            <h3>NAME:</h3>
