@@ -1,3 +1,4 @@
+import { NumbersRounded } from "@mui/icons-material";
 import mongoose from "mongoose"
 
 const orderItemSchema = new mongoose.Schema(
@@ -16,6 +17,9 @@ const orderItemSchema = new mongoose.Schema(
         gallonType: {
             type: String // Only if water (round or slim)
         },
+        waterType:{
+            type: String
+        },
         numberOfItems: { // e.g. 1 gallon, 2 gallons
             type: Number,
         },
@@ -32,6 +36,12 @@ const OrderSchema = new mongoose.Schema(
             type: mongoose.Schema.Types.ObjectId, 
             ref: 'Users',
             required: true,
+        },
+        address:{
+            type: String
+        },
+        contactNumber:{
+            type: Number
         },
         status:{
             type: String, 

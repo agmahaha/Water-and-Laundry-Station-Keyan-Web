@@ -5,6 +5,7 @@ import { Unstable_NumberInput as BaseNumberInput,  numberInputClasses, } from '@
 import { styled } from '@mui/system';
 import Navbar from '../../../components/Navbar'
 import FlexBetween from '../../../components/FlexBetween'
+import {useSelector} from "react-redux"
 import { useNavigate } from 'react-router-dom'
 import { useDispatch } from "react-redux"
 
@@ -32,26 +33,94 @@ const NumberInput = React.forwardRef(function CustomNumberInput(props, ref) {
 });
 
 const WaterOrder = () => {
-  const [selectedOption, setSelectedOption] = useState(null);
+  const user = useSelector((state) => state.user)
+  const [selectedOption, setSelectedOption] = useState(null)
   const [selectedWater, setSelectedWater] = useState(null)
-  const [L1, setL1] = useState (false)
-  const [L2, setL2] = useState (false)
-  const [L3, setL3] = useState (false)
-  const [quantity, setQuantity] = useState(null);
+  const [selectedService, setSelectedService] = useState(null)
+  const [quantity, setQuantity] = useState(null)
+  const [sameAddress, setSameAddress] = useState(false)
   const navigate = useNavigate()
 
   const itemsOrdered = [
-    (L1 ? {name: 'Gallon Round', price: 130} : {}),
-    (L2 ? {name: 'Gallon Slim', price: 150} : {}),
-    (L3 ? {name: 'Refill', price: 20} : {}),
+    (selectedService === "round" ? {name: 'Gallon Round', price: 130} : {}),
+    (selectedService === "slim" ? {name: 'Gallon Slim', price: 150} : {}),
+    (selectedService === "refill" ? {name: 'Refill', price: 20} : {}),
   ]
   const filteredItems = itemsOrdered.filter(item => Object.keys(item).length > 0)
+  const [address, setAddress] = useState('')
+  const [contactNum, setContactNum] = useState ()
+  var savedAddress = ''
+  var savedContact = ''
 
   const handleOptionChange = (option) => {
     setSelectedOption(option)}
 
   const estimatedTotal = () => {
     return filteredItems.reduce((total, item) => total + item.price, 0)
+  }
+
+  if(user){
+    var user_ID = user._id 
+  }
+
+  const orderItems = () => {
+    var orderedItems = []
+
+    if(filteredItems != null){
+      filteredItems.forEach(item => {
+        const itemName = item.name
+        const type = 'water'
+        if (selectedService !== 'refill'){
+          var gallonType = selectedService
+        }
+        const waterType = selectedWater
+        const numberOfItems = quantity
+        const pricePerItem = item.price
+
+        if (selectedService !== 'refill')
+          orderedItems.push({ itemName, type, gallonType, waterType, numberOfItems, pricePerItem })
+        else
+          orderedItems.push({ itemName, type, waterType, numberOfItems, pricePerItem })
+      })
+    }
+    
+
+    if(orderedItems != null){
+      orderedItems = orderedItems.filter(item => 
+        filteredItems.some(filteredItem => filteredItem.name === item.itemName)
+      )
+    }
+    
+      return orderedItems
+  }
+
+  if(selectedOption === 'delivery'){
+    if(!sameAddress){
+      savedAddress = address
+      savedContact = contactNum
+    } else {
+      savedAddress = user.address
+      savedContact = user.phone_num
+    }
+  } else {
+      savedAddress = ''
+      savedContact = ''
+  }
+
+  const createUserOrder = async() => {
+    const savedUserOrder = await fetch(
+      "http://localhost:3001/order/orderService",
+      {
+        method: "POST",
+        headers:{"Content-Type" : "application/json"},
+        body: JSON.stringify({
+            userID: user_ID,
+            items: orderItems()
+        })
+      }
+    )
+
+    const savedOrder = await savedUserOrder.json()
   }
 
     return(
@@ -62,7 +131,7 @@ const WaterOrder = () => {
                 margin: 'auto',
                 borderRadius: '10px',
                 bgcolor: '#ffffff',
-                width: '80%',
+                width: '85%',
                 height: '50%',
                 }}
         >
@@ -90,7 +159,7 @@ const WaterOrder = () => {
                                 sx={{
                                   margin: 'auto',
                                   borderRadius: 3,
-                                  bgcolor: (L1 ? '#0B4C84' : '#ffffff'),
+                                  bgcolor: (selectedService === "round" ? '#0B4C84' : '#ffffff'),
                                   height: '300px',
                                   width: '70%',
                                   padding: '5%',
@@ -101,13 +170,13 @@ const WaterOrder = () => {
                                     cursor: 'pointer',
                                 },
                                 }}
-                                  onClick={() => {setL1(!L1)}}
+                                  onClick={() => {setSelectedService('round')}}
 
                                 >
                               <Typography
                                       sx={{
                                           fontWeight: 'bold',
-                                          color:(L1 ? '#ffffff' : 'black'),
+                                          color:(selectedService === "round" ? '#ffffff' : 'black'),
                                       }}
                                   >
                                       Gallon Round
@@ -119,7 +188,7 @@ const WaterOrder = () => {
                                 sx={{
                                   margin: 'auto',
                                   borderRadius: 3,
-                                  bgcolor: (L2 ? '#0B4C84' : '#ffffff'),
+                                  bgcolor: (selectedService === "slim" ? '#0B4C84' : '#ffffff'),
                                   height: '300px',
                                   width: '70%',
                                   padding: '5%',
@@ -132,13 +201,13 @@ const WaterOrder = () => {
                                 },
                                 
                                 }}
-                                onClick={() => {setL2(!L2)}}
+                                onClick={() => {setSelectedService('slim')}}
 
                                 >
                               <Typography
                                       sx={{
                                           fontWeight: 'bold',
-                                          color:(L2 ? '#ffffff' : 'black'),
+                                          color:(selectedService === "slim" ? '#ffffff' : 'black'),
                   
                                       }}
                                   >
@@ -151,7 +220,7 @@ const WaterOrder = () => {
                                 sx={{
                                   margin: 'auto',
                                   borderRadius: 3,
-                                  bgcolor: (L3 ? '#0B4C84' : '#ffffff'),
+                                  bgcolor: (selectedService === "refill" ? '#0B4C84' : '#ffffff'),
                                   height: '300px',
                                   width: '70%',
                                   padding: '5%',
@@ -163,13 +232,13 @@ const WaterOrder = () => {
                                 },
                                 
                                 }}
-                                onClick={() => {setL3(!L3)}}
+                                onClick={() => {setSelectedService('refill')}}
 
                                 >
                               <Typography
                                       sx={{
                                           fontWeight: 'bold',
-                                          color:(L3 ? '#ffffff' : 'black'),
+                                          color:(selectedService === "refill" ? '#ffffff' : 'black'),
                                       }}
                                   >
                                       Refill
@@ -299,7 +368,7 @@ const WaterOrder = () => {
                             Quantity:
                           </Typography>
                           <NumberInput
-                            min={0}
+                            min={1}
                             value={quantity}
                             onChange={(event, val) => setQuantity(val)}
                             sx={{width: '15%'}}/>
@@ -361,23 +430,27 @@ const WaterOrder = () => {
                           <TextField
                             fullWidth
                             label="Address"
-                            defaultValue= ''
+                            defaultValue= {address}
                             variant='outlined'
                             InputLabelProps={{ style: {color: 'black'}}}
                             InputProps={{ style: {color: 'black'}}}
                             autoComplete='false'
+                            onChange = {(e) => setAddress(e.target.value)}
+                            disabled = {sameAddress}
                             />
                           <TextField
                             fullWidth
                             label="Contact No."
-                            defaultValue= ''
+                            defaultValue= {contactNum}
                             variant='outlined'
                             InputLabelProps={{ style: {color: 'black'}}}
                             InputProps={{ style: {color: 'black'}}}
                             autoComplete='false'
+                            onChange = {(e) => setContactNum(e.target.value)}
+                            disabled = {sameAddress}
                             />
                           <FormControlLabel label='Use same address and contact number in profile' 
-                              control={<Checkbox/>}/>
+                              control={<Checkbox checked = {sameAddress} onChange={(event) => setSameAddress(event.target.checked)}/>}/>
                         </Box>
                       )}
                       </Grid>
@@ -525,6 +598,8 @@ const WaterOrder = () => {
                             fontWeight: 'bold',
                             color: '#ffffff',
                           }}
+
+                          onClick={()=>createUserOrder()}
                         >
                               ORDER ⭢
                         </Typography>

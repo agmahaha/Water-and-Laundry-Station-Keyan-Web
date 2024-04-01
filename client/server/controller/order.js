@@ -4,11 +4,15 @@ export const userOrder = async (req, res) => {
     try{
         const{
             userID,
+            address,
+            contactNumber,
             items
         } = req.body
 
         const newUserOrder = new Order({
             userID,
+            address,
+            contactNumber,
             items
         })
 

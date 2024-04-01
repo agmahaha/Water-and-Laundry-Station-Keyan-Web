@@ -14,12 +14,17 @@ const LaundryOrder = () => {
   const [L1, setL1] = useState (false)
   const [L2, setL2] = useState (false)
   const [L3, setL3] = useState (false)
+  const [sameAddress, setSameAddress] = useState(false)
   const itemsOrdered = [
       (L1 ? {name: 'Comforters / Blankets', price: 150} : {}),
       (L2 ? {name: 'Thick / Linen / Curtains', price: 200} : {}),
       (L3 ? {name: 'Regular Clothing', price: 100} : {}),
     ]
   const filteredItems = itemsOrdered.filter(item => Object.keys(item).length > 0)
+  const [address, setAddress] = useState('')
+  const [contactNum, setContactNum] = useState ()
+  var savedAddress = ''
+  var savedContact = ''
 
   const handleOptionChange = (option) => {
     setSelectedOption(option)}
@@ -38,7 +43,7 @@ const LaundryOrder = () => {
     if(filteredItems != null){
       filteredItems.forEach(item => {
         const itemName = item.name
-        const type = 'water'
+        const type = 'laundry'
         const weight = 5
         const pricePerItem = item.price
 
@@ -56,7 +61,20 @@ const LaundryOrder = () => {
       return orderedItems
   }
 
-  console.log(orderItems())
+  if(selectedOption === 'delivery'){
+    if(!sameAddress){
+      savedAddress = address
+      savedContact = contactNum
+    } else {
+      savedAddress = user.address
+      savedContact = user.phone_num
+    }
+  } else {
+      savedAddress = ''
+      savedContact = ''
+  }
+
+  console.log(sameAddress)
   
 
   const createUserOrder = async() => {
@@ -67,6 +85,8 @@ const LaundryOrder = () => {
         headers:{"Content-Type" : "application/json"},
         body: JSON.stringify({
             userID: user_ID,
+            address: savedAddress,
+            contactNumber: savedContact,
             items: orderItems()
         })
       }
@@ -255,23 +275,27 @@ const LaundryOrder = () => {
                           <TextField
                             fullWidth
                             label="Address"
-                            defaultValue= ''
+                            defaultValue= {address}
                             variant='outlined'
                             InputLabelProps={{ style: {color: 'black'}}}
                             InputProps={{ style: {color: 'black'}}}
                             autoComplete='false'
+                            onChange = {(e) => setAddress(e.target.value)}
+                            disabled = {sameAddress}
                             />
                           <TextField
                             fullWidth
                             label="Contact No."
-                            defaultValue= ''
+                            defaultValue= {contactNum}
                             variant='outlined'
                             InputLabelProps={{ style: {color: 'black'}}}
                             InputProps={{ style: {color: 'black'}}}
                             autoComplete='false'
+                            onChange = {(e) => setContactNum(e.target.value)}
+                            disabled = {sameAddress}
                             />
                           <FormControlLabel label='Use same address and contact number in profile' 
-                              control={<Checkbox/>}/>
+                              control={<Checkbox checked = {sameAddress} onChange={(event) => setSameAddress(event.target.checked)}/>}/>
                         </Box>
                       )}
                       </Grid>
