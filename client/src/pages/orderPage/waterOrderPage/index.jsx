@@ -131,7 +131,12 @@ const WaterOrder = () => {
   }
 
   if (filteredItems !== null && selectedOption !== null && selectedWater !== null){
-    proceedOrder = true
+    if(address !== '' && contactNum !== '')
+      proceedOrder = true
+    else if (sameAddress === true)
+      proceedOrder = true
+    else 
+      proceedOrder = false
   } else {
     proceedOrder = false
   }
@@ -455,6 +460,11 @@ const WaterOrder = () => {
                             autoComplete='false'
                             onChange = {(e) => setAddress(e.target.value)}
                             disabled = {sameAddress}
+                            sx={{
+                              "& .MuiOutlinedInput-root.Mui-disabled .MuiOutlinedInput-notchedOutline": {
+                                borderColor: "red",
+                              },
+                            }}
                             />
                           <TextField
                             fullWidth
@@ -466,6 +476,11 @@ const WaterOrder = () => {
                             autoComplete='false'
                             onChange = {(e) => setContactNum(e.target.value)}
                             disabled = {sameAddress}
+                            sx={{
+                              "& .MuiOutlinedInput-root.Mui-disabled .MuiOutlinedInput-notchedOutline": {
+                                borderColor: "red",
+                              },
+                            }}
                             />
                           <FormControlLabel label='Use same address and contact number in profile' 
                               control={<Checkbox checked = {sameAddress} onChange={(event) => setSameAddress(event.target.checked)}/>}/>
@@ -625,8 +640,16 @@ const WaterOrder = () => {
                           }}
 
                           onClick={() => {
-                            setDisplayAlert(true);
-                            validateOrder();}}
+                            if (filteredItems !== null && selectedOption !== null){
+                              if(address !== '' && contactNum !== '')
+                                  validateOrder()
+                              else if (sameAddress === true)
+                                  validateOrder()
+                              else 
+                                  setDisplayAlert(true)
+                            }else
+                              setDisplayAlert(true)
+                            }}
                         >
                               ORDER ⭢
                         </Typography>
