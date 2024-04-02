@@ -1,13 +1,12 @@
 import React, {useState} from 'react'
-import { Typography, Button, Box, Grid, Checkbox, TextField, FormControlLabel, Breadcrumbs, Link} from '@mui/material'
+import { Typography, Box, Grid, Checkbox, TextField, FormControlLabel, Breadcrumbs, Link, Alert, AlertTitle} from '@mui/material'
 import {StorefrontOutlined, LocalShippingOutlined} from '@mui/icons-material'
-import { Unstable_NumberInput as BaseNumberInput,  numberInputClasses, } from '@mui/base/Unstable_NumberInput'
-import { styled } from '@mui/system';
+import { Unstable_NumberInput as BaseNumberInput } from '@mui/base/Unstable_NumberInput'
 import Navbar from '../../../components/Navbar'
 import FlexBetween from '../../../components/FlexBetween'
 import {useSelector} from "react-redux"
 import { useNavigate } from 'react-router-dom'
-import { useDispatch } from "react-redux"
+import {StyledInputRoot, StyledInputElement, StyledButton} from '../../../components/numberInput'
 
 const NumberInput = React.forwardRef(function CustomNumberInput(props, ref) {
   return (
@@ -42,21 +41,23 @@ const WaterOrder = () => {
   const navigate = useNavigate()
 
   const itemsOrdered = [
-    (selectedService === "round" ? {name: 'Gallon Round', price: 130} : {}),
-    (selectedService === "slim" ? {name: 'Gallon Slim', price: 150} : {}),
-    (selectedService === "refill" ? {name: 'Refill', price: 20} : {}),
+    (selectedService === "round" ? {name: 'Gallon Round', price: 130, qty: quantity, type: selectedWater} : {}),
+    (selectedService === "slim" ? {name: 'Gallon Slim', price: 150, qty: quantity, type: selectedWater} : {}),
+    (selectedService === "refill" ? {name: 'Refill', price: 20, qty: quantity, type: selectedWater} : {}),
   ]
   const filteredItems = itemsOrdered.filter(item => Object.keys(item).length > 0)
   const [address, setAddress] = useState('')
   const [contactNum, setContactNum] = useState ()
   var savedAddress = ''
   var savedContact = ''
+  var proceedOrder = false
+  const [displayAlert, setDisplayAlert] = useState(false)
 
   const handleOptionChange = (option) => {
     setSelectedOption(option)}
 
   const estimatedTotal = () => {
-    return filteredItems.reduce((total, item) => total + item.price, 0)
+    return filteredItems.reduce((total, item) => total + item.price * quantity, 0)
   }
 
   if(user){
@@ -107,6 +108,10 @@ const WaterOrder = () => {
       savedContact = ''
   }
 
+  if (filteredItems !== null && selectedOption !== null){
+    proceedOrder = true
+  }
+
   const createUserOrder = async() => {
     const savedUserOrder = await fetch(
       "http://localhost:3001/order/orderService",
@@ -115,12 +120,25 @@ const WaterOrder = () => {
         headers:{"Content-Type" : "application/json"},
         body: JSON.stringify({
             userID: user_ID,
+            address: savedAddress,
+            contactNumber: savedContact,
             items: orderItems()
         })
       }
     )
 
     const savedOrder = await savedUserOrder.json()
+  }
+
+  if (filteredItems !== null && selectedOption !== null && selectedWater !== null){
+    proceedOrder = true
+  } else {
+    proceedOrder = false
+  }
+  const validateOrder = () => {
+    if(proceedOrder === true){
+      createUserOrder()
+    }
   }
 
     return(
@@ -547,17 +565,24 @@ const WaterOrder = () => {
                         sx={{
                           textAlign:'center'
                         }}>
-                    <Grid xs ={6}>
+                    <Grid xs ={4}>
                       {filteredItems.map((item, index) => (
                         <Typography key = {index}>
-                          {item.name}
+                          {item.name} ({item.type})
                         </Typography>
                       ))}
                     </Grid>
-                    <Grid xs ={6}>
+                    <Grid xs ={4}>
                       {filteredItems.map((item, index) => (
                         <Typography key = {index}>
                             ₱ {item.price}
+                        </Typography>
+                      ))}
+                    </Grid>
+                    <Grid xs ={4}>
+                      {filteredItems.map((item, index) => (
+                        <Typography key = {index}>
+                            {item.qty}
                         </Typography>
                       ))}
                     </Grid>
@@ -599,10 +624,21 @@ const WaterOrder = () => {
                             color: '#ffffff',
                           }}
 
-                          onClick={()=>createUserOrder()}
+                          onClick={() => {
+                            setDisplayAlert(true);
+                            validateOrder();}}
                         >
                               ORDER ⭢
                         </Typography>
+                      </Box>
+                    </Grid>
+                      <Grid xs = {12} sx = {{marginTop : '5%'}}>
+                        <Box>
+                            {displayAlert === true && (
+                          <Alert severity="warning" onClose={() => setDisplayAlert(false)}>
+                          <AlertTitle>Warning</AlertTitle>
+                            Please select service before ordering.
+                          </Alert>)}
                       </Box>
                     </Grid>
                   </Grid>
@@ -616,142 +652,4 @@ const WaterOrder = () => {
     )
 }
 
-const blue = {
-  100: '#DAECFF',
-  200: '#80BFFF',
-  400: '#3399FF',
-  500: '#007FFF',
-  600: '#0072E5',
-};
-
-const grey = {
-  50: '#F3F6F9',
-  100: '#E5EAF2',
-  200: '#DAE2ED',
-  300: '#C7D0DD',
-  400: '#B0B8C4',
-  500: '#9DA8B7',
-  600: '#6B7A90',
-  700: '#434D5B',
-  800: '#303740',
-  900: '#1C2025',
-};
-
-const StyledInputRoot = styled('div')(
-  ({ theme }) => `
-  font-family: 'IBM Plex Sans', sans-serif;
-  font-weight: 400;
-  border-radius: 8px;
-  color: ${theme.palette.mode === 'dark' ? grey[300] : grey[900]};
-  background: ${theme.palette.mode === 'dark' ? grey[900] : '#fff'};
-  border: 1px solid ${theme.palette.mode === 'dark' ? grey[700] : grey[200]};
-  box-shadow: 0px 2px 2px ${theme.palette.mode === 'dark' ? grey[900] : grey[50]};
-  display: grid;
-  grid-template-columns: 70% 19px;
-  grid-template-rows: 1fr 1fr;
-  overflow: hidden;
-  column-gap: 8px;
-  padding: 4px;
-
-  &.${numberInputClasses.focused} {
-    border-color: ${blue[400]};
-    box-shadow: 0 0 0 3px ${theme.palette.mode === 'dark' ? blue[600] : blue[200]};
-  }
-
-  &:hover {
-    border-color: ${blue[400]};
-  }
-
-  // firefox
-  &:focus-visible {
-    outline: 0;
-  }
-`,
-);
-
-const StyledInputElement = styled('input')(
-  ({ theme }) => `
-  font-size: 0.875rem;
-  font-family: inherit;
-  font-weight: 400;
-  line-height: 1.5;
-  grid-column: 1/2;
-  grid-row: 1/3;
-  color: ${theme.palette.mode === 'dark' ? grey[300] : grey[900]};
-  background: inherit;
-  border: none;
-  border-radius: inherit;
-  padding: 8px 12px;
-  outline: 0;
-`,
-);
-
-const StyledButton = styled('button')(
-  ({ theme }) => `
-  display: flex;
-  flex-flow: row nowrap;
-  justify-content: center;
-  align-items: center;
-  appearance: none;
-  padding: 0;
-  width: 19px;
-  height: 19px;
-  font-family: system-ui, sans-serif;
-  font-size: 0.875rem;
-  line-height: 1;
-  box-sizing: border-box;
-  background: ${theme.palette.mode === 'dark' ? grey[900] : '#fff'};
-  border: 0;
-  color: ${theme.palette.mode === 'dark' ? grey[300] : grey[900]};
-  transition-property: all;
-  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
-  transition-duration: 120ms;
-
-  &:hover {
-    background: ${theme.palette.mode === 'dark' ? grey[800] : grey[50]};
-    border-color: ${theme.palette.mode === 'dark' ? grey[600] : grey[300]};
-    cursor: pointer;
-  }
-
-  &.${numberInputClasses.incrementButton} {
-    grid-column: 2/3;
-    grid-row: 1/2;
-    border-top-left-radius: 4px;
-    border-top-right-radius: 4px;
-    border: 1px solid;
-    border-bottom: 0;
-    &:hover {
-      cursor: pointer;
-      background: ${blue[400]};
-      color: ${grey[50]};
-    }
-
-  border-color: ${theme.palette.mode === 'dark' ? grey[800] : grey[200]};
-  background: ${theme.palette.mode === 'dark' ? grey[900] : grey[50]};
-  color: ${theme.palette.mode === 'dark' ? grey[200] : grey[900]};
-  }
-
-  &.${numberInputClasses.decrementButton} {
-    grid-column: 2/3;
-    grid-row: 2/3;
-    border-bottom-left-radius: 4px;
-    border-bottom-right-radius: 4px;
-    border: 1px solid;
-    &:hover {
-      cursor: pointer;
-      background: ${blue[400]};
-      color: ${grey[50]};
-    }
-
-  border-color: ${theme.palette.mode === 'dark' ? grey[800] : grey[200]};
-  background: ${theme.palette.mode === 'dark' ? grey[900] : grey[50]};
-  color: ${theme.palette.mode === 'dark' ? grey[200] : grey[900]};
-  }
-  & .arrow {
-    transform: translateY(-1px);
-  }
-`,
-);
-
 export default WaterOrder
-

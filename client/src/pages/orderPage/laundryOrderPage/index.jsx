@@ -1,5 +1,5 @@
 import React, {useState} from 'react'
-import { Typography, Button, Box, Grid, Checkbox, TextField, FormControlLabel, Breadcrumbs, Link} from '@mui/material'
+import { Typography, Box, Grid, Checkbox, TextField, FormControlLabel, Breadcrumbs, Link, Alert, AlertTitle} from '@mui/material'
 import {StorefrontOutlined, LocalShippingOutlined} from '@mui/icons-material'
 import Navbar from '../../../components/Navbar'
 import FlexBetween from '../../../components/FlexBetween'
@@ -25,6 +25,8 @@ const LaundryOrder = () => {
   const [contactNum, setContactNum] = useState ()
   var savedAddress = ''
   var savedContact = ''
+  var proceedOrder = false
+  const [displayAlert, setDisplayAlert] = useState(false)
 
   const handleOptionChange = (option) => {
     setSelectedOption(option)}
@@ -73,9 +75,10 @@ const LaundryOrder = () => {
       savedAddress = ''
       savedContact = ''
   }
-
-  console.log(sameAddress)
   
+  if (filteredItems !== null && selectedOption !== null){
+      proceedOrder = true
+  }
 
   const createUserOrder = async() => {
     const savedUserOrder = await fetch(
@@ -94,6 +97,20 @@ const LaundryOrder = () => {
 
     const savedOrder = await savedUserOrder.json()
   }
+
+  if (filteredItems !== null && selectedOption !== null){
+    proceedOrder = true
+  } else {
+    proceedOrder = false
+  }
+  const validateOrder = () => {
+    if(proceedOrder === true){
+      createUserOrder()
+    }
+  }
+
+
+  console.log(displayAlert)
 
     return(
        <><Navbar/>
@@ -444,10 +461,22 @@ const LaundryOrder = () => {
                             color: '#ffffff',
                           }}
 
-                          onClick={()=>createUserOrder()}
+                          onClick={() => {
+                            setDisplayAlert(true);
+                            validateOrder();}}
                         >
                               ORDER ⭢
                         </Typography>
+
+                      </Box>
+                    </Grid>
+                    <Grid xs = {12} sx = {{marginTop : '5%'}}>
+                        <Box>
+                            {displayAlert === true && (
+                          <Alert severity="warning" onClose={() => setDisplayAlert(false)}>
+                          <AlertTitle>Warning</AlertTitle>
+                            Please select service before ordering.
+                          </Alert>)}
                       </Box>
                     </Grid>
                   </Grid>
