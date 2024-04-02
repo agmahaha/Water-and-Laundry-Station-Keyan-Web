@@ -130,7 +130,7 @@ const WaterOrder = () => {
     const savedOrder = await savedUserOrder.json()
   }
 
-  if (filteredItems !== null && selectedOption !== null && selectedWater !== null){
+  if (filteredItems.length > 0 && selectedOption !== null && selectedWater !== null){
     if(address !== '' && contactNum !== null)
       proceedOrder = true
     else if (sameAddress === true)
@@ -145,6 +145,7 @@ const WaterOrder = () => {
       createUserOrder()
     }
   }
+
 
     return(
        <><Navbar/>
@@ -640,7 +641,7 @@ const WaterOrder = () => {
                           }}
 
                           onClick={() => {
-                            if (filteredItems !== null && selectedOption !== null){
+                            if (filteredItems.length > 0 && selectedOption !== null && selectedWater != null){
                               if(address !== '' && contactNum !== null)
                                   validateOrder()
                               else if (sameAddress === true)
