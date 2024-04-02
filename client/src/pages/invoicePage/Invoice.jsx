@@ -1,0 +1,167 @@
+import React from 'react';
+import { Typography, Stack, IconButton, Paper, Table, TableHead, TableBody, TableRow, Box, TableCell, Accordion, AccordionSummary, AccordionDetails, Divider, Tooltip } from '@mui/material';
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+import HourglassEmptyIcon from '@mui/icons-material/HourglassEmpty';
+import AccessTimeIcon from '@mui/icons-material/AccessTime';
+import LocalShippingIcon from '@mui/icons-material/LocalShipping';
+import CheckCircleIcon from '@mui/icons-material/CheckCircle';
+import EditIcon from '@mui/icons-material/Edit';
+
+const getStatusIcon = (status) => {
+  switch (status) {
+    case 'Pending':
+      return <HourglassEmptyIcon sx={{ fontSize: 62 }} />; // Icon for pending status
+    case 'In-Progress':
+      return <AccessTimeIcon sx={{ fontSize: 62 }} />; // Icon for in progress status
+    case 'For-Delivery':
+      return <LocalShippingIcon sx={{ fontSize: 62 }} />; // Icon for for delivery status
+    case 'Completed':
+      return <CheckCircleIcon sx={{ fontSize: 62 }} />; // Icon for completed status
+    default:
+      return null; // Default to no icon for unknown statuses
+  }
+};
+
+const getStatusColor = (status) => {
+  switch (status) {
+    case 'Pending':
+      return '#CCCCCC'; // gray
+    case 'In-Progress':
+      return '#d7a6f5'; // purple
+    case 'For-Delivery':
+      return '#87baed'; // blue
+    case 'Completed':
+      return '#8cde8f'; // green
+    default:
+      return '#CCCCCC'; // default to gray for unknown statuses
+  }
+};
+
+const Invoice = ({ order, index, handleEdit, admin }) => {
+
+  const accordionColor = getStatusColor(order.status);
+  const accordionIcon = getStatusIcon(order.status);
+
+  const getTypeSpecificColumns = (type) => {
+    if (type === 'Laundry') {
+      return (
+        <>
+          <TableCell>Weight</TableCell>
+        </>
+      );
+    } else if (type === 'Water') {
+      return (
+        <>
+          <TableCell>P/M/A</TableCell>
+          <TableCell>Gallon Type</TableCell>
+        </>
+      );
+    }
+    return (
+      <>
+        <TableCell>Weight</TableCell>
+      </>
+    ); // Default
+  };
+
+  const getTypeSpecificItemColumns = (item, type) => {
+    if (type === 'Laundry') {
+      return (
+        <>
+          <TableCell>{item.weight}</TableCell>
+        </>
+      );
+    } else if (type === 'Water') {
+      return (
+        <>
+          <TableCell>{item.weight}</TableCell>
+          <TableCell>{item.gallonType}</TableCell>
+        </>
+      );
+    }
+    return (
+      <>
+        <TableCell>{item.weight}</TableCell>
+      </>
+    ); // Default
+  };
+  
+  return (
+    <>
+      <Accordion style={{ width: '75%', marginBottom: '20px', backgroundColor: accordionColor }} key={index}>
+        <AccordionSummary
+          expandIcon={<ExpandMoreIcon />}
+          aria-controls={`panel-${index}-content`}
+          id={`panel-${index}-header`}
+        >
+          <Box display="flex" alignItems="center">
+            {accordionIcon && <Box mr={1}>{accordionIcon}</Box>}
+          </Box>
+          <Box ml={2}>
+            <Typography variant="h6">Order {order.invoiceNumber}</Typography>
+            <Typography variant="subtitle2" color="textSecondary">
+              Status: {order.status}
+            </Typography>
+            <Typography variant="subtitle2" color="textSecondary">
+              Type: {order.type}
+            </Typography>
+            <Typography variant="subtitle2" color="textSecondary">
+              Total Amount Due: {order.totalAmountDue}
+            </Typography>
+          </Box>
+        </AccordionSummary>
+        <AccordionDetails style={{ width: '100%', display: 'flex', justifyContent: 'center' }}>
+          <Paper style={{ width: '75%', padding: '20px' }}>
+            {admin == 'true' ? (
+              <Tooltip title="Edit Order">
+                <IconButton onClick={() => handleEdit(order)} sx={{ "&:hover": { backgroundColor: '#CCCCCC' } }}> {/* Add edit button */}
+                  <Typography sx={{ mr: 2 }}>Edit Order Details</Typography>
+                  <EditIcon />
+                </IconButton>
+              </Tooltip>
+            ) : null}
+            <Typography gutterBottom>
+              Date: {order.date}
+            </Typography>
+            <Typography gutterBottom>
+              Invoice Number: {order.invoiceNumber}
+            </Typography>
+            <Stack direction="row" spacing={2} style={{ marginTop: '10px', flexGrow: 1 }}>
+              <Table>
+                <TableHead>
+                  <TableRow>
+                    <TableCell>Item</TableCell>
+                    {getTypeSpecificColumns(order.type)}
+                    <TableCell>Price</TableCell>
+                    <TableCell>Quantity</TableCell>
+                  </TableRow>
+                </TableHead>
+                <TableBody>
+                  {order.items.map((item, idx) => (
+                    <TableRow key={idx}>
+                      <TableCell>{item.name}</TableCell>
+                      {getTypeSpecificItemColumns(item, order.type)}
+                      <TableCell>{item.price}</TableCell>
+                      <TableCell>{item.quantity}</TableCell>
+                    </TableRow>
+                  ))}
+                </TableBody>
+              </Table>
+              <div>
+                <Typography variant="subtitle1" color="textSecondary" sx={{ marginBottom: '20px' }}>
+                  Payment Instructions: {order.paymentInstructions}
+                </Typography>
+                <Typography variant="h6">
+                  Total Amount Due: {order.totalAmountDue}
+                </Typography>
+              </div>
+
+            </Stack>
+          </Paper>
+        </AccordionDetails>
+      </Accordion>
+    </>
+  );
+};
+
+export default Invoice;
