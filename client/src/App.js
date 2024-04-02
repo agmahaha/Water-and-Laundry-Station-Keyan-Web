@@ -11,6 +11,8 @@ import PageNotFound from "./pages/pageNotFound"
 import {BrowserRouter, Routes, Route} from 'react-router-dom'
 import './App.css';
 import AnnouncementsPage from "./pages/announcementPage"
+import OrderInvoices from "./pages/invoicePage/page"
+import OrderAdmin from "./pages/invoicePage/adminPage"
 
 
 function App() {
@@ -29,6 +31,8 @@ function App() {
           <Route path ="/orderLaundry" element={<LaundryOrder/>}/>
           <Route path ="/orderWater" element={<WaterOrder/>}/>
           <Route path ="/profile" element={<Profile/>}/>
+          <Route path ="/orderHistory" element={<OrderInvoices/>}/>
+          <Route path ="/adminOrderHistory" element={<OrderAdmin/>}/>
           <Route path ="/pageNotFound" element={<PageNotFound/>}/>
         </Routes>
       </BrowserRouter>

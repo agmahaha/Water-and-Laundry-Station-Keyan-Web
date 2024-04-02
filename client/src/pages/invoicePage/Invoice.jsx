@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Typography, Stack, IconButton, Paper, Table, TableHead, TableBody, TableRow, Box, TableCell, Accordion, AccordionSummary, AccordionDetails, Divider, Tooltip } from '@mui/material';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import HourglassEmptyIcon from '@mui/icons-material/HourglassEmpty';
@@ -9,7 +9,7 @@ import EditIcon from '@mui/icons-material/Edit';
 
 const getStatusIcon = (status) => {
   switch (status) {
-    case 'Pending':
+    case 'pending':
       return <HourglassEmptyIcon sx={{ fontSize: 62 }} />; // Icon for pending status
     case 'In-Progress':
       return <AccessTimeIcon sx={{ fontSize: 62 }} />; // Icon for in progress status
@@ -24,7 +24,7 @@ const getStatusIcon = (status) => {
 
 const getStatusColor = (status) => {
   switch (status) {
-    case 'Pending':
+    case 'pending':
       return '#CCCCCC'; // gray
     case 'In-Progress':
       return '#d7a6f5'; // purple
@@ -41,6 +41,9 @@ const Invoice = ({ order, index, handleEdit, admin }) => {
 
   const accordionColor = getStatusColor(order.status);
   const accordionIcon = getStatusIcon(order.status);
+  const [user, setUser] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
   const getTypeSpecificColumns = (type) => {
     if (type === 'Laundry') {
@@ -86,6 +89,24 @@ const Invoice = ({ order, index, handleEdit, admin }) => {
     ); // Default
   };
   
+  useEffect(() => {
+    const fetchUser = async () => {
+      try {
+        const response = await fetch(`http://localhost:3001/users/adminGet/${order.userID}`);
+        if (!response.ok) {
+          throw new Error('Failed to fetch user');
+        }
+        const userData = await response.json();
+        setUser(userData);
+        setLoading(false);
+      } catch (error) {
+        setError(error.message);
+        setLoading(false);
+      }
+    };
+    fetchUser();
+  }, [order.userID]);
+
   return (
     <>
       <Accordion style={{ width: '75%', marginBottom: '20px', backgroundColor: accordionColor }} key={index}>
@@ -98,7 +119,7 @@ const Invoice = ({ order, index, handleEdit, admin }) => {
             {accordionIcon && <Box mr={1}>{accordionIcon}</Box>}
           </Box>
           <Box ml={2}>
-            <Typography variant="h6">Order {order.invoiceNumber}</Typography>
+            <Typography variant="h6">Order {order._id}</Typography>
             <Typography variant="subtitle2" color="textSecondary">
               Status: {order.status}
             </Typography>
@@ -121,10 +142,19 @@ const Invoice = ({ order, index, handleEdit, admin }) => {
               </Tooltip>
             ) : null}
             <Typography gutterBottom>
-              Date: {order.date}
+              Date: {new Date(order.orderDate).toISOString().split('T')[0]}
             </Typography>
             <Typography gutterBottom>
-              Invoice Number: {order.invoiceNumber}
+              Invoice Number: {order._id}
+            </Typography>
+            {user ? (
+            <Typography gutterBottom>
+              Customer: {user.username}
+            </Typography>
+            ) : null}
+
+            <Typography gutterBottom>
+              Contact Number: {order.contactNumber}
             </Typography>
             <Stack direction="row" spacing={2} style={{ marginTop: '10px', flexGrow: 1 }}>
               <Table>
@@ -139,9 +169,9 @@ const Invoice = ({ order, index, handleEdit, admin }) => {
                 <TableBody>
                   {order.items.map((item, idx) => (
                     <TableRow key={idx}>
-                      <TableCell>{item.name}</TableCell>
+                      <TableCell>{item.itemName}</TableCell>
                       {getTypeSpecificItemColumns(item, order.type)}
-                      <TableCell>{item.price}</TableCell>
+                      <TableCell>₱{item.pricePerItem}</TableCell>
                       <TableCell>{item.quantity}</TableCell>
                     </TableRow>
                   ))}
@@ -152,7 +182,7 @@ const Invoice = ({ order, index, handleEdit, admin }) => {
                   Payment Instructions: {order.paymentInstructions}
                 </Typography>
                 <Typography variant="h6">
-                  Total Amount Due: {order.totalAmountDue}
+                  Total Amount Due: ₱{order.total}
                 </Typography>
               </div>
 

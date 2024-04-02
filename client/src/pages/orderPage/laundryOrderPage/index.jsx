@@ -10,6 +10,7 @@ import { useDispatch } from "react-redux"
 
 const LaundryOrder = () => {
   const user = useSelector((state) => state.user)
+  const navigate = useNavigate();
   const [selectedOption, setSelectedOption] = useState(null);
   const [L1, setL1] = useState (false)
   const [L2, setL2] = useState (false)
@@ -90,6 +91,7 @@ const LaundryOrder = () => {
             userID: user_ID,
             address: savedAddress,
             contactNumber: savedContact,
+            type: 'Laundry',
             items: orderItems()
         })
       }
@@ -110,7 +112,9 @@ const LaundryOrder = () => {
   }
   const validateOrder = () => {
     if(proceedOrder === true){
-      createUserOrder()
+      createUserOrder();
+      navigate('/orderHistory');
+      
     }
   }
 

@@ -20,8 +20,9 @@ const orderItemSchema = new mongoose.Schema(
         waterType:{
             type: String
         },
-        numberOfItems: { // e.g. 1 gallon, 2 gallons
+        quantity: { // e.g. 1 gallon, 2 gallons
             type: Number,
+            default: 1,
         },
         pricePerItem: {
             type: Number,
@@ -58,9 +59,27 @@ const OrderSchema = new mongoose.Schema(
             default: Date.now,
             required: true
         },
-        items: [orderItemSchema]
+        type:{
+            type: String,
+            required: true,
+        },  
+        items: [orderItemSchema],
+        total: {
+            type: Number,
+            default: 0 // Default total to 0
+        }
     }, {timestamps: true}
 );
+
+OrderSchema.pre('save', function(next) {
+    const items = this.items;
+    let total = 0;
+    for (const item of items) {
+        total += item.pricePerItem * item.quantity;
+    }
+    this.total = total;
+    next();
+});
 
 const Order = mongoose.model("Order", OrderSchema)
 export default Order
