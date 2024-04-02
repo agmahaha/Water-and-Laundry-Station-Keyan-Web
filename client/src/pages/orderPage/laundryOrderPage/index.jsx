@@ -22,7 +22,7 @@ const LaundryOrder = () => {
     ]
   const filteredItems = itemsOrdered.filter(item => Object.keys(item).length > 0)
   const [address, setAddress] = useState('')
-  const [contactNum, setContactNum] = useState ()
+  const [contactNum, setContactNum] = useState (null)
   var savedAddress = ''
   var savedContact = ''
   var proceedOrder = false
@@ -99,7 +99,7 @@ const LaundryOrder = () => {
   }
 
   if (filteredItems !== null && selectedOption !== null){
-    if(address !== '' && contactNum !== '')
+    if(address !== '' && contactNum !== null)
       proceedOrder = true
     else if (sameAddress === true)
       proceedOrder = true
@@ -478,7 +478,7 @@ const LaundryOrder = () => {
 
                           onClick={() => {
                             if (filteredItems !== null && selectedOption !== null){
-                              if(address !== '' && contactNum !== '')
+                              if(address !== '' && contactNum !== null)
                                   validateOrder()
                               else if (sameAddress === true)
                                   validateOrder()
