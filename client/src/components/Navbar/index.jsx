@@ -51,6 +51,7 @@ const Navbar = () => {
 
   if (user) {
     var username = `${user.username}`;
+    var typeOfUser = user.userType
   }
 
   if (username) {
@@ -141,7 +142,7 @@ const Navbar = () => {
                               <MenuItem value = {username} disabled>
                                   <Typography sx={{ color: "#9DB7CD", "&:hover": {color: "#F4A4AC"}}}>{username}</Typography>
                               </MenuItem>
-                              <MenuItem onClick={() => {navigate("/profile")}}>Profile</MenuItem>
+                              {typeOfUser === 'customer' && (<MenuItem onClick={() => {navigate("/profile")}}>Profile</MenuItem>)}
                               <MenuItem onClick={async () => { navigate("/"); await dispatch(setLogout()); }}>Log Out</MenuItem>
                             </Select>
                           </FormControl>

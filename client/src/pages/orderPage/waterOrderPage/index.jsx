@@ -109,10 +109,6 @@ const WaterOrder = () => {
       savedContact = ''
   }
 
-  if (filteredItems !== null && selectedOption !== null){
-    proceedOrder = true
-  }
-
   const createUserOrder = async() => {
     setTotal(filteredItems.reduce((total, item) => total + item.price * quantity, 0));
     const savedUserOrder = await fetch(
@@ -137,7 +133,7 @@ const WaterOrder = () => {
   if (filteredItems.length > 0 && selectedOption !== null && selectedWater !== null){
     if(address !== '' && contactNum !== null)
       proceedOrder = true
-    else if (sameAddress === true)
+    else if (sameAddress === true || selectedOption === 'pickup')
       proceedOrder = true
     else 
       proceedOrder = false
@@ -649,7 +645,7 @@ const WaterOrder = () => {
                             if (filteredItems.length > 0 && selectedOption !== null && selectedWater != null){
                               if(address !== '' && contactNum !== null)
                                   validateOrder()
-                              else if (sameAddress === true)
+                              else if (sameAddress === true || selectedOption === 'pickup' )
                                   validateOrder()
                               else 
                                   setDisplayAlert(true)

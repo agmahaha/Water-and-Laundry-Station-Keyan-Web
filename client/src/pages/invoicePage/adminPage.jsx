@@ -18,7 +18,6 @@ import {
 import FlexBetween from '../../components/FlexBetween';
 import Footer from '../../components/Footer';
 import FilterAltIcon from '@mui/icons-material/FilterAlt';
-import axios from 'axios';
 import { useSelector } from 'react-redux';
 import { Navigate } from 'react-router-dom';
 

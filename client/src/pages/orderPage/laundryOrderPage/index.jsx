@@ -76,10 +76,6 @@ const LaundryOrder = () => {
       savedAddress = ''
       savedContact = ''
   }
-  
-  if (filteredItems !== null && selectedOption !== null){
-      proceedOrder = true
-  }
 
   const createUserOrder = async() => {
     const savedUserOrder = await fetch(
@@ -103,7 +99,7 @@ const LaundryOrder = () => {
   if (filteredItems.length > 0 && selectedOption !== null){
     if(address !== '' && contactNum !== null)
       proceedOrder = true
-    else if (sameAddress === true)
+    else if (sameAddress === true || selectedOption === 'pickup')
       proceedOrder = true
     else 
       proceedOrder = false
@@ -484,7 +480,7 @@ const LaundryOrder = () => {
                             if (filteredItems.length > 0 && selectedOption !== null){
                               if(address !== '' && contactNum !== null)
                                   validateOrder()
-                              else if (sameAddress === true)
+                              else if (sameAddress === true || selectedOption === 'pickup')
                                   validateOrder()
                               else 
                                   setDisplayAlert(true)

@@ -16,16 +16,13 @@ const PageNotFound = () => {
   if (userType === 'customer'){
     isCustomer = true
     loc = '/'
-  }else if (userType === ('owner' || 'employee')){
+  }else if (userType === ('admin' || 'employee')){
     isCustomer = false
     loc = '/employee/home'
   }else{
     isCustomer = true
     loc = '/'  
   }
-
-
-
 
   return (
     <body className='page-not-found-container'>
