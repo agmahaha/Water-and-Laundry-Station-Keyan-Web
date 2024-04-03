@@ -1,4 +1,4 @@
-import React, {useState} from 'react'
+import React, {useState, useEffect} from 'react'
 import { Typography, Box, Grid, Checkbox, TextField, FormControlLabel, Breadcrumbs, Link, Alert, AlertTitle} from '@mui/material'
 import {StorefrontOutlined, LocalShippingOutlined} from '@mui/icons-material'
 import { Unstable_NumberInput as BaseNumberInput } from '@mui/base/Unstable_NumberInput'
@@ -52,6 +52,7 @@ const WaterOrder = () => {
   var savedContact = ''
   var proceedOrder = false
   const [displayAlert, setDisplayAlert] = useState(false)
+  const [total, setTotal] = useState(0);
 
   const handleOptionChange = (option) => {
     setSelectedOption(option)}
@@ -113,6 +114,7 @@ const WaterOrder = () => {
   }
 
   const createUserOrder = async() => {
+    setTotal(filteredItems.reduce((total, item) => total + item.price * quantity, 0));
     const savedUserOrder = await fetch(
       "http://localhost:3001/order/orderService",
       {
@@ -122,7 +124,9 @@ const WaterOrder = () => {
             userID: user_ID,
             address: savedAddress,
             contactNumber: savedContact,
-            items: orderItems()
+            type: 'Water',
+            items: orderItems(),
+            total: total
         })
       }
     )
@@ -143,6 +147,7 @@ const WaterOrder = () => {
   const validateOrder = () => {
     if(proceedOrder === true){
       createUserOrder()
+      navigate("/orderHistory");
     }
   }
 

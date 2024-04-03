@@ -45,7 +45,7 @@ const Invoice = ({ order, index, handleEdit, admin }) => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
-  const getTypeSpecificColumns = (type) => {
+  const getTypeSpecificColumns = (item, type) => {
     if (type === 'Laundry') {
       return (
         <>
@@ -53,13 +53,22 @@ const Invoice = ({ order, index, handleEdit, admin }) => {
         </>
       );
     } else if (type === 'Water') {
-      return (
-        <>
-          <TableCell>P/M/A</TableCell>
-          <TableCell>Gallon Type</TableCell>
-        </>
-      );
-    }
+      if (item.gallonType) {
+        return (
+          <>
+            <TableCell>P/M/A</TableCell>
+            <TableCell>Gallon Type</TableCell>
+          </>
+        );
+      } else {
+        return (
+          <>
+            <TableCell>P/M/A</TableCell>
+          </>
+        );
+      }
+
+  }
     return (
       <>
         <TableCell>Weight</TableCell>
@@ -75,12 +84,21 @@ const Invoice = ({ order, index, handleEdit, admin }) => {
         </>
       );
     } else if (type === 'Water') {
-      return (
-        <>
-          <TableCell>{item.weight}</TableCell>
-          <TableCell>{item.gallonType}</TableCell>
-        </>
-      );
+      if (item.gallonType) {
+        return (
+          <>
+            <TableCell>{item.waterType}</TableCell>
+            <TableCell>{item.gallonType}</TableCell>
+          </>
+        );
+      } else {
+        return (
+          <>
+            <TableCell>{item.waterType}</TableCell>
+          </>
+        );
+      }
+
     }
     return (
       <>
@@ -126,8 +144,8 @@ const Invoice = ({ order, index, handleEdit, admin }) => {
             <Typography variant="subtitle2" color="textSecondary">
               Type: {order.type}
             </Typography>
-            <Typography variant="subtitle2" color="textSecondary">
-              Total Amount Due: {order.totalAmountDue}
+            <Typography variant="subtitle1" color="textSecondary">
+              Total Amount Due: ₱{order.total}
             </Typography>
           </Box>
         </AccordionSummary>
@@ -161,7 +179,7 @@ const Invoice = ({ order, index, handleEdit, admin }) => {
                 <TableHead>
                   <TableRow>
                     <TableCell>Item</TableCell>
-                    {getTypeSpecificColumns(order.type)}
+                    {getTypeSpecificColumns(order.items[0], order.type)}
                     <TableCell>Price</TableCell>
                     <TableCell>Quantity</TableCell>
                   </TableRow>
@@ -172,7 +190,7 @@ const Invoice = ({ order, index, handleEdit, admin }) => {
                       <TableCell>{item.itemName}</TableCell>
                       {getTypeSpecificItemColumns(item, order.type)}
                       <TableCell>₱{item.pricePerItem}</TableCell>
-                      <TableCell>{item.quantity}</TableCell>
+                      <TableCell>{item.numberOfItems}</TableCell>
                     </TableRow>
                   ))}
                 </TableBody>

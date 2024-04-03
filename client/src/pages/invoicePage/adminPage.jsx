@@ -101,6 +101,26 @@ const OrderAdmin = () => {
     }
   };
 
+  const updateOrder = async (orderId, updatedOrderData) => {
+    try {
+      const response = await fetch(`http://localhost:3001/order/update/${orderId}`, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(updatedOrderData),
+      });
+  
+      if (!response.ok) {
+        throw new Error('Failed to update order');
+      }
+  
+      const updatedOrder = await response.json(); // Parse response body as JSON
+      return updatedOrder; // Return the updated order
+    } catch (error) {
+      console.error(error);
+      throw error; // Throw the error for handling in the calling code
+    }
+  };
+
   useEffect(() => {
     // Set sampleOrders as initial orders
     // setOrders(sampleOrders);
@@ -162,11 +182,17 @@ const OrderAdmin = () => {
   };
 
   // Function to handle saving edited order details
-  const handleSaveEdit = () => {
-    // Add logic to save edited order details
-    console.log("Saving edited order:", editedOrder);
-    setOpenModal(false);
-    setEditedOrder(null);
+  const handleSaveEdit = async () => {
+    try {
+      const updatedOrder = await updateOrder(editedOrder._id, editedOrder);
+      console.log('Order updated:', updatedOrder);
+      setOpenModal(false); // Close the modal after successful update
+      setEditedOrder(null); // Reset the editedOrder state
+      fetchOrders();
+    } catch (error) {
+      console.error('Failed to update order:', error);
+      // Handle error (e.g., display error message to user)
+    }
   };
 
   return (
@@ -218,7 +244,7 @@ const OrderAdmin = () => {
               {/* Status filter */}
               <Select value={statusFilter} onChange={handleStatusChange} sx={{ mr: 2 }}>
                 <MenuItem value="All">All Statuses</MenuItem>
-                <MenuItem value="Pending">Pending</MenuItem>
+                <MenuItem value="pending">Pending</MenuItem>
                 <MenuItem value="In-Progress">In Progress</MenuItem>
                 <MenuItem value="For-Delivery">For Delivery</MenuItem>
                 <MenuItem value="Completed">Completed</MenuItem>
@@ -260,6 +286,8 @@ const OrderAdmin = () => {
             p: 4,
             minWidth: 400,
             maxWidth: 600,
+            overflow: 'auto', // Enable scrolling
+            maxHeight: '80vh', // Limit the height to 80% of the viewport height
             }}
         >
             <Typography variant="h6" id="modal-title" gutterBottom>
@@ -287,7 +315,7 @@ const OrderAdmin = () => {
                 label="Item Name"
                 fullWidth
                 margin="normal"
-                value={item.name}
+                value={item.itemName}
                 disabled
                 />
                 {editedOrder.type === 'Laundry' ? (
@@ -296,15 +324,15 @@ const OrderAdmin = () => {
                             label="Item Price"
                             fullWidth
                             margin="normal"
-                            value={item.price}
-                            onChange={(e) => handleItemChange(itemIndex, 'price', e.target.value)}
+                            value={item.pricePerItem}
+                            onChange={(e) => handleItemChange(itemIndex, 'pricePerItem', e.target.value)}
                         />
                         <TextField
                         label="Item Quantity"
                         fullWidth
                         margin="normal"
-                        value={item.quantity}
-                        onChange={(e) => handleItemChange(itemIndex, 'quantity', e.target.value)}
+                        value={item.numberOfItems}
+                        onChange={(e) => handleItemChange(itemIndex, 'numberOfItems', e.target.value)}
                         />
                     </>
 
@@ -320,32 +348,15 @@ const OrderAdmin = () => {
                     onChange={(e) => handleItemChange(itemIndex, 'weight', e.target.value)}
                 />
                 )}
-                {editedOrder.type === 'Water' && (
-                <>
-                    <TextField
-                    select
-                    label="Gallon Type"
-                    fullWidth
-                    margin="normal"
-                    value={item.gallonType}
-                    onChange={(e) => handleItemChange(itemIndex, 'gallonType', e.target.value)}
-                    >
-                    {['Slim', 'Round'].map((option) => (
-                        <MenuItem key={option} value={option}>
-                        {option}
-                        </MenuItem>
-                    ))}
-                    </TextField>
-                </>
-                )}
             </div>
             ))}
             <TextField
             label="Total Amount Due"
             fullWidth
             margin="normal"
-            value={editedOrder ? editedOrder.totalAmountDue : ''}
-            onChange={(e) => setEditedOrder({ ...editedOrder, totalAmountDue: e.target.value })}
+            disabled={editedOrder && editedOrder.type === 'Water'}
+            value={editedOrder ? editedOrder.total : ''}
+            onChange={(e) => setEditedOrder({ ...editedOrder, total: e.target.value })}
             />
             <TextField
             label="Payment Instructions"
