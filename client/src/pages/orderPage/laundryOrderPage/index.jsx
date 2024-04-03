@@ -85,6 +85,7 @@ const LaundryOrder = () => {
         headers:{"Content-Type" : "application/json"},
         body: JSON.stringify({
             userID: user_ID,
+            option: selectedOption,
             address: savedAddress,
             contactNumber: savedContact,
             type: 'Laundry',
