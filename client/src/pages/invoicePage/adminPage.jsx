@@ -31,6 +31,7 @@ const OrderAdmin = () => {
   const [showFilters, setShowFilters] = useState(false);
   const [editedOrder, setEditedOrder] = useState(null);
   const [openModal, setOpenModal] = useState(false);
+  const [newTotal, setNewTotal] = useState(0);
   const isAdmin = user.userType === "admin";
 
   const sampleOrders = [
@@ -179,12 +180,21 @@ const OrderAdmin = () => {
         ...updatedItems[itemIndex],
         [field]: value
       };
+      let newTotal = prevOrder.total;
+      if (field === 'pricePerItem') {
+        newTotal = 0;
+        updatedItems.forEach(item => {
+          newTotal += Number(item.pricePerItem);
+        });
+      }
       return {
         ...prevOrder,
-        items: updatedItems
+        items: updatedItems,
+        total: newTotal
       };
     });
   };
+
   if (!isAdmin) {
     return <Navigate to="/pageNotFound" />;
   }
@@ -338,6 +348,7 @@ const OrderAdmin = () => {
                         <TextField
                         label="Item Quantity"
                         fullWidth
+                        disabled
                         margin="normal"
                         value={item.numberOfItems}
                         onChange={(e) => handleItemChange(itemIndex, 'numberOfItems', e.target.value)}
@@ -362,7 +373,7 @@ const OrderAdmin = () => {
             label="Total Amount Due"
             fullWidth
             margin="normal"
-            disabled={editedOrder && editedOrder.type === 'Water'}
+            disabled
             value={editedOrder ? editedOrder.total : ''}
             onChange={(e) => setEditedOrder({ ...editedOrder, total: e.target.value })}
             />
