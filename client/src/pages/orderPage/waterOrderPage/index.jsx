@@ -7,6 +7,9 @@ import FlexBetween from '../../../components/FlexBetween'
 import {useSelector} from "react-redux"
 import { useNavigate } from 'react-router-dom'
 import {StyledInputRoot, StyledInputElement, StyledButton} from '../../../components/numberInput'
+import WP1 from "./ordersimg/refill.jpg"
+import WP2 from "./ordersimg/slim.jpg"
+import WP3 from "./ordersimg/round.png"
 
 const NumberInput = React.forwardRef(function CustomNumberInput(props, ref) {
   return (
@@ -199,6 +202,10 @@ const WaterOrder = () => {
                                   onClick={() => {setSelectedService('round')}}
 
                                 >
+                              <img
+                                src={WP3}
+                                alt="img"
+                                style={{ height: '250px', width: '180px' }} />
                               <Typography
                                       sx={{
                                           fontWeight: 'bold',
@@ -230,6 +237,10 @@ const WaterOrder = () => {
                                 onClick={() => {setSelectedService('slim')}}
 
                                 >
+                              <img
+                                src={WP2}
+                                alt="img"
+                                style={{ height: '250px', width: '180px' }} />
                               <Typography
                                       sx={{
                                           fontWeight: 'bold',
@@ -261,6 +272,10 @@ const WaterOrder = () => {
                                 onClick={() => {setSelectedService('refill')}}
 
                                 >
+                              <img
+                                src={WP1}
+                                alt="img"
+                                style={{ height: '250px', width: '180px' }} />
                               <Typography
                                       sx={{
                                           fontWeight: 'bold',

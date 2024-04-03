@@ -6,6 +6,9 @@ import FlexBetween from '../../../components/FlexBetween'
 import {useSelector} from "react-redux"
 import { useNavigate } from 'react-router-dom'
 import { useDispatch } from "react-redux"
+import LP1 from "./ordersimg/curtain.jpg"
+import LP2 from "./ordersimg/thick.jpg"
+import LP3 from "./ordersimg/regular.png"
 
 
 const LaundryOrder = () => {
@@ -168,6 +171,10 @@ const LaundryOrder = () => {
                                   onClick={() => {setL1(!L1)}}
 
                                 >
+                               <img
+                                src={LP2}
+                                alt="img"
+                                style={{ height: '250px', width: '180px' }} />
                               <Typography
                                       sx={{
                                           fontWeight: 'bold',
@@ -199,6 +206,10 @@ const LaundryOrder = () => {
                                 onClick={() => {setL2(!L2)}}
 
                                 >
+                              <img
+                                src={LP1}
+                                alt="img"
+                                style={{ height: '250px', width: '180px' }} />
                               <Typography
                                       sx={{
                                           fontWeight: 'bold',
@@ -230,6 +241,10 @@ const LaundryOrder = () => {
                                 onClick={() => {setL3(!L3)}}
 
                                 >
+                              <img
+                                src={LP3}
+                                alt="img"
+                                style={{ height: '250px', width: '180px' }} />
                               <Typography
                                       sx={{
                                           fontWeight: 'bold',
