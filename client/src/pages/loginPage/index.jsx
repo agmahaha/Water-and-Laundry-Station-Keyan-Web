@@ -65,7 +65,7 @@ const Login = () => {
     onSubmitProps.resetForm()
 
     if (loggedInResponse.status === 200){
-      if (loggedIn.user.userType === "owner" || loggedIn.user.userType === "employee") {
+      if (loggedIn.user.userType === "admin" || loggedIn.user.userType === "employee") {
         alert("Here's what we got: \n" + "Username: " + loggedIn.user.username + "\n Password: " + loggedIn.user.password);
         dispatch(
           setLogin({

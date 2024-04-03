@@ -19,16 +19,20 @@ import FlexBetween from '../../components/FlexBetween';
 import Footer from '../../components/Footer';
 import FilterAltIcon from '@mui/icons-material/FilterAlt';
 import axios from 'axios';
+import { useSelector } from 'react-redux';
+import { Navigate } from 'react-router-dom';
 
 const OrderAdmin = () => {
+  const user = useSelector((state) => state.user);
   const [orders, setOrders] = useState([]);
   const [filteredOrders, setFilteredOrders] = useState([]);
   const [typeFilter, setTypeFilter] = useState('All');
   const [statusFilter, setStatusFilter] = useState('All');
   const [dateFilter, setDateFilter] = useState('Newest');
   const [showFilters, setShowFilters] = useState(false);
-  const [editedOrder, setEditedOrder] = useState(null); // State to track the order being edited
+  const [editedOrder, setEditedOrder] = useState(null);
   const [openModal, setOpenModal] = useState(false);
+  const isAdmin = user.userType === "admin";
 
   const sampleOrders = [
     {
@@ -87,19 +91,21 @@ const OrderAdmin = () => {
 
   const fetchOrders = async () => {
     try {
-      const response = await fetch('http://localhost:3001/order/adminOrder', {
-        method: "GET",
-        headers:{"Content-Type" : "application/json"},
-      }); // Fetch orders from backend API
-      if (!response.ok) {
-        throw new Error('Failed to fetch orders');
-      }
-      const data = await response.json(); // Parse response body as JSON
-      setOrders(data); // Update state with fetched orders
+        const response = await fetch(`http://localhost:3001/order/adminOrder?userType=${user.userType}`, {
+            method: "GET",
+            headers: {
+                "Content-Type": "application/json"
+            }
+        });
+        if (!response.ok) {
+            throw new Error('Failed to fetch orders');
+        }
+        const data = await response.json();
+        setOrders(data);
     } catch (error) {
-      console.error("yea" + error);
+        console.error("Error: " + error);
     }
-  };
+};
 
   const updateOrder = async (orderId, updatedOrderData) => {
     try {
@@ -113,11 +119,11 @@ const OrderAdmin = () => {
         throw new Error('Failed to update order');
       }
   
-      const updatedOrder = await response.json(); // Parse response body as JSON
-      return updatedOrder; // Return the updated order
+      const updatedOrder = await response.json();
+      return updatedOrder; 
     } catch (error) {
       console.error(error);
-      throw error; // Throw the error for handling in the calling code
+      throw error; 
     }
   };
 
@@ -180,6 +186,9 @@ const OrderAdmin = () => {
       };
     });
   };
+  if (!isAdmin) {
+    return <Navigate to="/pageNotFound" />;
+  }
 
   // Function to handle saving edited order details
   const handleSaveEdit = async () => {

@@ -20,3 +20,13 @@ export const verifyToken = async (req, res, next) => {
         res.status(500).json({ error: err.message });
     }
 }
+
+export const isAdmin = (req, res, next) => {
+    const { userType } = req.query; // Extract userType from query parameters
+    console.log(userType + " user");
+    if (userType === 'admin') {
+        next();
+    } else {
+        res.status(401).json({ message: 'Unauthorized' });
+    }
+};

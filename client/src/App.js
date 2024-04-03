@@ -8,7 +8,7 @@ import LaundryOrder from './pages/orderPage/laundryOrderPage'
 import WaterOrder from './pages/orderPage/waterOrderPage'
 import Profile from './pages/profilePage'
 import PageNotFound from "./pages/pageNotFound"
-import {BrowserRouter, Routes, Route} from 'react-router-dom'
+import {BrowserRouter, Routes, Route, Switch, Navigate} from 'react-router-dom'
 import './App.css';
 import AnnouncementsPage from "./pages/announcementPage"
 import OrderInvoices from "./pages/invoicePage/page"
@@ -33,6 +33,7 @@ function App() {
           <Route path ="/profile" element={<Profile/>}/>
           <Route path ="/orderHistory" element={<OrderInvoices/>}/>
           <Route path ="/adminOrderHistory" element={<OrderAdmin/>}/>
+          <Route path="*" element={<Navigate to="/pageNotFound" />} />
           <Route path ="/pageNotFound" element={<PageNotFound/>}/>
         </Routes>
       </BrowserRouter>
