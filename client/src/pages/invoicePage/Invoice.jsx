@@ -80,7 +80,7 @@ const Invoice = ({ order, index, handleEdit, admin }) => {
     if (type === 'Laundry') {
       return (
         <>
-          <TableCell>{item.weight}</TableCell>
+          <TableCell>{item.weight}kg</TableCell>
         </>
       );
     } else if (type === 'Water') {
@@ -102,7 +102,7 @@ const Invoice = ({ order, index, handleEdit, admin }) => {
     }
     return (
       <>
-        <TableCell>{item.weight}</TableCell>
+        <TableCell>{item.weight}kg</TableCell>
       </>
     ); // Default
   };
