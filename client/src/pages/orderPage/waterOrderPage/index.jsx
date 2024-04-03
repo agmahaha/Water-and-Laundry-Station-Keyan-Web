@@ -492,9 +492,13 @@ const WaterOrder = () => {
                             InputLabelProps={{ style: {color: 'black'}}}
                             InputProps={{ style: {color: 'black'}}}
                             autoComplete='false'
+                            type ="number"
                             onChange = {(e) => setContactNum(e.target.value)}
                             disabled = {sameAddress}
                             sx={{
+                              "& input::-webkit-outer-spin-button, & input::-webkit-inner-spin-button": {
+                                display: "none",
+                              },
                               "& .MuiOutlinedInput-root.Mui-disabled .MuiOutlinedInput-notchedOutline": {
                                 borderColor: "red",
                               },

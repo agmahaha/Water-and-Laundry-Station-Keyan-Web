@@ -131,6 +131,12 @@ const Profile = () => {
                 InputProps={{ style: {color: 'black'}}}
                 autoComplete='false'
                 onChange = {(e) => setPhoneNum(e.target.value)}
+                type ="number"
+                sx = {{
+                  "& input::-webkit-outer-spin-button, & input::-webkit-inner-spin-button": {
+                    display: "none",
+                  },
+                }}
                 />
             <Button
               variant='contained'
