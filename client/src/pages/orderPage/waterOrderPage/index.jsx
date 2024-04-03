@@ -43,7 +43,7 @@ const WaterOrder = () => {
   const itemsOrdered = [
     (selectedService === "round" ? {name: 'Gallon Round', price: 130, qty: quantity, type: selectedWater} : {}),
     (selectedService === "slim" ? {name: 'Gallon Slim', price: 150, qty: quantity, type: selectedWater} : {}),
-    (selectedService === "refill" ? {name: 'Refill', price: 20, qty: quantity, type: selectedWater} : {}),
+    (selectedService === "refill" ? {name: 'Refill', price: 40, qty: quantity, type: selectedWater} : {}),
   ]
   const filteredItems = itemsOrdered.filter(item => Object.keys(item).length > 0)
   const [address, setAddress] = useState('')
