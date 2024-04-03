@@ -80,7 +80,7 @@ const Invoice = ({ order, index, handleEdit, admin }) => {
     if (type === 'Laundry') {
       return (
         <>
-          <TableCell>{item.weight}</TableCell>
+          <TableCell>{item.weight}kg</TableCell>
         </>
       );
     } else if (type === 'Water') {
@@ -102,7 +102,7 @@ const Invoice = ({ order, index, handleEdit, admin }) => {
     }
     return (
       <>
-        <TableCell>{item.weight}</TableCell>
+        <TableCell>{item.weight}kg</TableCell>
       </>
     ); // Default
   };
@@ -138,13 +138,16 @@ const Invoice = ({ order, index, handleEdit, admin }) => {
           </Box>
           <Box ml={2}>
             <Typography variant="h6">Order {order._id}</Typography>
-            <Typography variant="subtitle2" color="textSecondary" fontWeight="bold">
-              Status: {order.status}
-            </Typography>
-            <Typography variant="subtitle2" color="textSecondary" fontWeight="bold">
-              Type: {order.type}
+            <Typography variant="subtitle1" color="textSecondary" fontWeight="bold">
+              For {order.option}
             </Typography>
             <Typography variant="subtitle1" color="textSecondary" fontWeight="bold">
+              Status: {order.status}
+            </Typography>
+            <Typography variant="subtitle1" color="textSecondary" fontWeight="bold">
+              Type: {order.type}
+            </Typography>
+            <Typography variant="subtitle1" color="textSecondary" fontWeight="bold" fontSize={22}>
               Total Amount Due: ₱{order.total}
             </Typography>
           </Box>
@@ -159,33 +162,41 @@ const Invoice = ({ order, index, handleEdit, admin }) => {
                 </IconButton>
               </Tooltip>
             ) : null}
-            <Typography gutterBottom>
-              Date: {new Date(order.orderDate).toISOString().split('T')[0]}
-            </Typography>
-            <Typography gutterBottom>
-              Invoice Number: {order._id}
-            </Typography>
-            {user ? (
-            <Typography gutterBottom>
-              Customer: {user.username}
-            </Typography>
-            ) : null}
-            <Typography gutterBottom>
+            <Stack direction="row" spacing={10} style={{ marginTop: '10px', flexGrow: 1 }}>
+              <div>
+                <Typography gutterBottom fontWeight="bold">
+                  Date: {new Date(order.orderDate).toISOString().split('T')[0]}
+                </Typography>
+                <Typography gutterBottom fontWeight="bold">
+                  Invoice Number: {order._id}
+                </Typography>
+                <Typography gutterBottom fontWeight="bold">
               For {order.option}
             </Typography>
+              </div>
+              <div>
+              {user ? (
+                <Typography gutterBottom fontWeight="bold">
+                  Customer: {user.username}
+                </Typography>
+                ) : null}
             {order.option === 'pickup' ? (
               null
             ) : (
               <>
-                <Typography gutterBottom>
+                <Typography gutterBottom fontWeight="bold">
                   Address: {order.address}
                 </Typography>
-                <Typography gutterBottom>
+                <Typography gutterBottom fontWeight="bold">
                   Contact Number: {order.contactNumber}
                 </Typography>
               </>
 
             )}
+              </div>
+            </Stack>
+
+
 
             <Stack direction="row" spacing={2} style={{ marginTop: '10px', flexGrow: 1 }}>
               <Table>
