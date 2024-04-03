@@ -170,10 +170,23 @@ const Invoice = ({ order, index, handleEdit, admin }) => {
               Customer: {user.username}
             </Typography>
             ) : null}
-
             <Typography gutterBottom>
-              Contact Number: {order.contactNumber}
+              For {order.option}
             </Typography>
+            {order.option === 'pickup' ? (
+              null
+            ) : (
+              <>
+                <Typography gutterBottom>
+                  Address: {order.address}
+                </Typography>
+                <Typography gutterBottom>
+                  Contact Number: {order.contactNumber}
+                </Typography>
+              </>
+
+            )}
+
             <Stack direction="row" spacing={2} style={{ marginTop: '10px', flexGrow: 1 }}>
               <Table>
                 <TableHead>

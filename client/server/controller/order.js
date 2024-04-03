@@ -5,6 +5,7 @@ export const userOrder = async (req, res) => {
     try{
         const{
             userID,
+            option,
             address,
             contactNumber,
             type,
@@ -14,6 +15,7 @@ export const userOrder = async (req, res) => {
 
         const newUserOrder = new Order({
             userID,
+            option,
             address,
             contactNumber,
             type,

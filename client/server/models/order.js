@@ -38,6 +38,9 @@ const OrderSchema = new mongoose.Schema(
             ref: 'Users',
             required: true,
         },
+        option: {
+            type: String,
+        },
         address:{
             type: String
         },
