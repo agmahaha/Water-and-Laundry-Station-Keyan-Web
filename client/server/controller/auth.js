@@ -49,7 +49,7 @@ export const loginUser = async (req, res) => {
         if(!isMatch)
             return res.Status(400).json({msg: "Password Invalid"})
 
-        const token = jwt.sign({id: user._id}, process.env.JWT_SECRET, {expiresIn: '1h'}) /* Add expiration? */
+        const token = jwt.sign({id: user._id}, process.env.JWT_SECRET) /* Add expiration? */
         delete user.password
         res.status(200).json({token, user})
     } catch(err){
