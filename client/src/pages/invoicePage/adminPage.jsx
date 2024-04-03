@@ -348,6 +348,7 @@ const OrderAdmin = () => {
                         <TextField
                         label="Item Quantity"
                         fullWidth
+                        disabled
                         margin="normal"
                         value={item.numberOfItems}
                         onChange={(e) => handleItemChange(itemIndex, 'numberOfItems', e.target.value)}
