@@ -372,7 +372,7 @@ const OrderAdmin = () => {
             label="Total Amount Due"
             fullWidth
             margin="normal"
-            disabled={editedOrder && editedOrder.type === 'Water'}
+            disabled
             value={editedOrder ? editedOrder.total : ''}
             onChange={(e) => setEditedOrder({ ...editedOrder, total: e.target.value })}
             />
