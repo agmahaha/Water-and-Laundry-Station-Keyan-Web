@@ -46,11 +46,16 @@ const WaterPage = () => {
     }
  }, [navigate, user]);
 
- var orderRedirect = navigate('/login')
+ const orderRedirect =  () => {
+    if(!user){
+      navigate('/login')
+    } else
+      navigate('/orderWater')
+      
+ } 
 
  if (user) {
    var userType = `${user.userType}`;
-   orderRedirect = navigate('/orderWater')
  }
   if (userType === 'customer' || user === null){
     return (
@@ -96,7 +101,6 @@ const WaterPage = () => {
                             ))}
                             
                           </Auto>
-                          {console.log(images)}
                           <MobileStepper
                             steps={max}
                             position='static'
@@ -171,7 +175,9 @@ const WaterPage = () => {
                             },
                             
                             }}
-                            onClick= {orderRedirect}
+                            onClick= {() => {
+                              orderRedirect()
+                            }}
                             >
                           <Typography
                                   variant="h5"

@@ -46,11 +46,15 @@ const LaundryPage = () => {
     }
  }, [navigate, user]);
   
-  var orderRedirect = navigate('/login')
+  const orderRedirect =  () => {
+    if(!user){
+      navigate('/login')
+    } else
+      navigate('/orderLaundry')
+  }
 
   if (user) {
     var userType = `${user.userType}`;
-    orderRedirect = navigate('/orderLaundry')
   }
 
   if (userType === 'customer' || user === null){
@@ -169,7 +173,7 @@ const LaundryPage = () => {
                             },
                             
                             }}
-                            onClick= {orderRedirect}
+                            onClick= {() => {orderRedirect()}}
                             >
                           <Typography
                                   variant="h5"
