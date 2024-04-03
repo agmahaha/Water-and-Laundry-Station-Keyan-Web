@@ -138,13 +138,13 @@ const Invoice = ({ order, index, handleEdit, admin }) => {
           </Box>
           <Box ml={2}>
             <Typography variant="h6">Order {order._id}</Typography>
-            <Typography variant="subtitle2" color="textSecondary">
+            <Typography variant="subtitle2" color="textSecondary" fontWeight="bold">
               Status: {order.status}
             </Typography>
-            <Typography variant="subtitle2" color="textSecondary">
+            <Typography variant="subtitle2" color="textSecondary" fontWeight="bold">
               Type: {order.type}
             </Typography>
-            <Typography variant="subtitle1" color="textSecondary">
+            <Typography variant="subtitle1" color="textSecondary" fontWeight="bold">
               Total Amount Due: ₱{order.total}
             </Typography>
           </Box>

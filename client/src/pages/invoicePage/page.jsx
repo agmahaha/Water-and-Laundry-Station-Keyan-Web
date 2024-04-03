@@ -18,8 +18,12 @@ import {
 import FlexBetween from '../../components/FlexBetween';
 import Footer from '../../components/Footer';
 import FilterAltIcon from '@mui/icons-material/FilterAlt';
+import {useSelector, useDispatch } from "react-redux";
+
 
 const OrderInvoices = () => {
+  const user = useSelector((state) => state.user);
+  const token = useSelector((state) => state.token);
   const [orders, setOrders] = useState([]);
   const [filteredOrders, setFilteredOrders] = useState([]);
   const [typeFilter, setTypeFilter] = useState('All');
@@ -27,21 +31,21 @@ const OrderInvoices = () => {
   const [dateFilter, setDateFilter] = useState('Newest');
   const [showFilters, setShowFilters] = useState(false);
 
-  const getInvoices = () => {
-        fetch('/api/orders')
-      .then(response => {
+  const fetchUserOrders = async (userId) => {
+    try {
+        const response = await fetch(`http://localhost:3001/order/userOrders/${userId}`, {
+            method: "GET",
+            headers: { "Content-Type": "application/json" },
+        });
         if (!response.ok) {
-          throw new Error('Failed to fetch orders');
+            throw new Error('Failed to fetch user orders');
         }
-        return response.json();
-      })
-      .then(data => {
+        const data = await response.json();
         setOrders(data);
-      })
-      .catch(error => {
-        console.error('Error fetching orders:', error);
-      });
-  }
+    } catch (error) {
+        console.error(error);
+    }
+};
 
   const sampleOrders = [
     {
@@ -95,8 +99,8 @@ const OrderInvoices = () => {
   ];
 
   useEffect(() => {
-    // getInvoices(); // mongoDB data
-    setOrders(sampleOrders.reverse()); // Use sampleOrders for testing without MongoDB
+    fetchUserOrders(user._id); // mongoDB data
+    // setOrders(sampleOrders.reverse()); // Use sampleOrders for testing without MongoDB
   }, []);
 
   useEffect(() => {
@@ -130,60 +134,79 @@ const OrderInvoices = () => {
     setShowFilters(prevState => !prevState);
 };
 
-  return (
-    <>
-        <Navbar />
-        <Box bgcolor="white" sx={{ width: '85%', margin: '0 auto', borderRadius: '10px', minHeight: '100vh'}}>
-            <FlexBetween gap="1.75rem" padding="1rem" paddingBottom={0}>
-                <Breadcrumbs aria-label="breadcrumb">
-                    <Link underline="hover" color="inherit" href="/" fontWeight='bold' fontSize={20}>
-                        Home
-                    </Link>
-                    <Typography color="text.primary" fontWeight='bold' fontSize={20}>Orders</Typography>
-                </Breadcrumbs>
-            </FlexBetween>
-            <Divider spacing={1} variant='middle'>
-                <Typography fontSize={50} textAlign="center" color='#F4A4AC' fontWeight="bold">ORDER HISTORY</Typography>
-            </Divider>
-            <Box textAlign="center" my={2}>
-                <Tooltip title="Toggle Filters" sx={{ mx: 'auto', mr: 2 }}>
-                    <IconButton onClick={toggleFilters}>
-                        <FilterAltIcon />
-                        <Typography>Filters</Typography>
-                    </IconButton>
-                </Tooltip>
-                {showFilters && (
-                    <>
-                        <Select value={typeFilter} onChange={handleTypeChange} sx={{ mr: 2 }}>
-                            <MenuItem value="All">All Types</MenuItem>
-                            <MenuItem value="Laundry">Laundry</MenuItem>
-                            <MenuItem value="Water">Water</MenuItem>
-                            {/* Add more types here */}
-                        </Select>
-                        <Select value={statusFilter} onChange={handleStatusChange} sx={{ mr: 2 }}>
-                            <MenuItem value="All">All Statuses</MenuItem>
-                            <MenuItem value="Pending">Pending</MenuItem>
-                            <MenuItem value="In-Progress">In Progress</MenuItem>
-                            <MenuItem value="For-Delivery">For Delivery</MenuItem>
-                            <MenuItem value="Completed">Completed</MenuItem>
-                        </Select>
-                        <Select value={dateFilter} onChange={handleDateChange}>
-                            <MenuItem value="Newest">Newest First</MenuItem>
-                            <MenuItem value="Oldest">Oldest First</MenuItem>
-                        </Select>
-                    </>
-                )}
-            </Box>
-            <Box style={{ display: 'flex', flexDirection: 'row', flexWrap: 'wrap', justifyContent: 'center', alignItems: 'center' }}>
-                {filteredOrders.length === 0 ? (
-                    <Typography variant="subtitle1">No invoices to display</Typography>
-                ) : (
-                    filteredOrders.map((order, index) => (
-                        <Invoice order={order} index={index} />
-                    ))
-                )}
-            </Box>
-        </Box>
+return (
+  <>
+    <Navbar />
+    <Box
+      bgcolor="white"
+      sx={{
+        width: '85%',
+        margin: '0 auto',
+        borderRadius: '10px',
+        minHeight: '100vh',
+      }}
+    >
+      {/* Filter controls */}
+      <FlexBetween gap="1.75rem" padding="1rem" paddingBottom={0}>
+        <Breadcrumbs aria-label="breadcrumb">
+          <Link underline="hover" color="inherit" href="/" fontWeight="bold" fontSize={20}>
+            Home
+          </Link>
+          <Typography color="text.primary" fontWeight="bold" fontSize={20}>
+            Order History
+          </Typography>
+        </Breadcrumbs>
+      </FlexBetween>
+      <Divider spacing={1} variant="middle">
+        <Typography fontSize={50} textAlign="center" color="#F4A4AC" fontWeight="bold">
+          ORDER HISTORY
+        </Typography>
+      </Divider>
+      <Box textAlign="center" my={2}>
+        {/* Toggle filters button */}
+        <Tooltip title="Toggle Filters" sx={{ mx: 'auto', mr: 2 }}>
+          <IconButton onClick={toggleFilters}>
+            <FilterAltIcon />
+            <Typography>Filters</Typography>
+          </IconButton>
+        </Tooltip>
+        {/* Filters */}
+        {showFilters && (
+          <>
+            {/* Type filter */}
+            <Select value={typeFilter} onChange={handleTypeChange} sx={{ mr: 2 }}>
+              <MenuItem value="All">All Types</MenuItem>
+              <MenuItem value="Laundry">Laundry</MenuItem>
+              <MenuItem value="Water">Water</MenuItem>
+              {/* Add more types here */}
+            </Select>
+            {/* Status filter */}
+            <Select value={statusFilter} onChange={handleStatusChange} sx={{ mr: 2 }}>
+              <MenuItem value="All">All Statuses</MenuItem>
+              <MenuItem value="pending">Pending</MenuItem>
+              <MenuItem value="In-Progress">In Progress</MenuItem>
+              <MenuItem value="For-Delivery">For Delivery</MenuItem>
+              <MenuItem value="Completed">Completed</MenuItem>
+            </Select>
+            {/* Date filter */}
+            <Select value={dateFilter} onChange={handleDateChange}>
+              <MenuItem value="Newest">Newest First</MenuItem>
+              <MenuItem value="Oldest">Oldest First</MenuItem>
+            </Select>
+          </>
+        )}
+      </Box>
+      {/* Render invoices or placeholder if no orders */}
+      <Box style={{ display: 'flex', flexDirection: 'row', flexWrap: 'wrap', justifyContent: 'center', alignItems: 'center' }}>
+          {filteredOrders.length === 0 ? (
+              <Typography variant="subtitle1">No invoices to display</Typography>
+          ) : (
+              filteredOrders.map((order, index) => (
+                  <Invoice order={order} index={index} />
+              ))
+          )}
+      </Box>
+    </Box>
         <Footer />
     </>
 );
